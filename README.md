@@ -1,2 +1,3 @@
 # GI_Termo
-Proyectos de TErmoEnvogibles
+Proyectos de TermoEncogibles
+1.- Política de Comisiones
