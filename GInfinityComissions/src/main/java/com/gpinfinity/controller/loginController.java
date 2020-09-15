@@ -133,6 +133,7 @@ public class loginController extends Utils implements Serializable ,  PhaseListe
             HttpServletResponse response = (HttpServletResponse) context.getResponse();
             RequestDispatcher dispatcher = request.getRequestDispatcher("/logout");
             dispatcher.forward(request, response);
+            FacesContext.getCurrentInstance().responseComplete();
         } catch (ServletException | IOException ex) {
         }
         

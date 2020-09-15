@@ -87,7 +87,7 @@
 
                                 <p:outputLabel for="descrip" value="Descripcion"/>
                                 <h:panelGroup styleClass="md-inputfield">
-                                    <p:inputText  required="true" value="#{paramController.paramDescripcion}" id="descrip"/>
+                                    <p:inputText  autocomplete="off" required="true" value="#{paramController.paramDescripcion}" id="descrip"/>
                                     <label>Descripcion</label>
                                     <p:message for="descrip" />
                                 </h:panelGroup>
@@ -96,7 +96,7 @@
 
                                 <p:outputLabel for="rnkinit" value="Rango Inicial"/>
                                 <h:panelGroup styleClass="md-inputfield">
-                                    <p:inputNumber decimalPlaces="2" required="true" value="#{paramController.paramRnkInicial}" id="rnkinit">
+                                    <p:inputNumber autocomplete="off" decimalPlaces="2" required="true" value="#{paramController.paramRnkInicial}" id="rnkinit">
                                      
                                     </p:inputNumber>   
                                     <label>Rango Inicial</label>
@@ -105,7 +105,7 @@
 
                                 <p:outputLabel for="rnkfin" value="Rango Final"/>
                                 <h:panelGroup styleClass="md-inputfield">
-                                    <p:inputNumber decimalPlaces="2" required="true" value="#{paramController.paramRnkFinal}" id="rnkfin">
+                                    <p:inputNumber autocomplete="off" decimalPlaces="2" required="true" value="#{paramController.paramRnkFinal}" id="rnkfin">
                                      
                                     </p:inputNumber>
                                     <label>Rango Final</label>
@@ -115,7 +115,7 @@
                                 
                                 <p:outputLabel for="porcent" value="Porcentaje Variable"/>
                                 <h:panelGroup styleClass="md-inputfield">
-                                    <p:inputNumber minValue="0.00" maxValue="100.00" symbol="%" symbolPosition="s" emptyValue="zero" required="true" value="#{paramController.paramPorcent}" id="porcent">
+                                    <p:inputNumber autocomplete="off" minValue="0.00" maxValue="100.00" symbol="%" symbolPosition="s" emptyValue="zero" required="true" value="#{paramController.paramPorcent}" id="porcent">
                                            
                                     </p:inputNumber>
                                     <label>Porcentaje Variable</label>

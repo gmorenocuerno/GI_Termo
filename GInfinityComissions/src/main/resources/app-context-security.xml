@@ -27,28 +27,33 @@
         
         <security:intercept-url pattern="/faces/view/**" access="hasRole('ROLE_AUTHENTICATION')" />  
         
-            <security:form-login login-page="/faces/login.xhtml" 
+        <security:form-login login-page="/faces/login.xhtml" 
                                  default-target-url="/faces/view/index.xhtml"
                                  login-processing-url="/j_spring_security_check"                                     
                                  authentication-failure-url="/faces/login.xhtml?securityStatus=authError"
                                  username-parameter="form_login:j_username"
                                  password-parameter="form_login:j_password" /> 
-            <security:logout invalidate-session="true" delete-cookies="JSESSIONID" logout-success-url="/faces/login.xhtml?securityStatus=logout" logout-url="/logout" />
-            <security:session-management invalid-session-url="/faces/login.xhtml?securityStatus=invalidSession">
-                <concurrency-control expired-url="/faces/login.xhtml"  max-sessions="1"/>
-            </security:session-management><!--cear la pagina cuando la session expira , modificar el tiempo de session en el web.xml -->
-            <security:anonymous enabled="true"/>
-            <csrf disabled="true"/>
-            <security:access-denied-handler error-page="/faces/accesDenied.xhtml"/>
-        </security:http>
+            
+        <security:logout invalidate-session="true" delete-cookies="JSESSIONID" logout-success-url="/faces/login.xhtml?securityStatus=logout" logout-url="/logout" />
+            
+        <security:session-management invalid-session-url="/faces/expired.xhtml?securityStatus=invalidSession">
+            <concurrency-control expired-url="/faces/expired.xhtml"  max-sessions="1"/>
+        </security:session-management><!--cear la pagina cuando la session expira , modificar el tiempo de session en el web.xml -->
+            
+        <security:anonymous enabled="true"/>
+            
+        <csrf disabled="true"/>
+            
+        <security:access-denied-handler error-page="/faces/accesDenied1.xhtml"/>
+    </security:http>
 	
 	
-        <security:authentication-manager>
-            <security:authentication-provider ref="japAuthProvider"/>	 	
-        </security:authentication-manager>
+    <security:authentication-manager>
+        <security:authentication-provider ref="japAuthProvider"/>	 	
+    </security:authentication-manager>
 	
-        <beans:bean id="japAuthProvider" class="com.gpinfinity.config.AuthenticationProviderSec">
-        </beans:bean>	
+    <beans:bean id="japAuthProvider" class="com.gpinfinity.config.AuthenticationProviderSec">
+    </beans:bean>	
 		
 	
 </beans:beans>
