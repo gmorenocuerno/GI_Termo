@@ -1,0 +1,120 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="content">
+        <h:form id="formUsers">
+            <p:growl />
+            <div class="ui-fluid">
+                <div class="ui-g">
+                    <div class="ui-g-12">
+                        
+
+                        <div class="card card-w-title">
+                           
+                            <p:dataTable var="usr" 
+                                         id="tbluser" 
+                                         paginator="true"
+                                         paginatorPosition="bottom"
+                                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                         currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} filas"
+                                         rowsPerPageTemplate="5,10,15"
+                                         rows="10"
+                                         reflow="true"
+                                         value="#{loginController.userlist}"  
+                                         selectionMode="single" 
+                                         selection="#{loginController.selectedUser}" 
+                                         rowKey="#{usr.userName}">
+
+                                <p:ajax event="rowSelect"  update="formUsers" listener="#{loginController.loadUserData()}"  />
+                                <f:facet  name="header">
+                                    Usuarios en sistema
+                                </f:facet>
+                                <p:column style="font-weight: bold" headerText="Nombre de usuario" >
+                                    <h:outputText style="font-weight: normal" value="#{usr.userName}" />
+                                </p:column>
+
+                                <p:column style="font-weight: bold" headerText="Nombre completo" >
+                                    <h:outputText style="font-weight: normal" value="#{usr.fullName}" />
+                                </p:column>
+
+                                <p:column style="font-weight: bold" headerText="Correo electronico" >
+                                    <h:outputText style="font-weight: normal" value="#{usr.email}" />
+                                </p:column>
+
+                                <p:column style="font-weight: bold" headerText="Estado" >
+                                    <h:outputText style="font-weight: normal" value="#{((usr.status eq 'I') ?'Inactivo':'Activo')}" />
+                                </p:column>
+                            </p:dataTable>
+                        </div>
+                        <div class="card card-w-title">
+                            <h1>Usuarios</h1>
+                            <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank form-group" style="border:0px none; background-color:transparent;">
+                                <p:outputLabel for="input" value="Nombre de usuario"/>
+                                <h:panelGroup styleClass="md-inputfield">
+                                    <p:inputText autocomplete="off" required="true" value="#{loginController.userName}" id="input"/>
+                                    <label>Nombre de usuario</label>
+                                    <p:message for="input" />
+                                </h:panelGroup>
+
+                                <p:outputLabel for="fullname" value="Nombre completo"/>
+                                <h:panelGroup styleClass="md-inputfield">
+                                    <p:inputText autocomplete="off"  required="true" value="#{loginController.fullName}" id="fullname"/>
+                                    <label>Nombre completo</label>
+                                    <p:message for="fullname" />
+                                </h:panelGroup>
+
+                                <p:outputLabel for="pass" value="Contraseña"/>
+                                <h:panelGroup styleClass="md-inputfield">
+                                    <p:password autocomplete="off" required="true" redisplay="true" value="#{loginController.pass}" id="pass"/>
+                                    <label>Contraseña</label>
+                                    <p:message for="pass" />
+                                </h:panelGroup>
+
+                                <p:outputLabel for="edad" value="Edad"/>
+                                <h:panelGroup styleClass="md-inputfield">
+                                    <p:inputText autocomplete="off" required="true" value="#{loginController.edad}" id="edad">
+                                        <p:keyFilter regEx="/[\d\-]/"/>  
+                                    </p:inputText>
+                                    <label>Edad</label>
+                                    <p:message for="edad" />
+                                </h:panelGroup>
+
+                                <p:outputLabel for="mail" value="Correo electronico"/>
+                                <h:panelGroup styleClass="md-inputfield">
+                                    <p:inputText autocomplete="off" required="true" value="#{loginController.email}" id="mail"/>
+                                    <label>Correo electronico</label>
+                                    <p:message for="mail"  />
+                                </h:panelGroup>
+
+                                <p:outputLabel for="status" value="Estado"/>
+                                <h:panelGroup styleClass="md-inputfield">
+                                    <p:selectOneMenu required="true" value="#{loginController.estado}" id="status">
+                                        <f:selectItem itemLabel="Seleccion Uno" itemValue="" />
+                                        <f:selectItem itemLabel="Activo" itemValue="A" />
+                                        <f:selectItem itemLabel="Inactivo" itemValue="I" />
+                                    </p:selectOneMenu>
+                                    <p:message for="status" />
+                                </h:panelGroup>
+
+
+                                <p:commandButton id="dialog2" actionListener="#{loginController.crearUsuario()}" update="formUsers" value="Guardar" icon="ui-icon-save"   style="max-width:150px;"/>
+                                <p:commandButton process="@this" id="dialog3" actionListener="#{loginController.clear()}" update="formUsers" value="Limpiar" icon="ui-icon-cached"  style="max-width:150px;">
+
+                                </p:commandButton>
+                            </p:panelGrid>
+
+
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>

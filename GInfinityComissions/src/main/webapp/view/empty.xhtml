@@ -1,0 +1,71 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="content">
+        <div class="ui-g">
+            <div class="ui-g-12">
+                <div class="card">
+                   <div class="card card-w-title">
+                    <h1>InputText</h1>
+                    <p:panelGrid columns="3" layout="grid" styleClass="ui-panelgrid-blank form-group">
+                        <h:panelGroup styleClass="md-inputfield">
+                            <p:inputText />
+                            <label>Name</label>
+                        </h:panelGroup>
+                        <h:panelGroup styleClass="md-inputfield">
+                            <p:inputText />
+                            <label>Email</label>
+                        </h:panelGroup>
+                        <h:panelGroup styleClass="md-inputfield">
+                            <p:inputText />
+                            <label>Phone</label>
+                        </h:panelGroup>
+                        <p:inputText placeholder="Disabled Input" disabled="true"/>
+                        <h:panelGroup styleClass="md-inputfield">
+                            <p:inputText />
+                            <label>Address</label>
+                        </h:panelGroup>
+                        <p:inputText />
+                    </p:panelGrid>
+                    <h1>Filled InputText</h1>
+                    <p:panelGrid columns="3" layout="grid" styleClass="ui-panelgrid-blank form-group">
+                        <h:panelGroup styleClass="md-inputfield md-inputfield-fill">
+                            <p:inputText />
+                            <label>Name</label>
+                        </h:panelGroup>
+                        <h:panelGroup styleClass="md-inputfield md-inputfield-fill">
+                            <p:inputText />
+                            <label>Email</label>
+                        </h:panelGroup>
+                        <h:panelGroup styleClass="md-inputfield md-inputfield-fill">
+                            <p:inputText />
+                            <label>Phone</label>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                    <h1>TextBox</h1>
+                    <p:panelGrid columns="3" layout="grid" styleClass="ui-panelgrid-blank form-group">
+                        <h:panelGroup styleClass="md-inputfield md-inputfield-box">
+                            <p:inputText />
+                            <label>Name</label>
+                        </h:panelGroup>
+                        <h:panelGroup styleClass="md-inputfield md-inputfield-box">
+                            <p:inputText />
+                            <label>Email</label>
+                        </h:panelGroup>
+                        <h:panelGroup styleClass="md-inputfield md-inputfield-box">
+                            <p:inputText />
+                            <label>Phone</label>
+                        </h:panelGroup>
+                    </p:panelGrid>
+                </div>
+                </div>
+            </div>
+        </div>
+        
+    </ui:define>
+
+</ui:composition>

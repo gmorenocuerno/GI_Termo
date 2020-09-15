@@ -1,0 +1,31 @@
+<ui:composition 
+    xmlns="http://www.w3.org/1999/xhtml"
+    xmlns:f="http://java.sun.com/jsf/core"
+    xmlns:h="http://java.sun.com/jsf/html"
+    xmlns:ui="http://java.sun.com/jsf/facelets"
+    xmlns:p="http://primefaces.org/ui"
+    xmlns:pu="http://primefaces.org/ultima">
+    
+    <h:form id="menuform"> 
+        <div class="layout-menu #{guestPreferences.menuClass}">
+            <div class="nano">
+                <div class="nano-content menu-scroll-content">
+                    <ui:fragment rendered="#{guestPreferences.profileMode == 'inline' and guestPreferences.menuLayout != 'menu-layout-static menu-layout-horizontal'}">
+                       
+                        <div class="profile">
+                            <p:graphicImage name="images/logotipo-termo-color.jpg" width="180" height="50" library="ultima-layout" />
+                        </div>
+                          
+                    </ui:fragment>
+                    
+                    <pu:menu widgetVar="me">
+                        <p:menuitem id="um_dashboard" value="Usuarios" icon="&#xE7FD;" outcome="/view/usuarios"/>                        
+                        <p:menuitem id="um_parameters"  value="Parametros" icon="&#xE869;" outcome="/view/parametros"/>                        
+                        <p:menuitem id="um_indicadorfamempleados" value="Indicador Emp/Familia" icon="&#xE226;" outcome="/view/fileindicador"/>     
+                        <p:menuitem id="um_logout" value="logout" ajax="false" icon="&#xE8AC;" actionListener="#{loginController.logOut()}" />
+                    </pu:menu>
+                </div>
+            </div>
+        </div>
+    </h:form>
+</ui:composition>

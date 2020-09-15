@@ -1,0 +1,155 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="content">
+        <h:form id="formParameters">
+            <p:growl />
+            <div class="ui-fluid">
+                <div class="ui-g">
+                    <div class="ui-g-12">
+                        <div class="card card-w-title">
+                            <h1 style="display: none">listado de Parametros</h1>
+                            <p:dataTable var="para" 
+                                         id="tbluser" 
+                                         paginator="true"
+                                         paginatorPosition="bottom"
+                                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                         currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} filas"
+                                         rowsPerPageTemplate="5,10,15"
+                                         rows="10"
+                                         reflow="true"
+                                         value="#{paramController.listTerParametroIndicador}"  
+                                         selectionMode="single" 
+                                         selection="#{paramController.selectedTerParametroIndicador}" 
+                                         rowKey="#{para.id}">
+
+                                <p:ajax event="rowSelect"  update="formParameters" listener="#{paramController.loadForm()}"  />
+                                <f:facet  name="header">
+                                    Listado de Parametros
+                                </f:facet>
+                                <p:column style="text-transform: capitalize;font-weight: bold" headerText="ID" >
+                                    <h:outputText style="font-weight: normal" value="#{para.id}" />
+                                </p:column>
+
+                                <p:column style="text-transform: capitalize;font-weight: bold" headerText="Are de Negocio" >
+                                    <h:outputText style="font-weight: normal" value="#{para.descripcionAreaNegocio}" />
+                                </p:column>
+
+                                <p:column style="text-transform: capitalize;font-weight: bold" headerText="Indicador" >
+                                    <h:outputText style="font-weight: normal" value="#{para.descripcionIndicador}" />
+                                </p:column>
+                                
+                                <p:column style="text-transform: capitalize;;font-weight: bold" headerText="Descripcion" >
+                                    <h:outputText style="font-weight: normal" value="#{para.descripcion}" />
+                                </p:column>
+
+                                <p:column style="text-transform: capitalize;font-weight: bold" headerText="Estado" >
+                                    <h:outputText style="font-weight: normal" value="#{((para.estado eq 'I') ?'Inactivo':'Activo')}" />
+                                </p:column>
+                            </p:dataTable>
+                        </div>
+                        <div class="card card-w-title">
+                            <h3>Parametros</h3>
+                            <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank form-group" style="border:0px none; background-color:transparent;">
+                                
+                                
+                                <p:outputLabel for="areanegocio" value="Area de negocio"/>
+                                <h:panelGroup styleClass="md-inputfield">
+                                    <p:selectOneMenu disabled="#{paramController.parametroselected}" required="true" value="#{paramController.paramIdAreaNegocio}" id="areanegocio">
+                                        <f:selectItem itemLabel="Seleccion Uno" itemValue="" />
+                                        <f:selectItems value="#{paramController.listAreaNegocio}" />
+                                        <p:ajax listener="#{paramController.loadIndicador()}" update="indicador" />
+                                    </p:selectOneMenu>
+                                    <p:message for="areanegocio" />
+                                </h:panelGroup>
+
+                                <p:outputLabel for="indicador" value="Indicador"/>
+                                <h:panelGroup styleClass="md-inputfield">
+                                    <p:selectOneMenu disabled="#{paramController.parametroselected}"  required="true" value="#{paramController.paramIdIndicador}" id="indicador">
+                                        <f:selectItem itemLabel="Seleccion Uno" itemValue="" />
+                                        <f:selectItems value="#{paramController.listIndicador}" />
+                                    </p:selectOneMenu>
+                                    <p:message for="indicador" />
+                                </h:panelGroup>
+                                
+                                
+                                
+                                <p:outputLabel for="idparameter" value="ID"/>
+                                <h:panelGroup styleClass="md-inputfield">
+                                    <p:inputText readonly="true" required="true" value="#{paramController.paramId}" id="idparameter"/>
+                                    <label>ID</label>
+                                    <p:message for="idparameter" />
+                                </h:panelGroup>
+
+                                <p:outputLabel for="descrip" value="Descripcion"/>
+                                <h:panelGroup styleClass="md-inputfield">
+                                    <p:inputText  required="true" value="#{paramController.paramDescripcion}" id="descrip"/>
+                                    <label>Descripcion</label>
+                                    <p:message for="descrip" />
+                                </h:panelGroup>
+
+                                
+
+                                <p:outputLabel for="rnkinit" value="Rango Inicial"/>
+                                <h:panelGroup styleClass="md-inputfield">
+                                    <p:inputNumber decimalPlaces="2" required="true" value="#{paramController.paramRnkInicial}" id="rnkinit">
+                                     
+                                    </p:inputNumber>   
+                                    <label>Rango Inicial</label>
+                                    <p:message for="rnkinit"  />
+                                </h:panelGroup>
+
+                                <p:outputLabel for="rnkfin" value="Rango Final"/>
+                                <h:panelGroup styleClass="md-inputfield">
+                                    <p:inputNumber decimalPlaces="2" required="true" value="#{paramController.paramRnkFinal}" id="rnkfin">
+                                     
+                                    </p:inputNumber>
+                                    <label>Rango Final</label>
+                                    <p:message for="rnkfin"  />
+                                </h:panelGroup>
+                                
+                                
+                                <p:outputLabel for="porcent" value="Porcentaje Variable"/>
+                                <h:panelGroup styleClass="md-inputfield">
+                                    <p:inputNumber minValue="0.00" maxValue="100.00" symbol="%" symbolPosition="s" emptyValue="zero" required="true" value="#{paramController.paramPorcent}" id="porcent">
+                                           
+                                    </p:inputNumber>
+                                    <label>Porcentaje Variable</label>
+                                    <p:message for="porcent"  />
+                                </h:panelGroup>
+                                
+                                <p:outputLabel for="estadoparameter" value="Estado"/>
+                                <h:panelGroup styleClass="md-inputfield">
+                                    <p:selectOneMenu required="true" value="#{paramController.paramEstado}" id="estadoparameter">
+                                        <f:selectItem itemLabel="Seleccion Uno" itemValue="" />
+                                        <f:selectItem itemLabel="Activo" itemValue="A" />
+                                        <f:selectItem itemLabel="Inactivo" itemValue="I" />
+                                    </p:selectOneMenu>
+                                    <p:message for="estadoparameter" />
+                                </h:panelGroup>
+
+
+                                <p:commandButton id="dialog2" actionListener="#{paramController.crearParametro()}" update="formParameters" value="Guardar" icon="ui-icon-save"   style="max-width:150px;"/>
+                                <p:commandButton process="@this" id="dialog3" actionListener="#{paramController.clearParametroForm()}" update="formParameters" value="Limpiar" icon="ui-icon-cached"  style="max-width:150px;">
+
+                                </p:commandButton>
+                            </p:panelGrid>
+
+
+                        </div>
+
+                        
+                    </div>
+
+                </div>
+            </div>
+           
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>
