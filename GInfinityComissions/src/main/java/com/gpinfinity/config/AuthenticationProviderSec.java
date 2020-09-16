@@ -25,7 +25,7 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
  *
- * @author irvin_monterroza
+ * @author nivrist
  */
 
 public class AuthenticationProviderSec implements AuthenticationProvider {

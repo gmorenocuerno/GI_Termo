@@ -14,7 +14,7 @@ import org.springframework.stereotype.Repository;
 
 /**
  *
- * @author piru876
+ * @author nivrist
  */
 @Repository
 public interface ITerParametroIndicadorRepository  extends JpaRepository<TerParametroIndicador, TerParametroIndicadorPK>{

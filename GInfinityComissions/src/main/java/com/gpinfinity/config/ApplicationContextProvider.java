@@ -10,7 +10,7 @@ import org.springframework.context.ApplicationContextAware;
 
 /**
  *
- * @author irvin_monterroza
+ * @author nivrist
  */
 public class ApplicationContextProvider implements ApplicationContextAware {
     private static ApplicationContext context;

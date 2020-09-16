@@ -28,7 +28,7 @@ import lombok.NoArgsConstructor;
 
 /**
  *
- * @author piru876
+ * @author nivrist
  */
 @Entity
 @Table(name = "ter_empleado_familia_indicador")

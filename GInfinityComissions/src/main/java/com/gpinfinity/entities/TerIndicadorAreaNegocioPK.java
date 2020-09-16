@@ -13,7 +13,7 @@ import javax.validation.constraints.NotNull;
 
 /**
  *
- * @author piru876
+ * @author nivrist
  */
 @Embeddable
 public class TerIndicadorAreaNegocioPK implements Serializable {

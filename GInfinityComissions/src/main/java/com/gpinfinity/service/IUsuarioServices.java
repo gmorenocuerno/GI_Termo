@@ -10,7 +10,7 @@ import java.util.List;
 
 /**
  *
- * @author piru876
+ * @author nivrist
  */
 public interface IUsuarioServices {
     

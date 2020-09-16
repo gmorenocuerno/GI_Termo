@@ -14,7 +14,7 @@ import javax.faces.context.FacesContext;
 
 /**
  *
- * @author piru876
+ * @author nivrist
  */
 public class Utils implements Serializable
 {

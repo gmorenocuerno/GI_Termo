@@ -17,7 +17,7 @@ import lombok.NoArgsConstructor;
 
 /**
  *
- * @author piru876
+ * @author nivrist
  */
 @Embeddable
 @Data

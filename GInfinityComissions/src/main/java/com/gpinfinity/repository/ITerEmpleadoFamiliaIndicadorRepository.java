@@ -18,7 +18,7 @@ import org.springframework.stereotype.Repository;
 
 /**
  *
- * @author piru876
+ * @author nivrist
  */
 @Repository
 public interface ITerEmpleadoFamiliaIndicadorRepository extends JpaRepository<TerEmpleadoFamiliaIndicador, TerEmpleadoFamiliaIndicadorPK> {

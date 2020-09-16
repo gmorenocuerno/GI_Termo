@@ -22,7 +22,7 @@ import org.springframework.transaction.TransactionSystemException;
 
 /**
  *
- * @author piru876
+ * @author nivrist
  */
 @Service
 public class TerEmpleadoFamiliaIndicadorServicesImpl implements ITerEmpleadoFamiliaIndicadorServices {

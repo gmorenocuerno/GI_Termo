@@ -12,7 +12,7 @@ import org.springframework.stereotype.Repository;
 
 /**
  *
- * @author piru876
+ * @author nivrist
  */
 @Repository
 public interface IUsuarioRepository extends JpaRepository<Usuarios, String> {

@@ -27,7 +27,7 @@ import lombok.EqualsAndHashCode;
 
 /**
  *
- * @author piru876
+ * @author nivrist
  */
 @Named(value = "loginController")
 @SessionScoped

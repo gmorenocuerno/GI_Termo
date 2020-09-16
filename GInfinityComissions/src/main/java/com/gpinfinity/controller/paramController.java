@@ -39,7 +39,7 @@ import org.primefaces.model.file.UploadedFile;
 
 /**
  *
- * @author piru876
+ * @author nivrist
  */
 @Named(value = "paramController")
 @ViewScoped
