@@ -16,20 +16,14 @@ import java.io.Serializable;
 import java.util.Date;
 import java.util.List;
 import javax.annotation.PostConstruct;
-import javax.faces.application.FacesMessage;
 import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.faces.event.PhaseEvent;
-import javax.faces.event.PhaseId;
-import javax.faces.event.PhaseListener;
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
-import org.springframework.security.authentication.BadCredentialsException;
-import org.springframework.security.web.WebAttributes;
 
 /**
  *
@@ -39,7 +33,7 @@ import org.springframework.security.web.WebAttributes;
 @SessionScoped
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class loginController extends Utils implements Serializable ,  PhaseListener{
+public class loginController extends Utils implements Serializable {
 
     private boolean editFields = false;
 
@@ -179,37 +173,5 @@ public class loginController extends Utils implements Serializable ,  PhaseListe
         return null;
     }
     
-    
-    public void afterPhase(PhaseEvent event) {
-    }
-
-    /* (non-Javadoc)
-     * @see javax.faces.event.PhaseListener#beforePhase(javax.faces.event.PhaseEvent)
-     *
-     * Do something before rendering phase.
-     */
-    
-    public void beforePhase(PhaseEvent event) {
-        Exception e = (Exception) FacesContext.getCurrentInstance().
-          getExternalContext().getSessionMap().get(WebAttributes.AUTHENTICATION_EXCEPTION);
- 
-        if (e instanceof BadCredentialsException) {
-            FacesContext.getCurrentInstance().getExternalContext().getSessionMap().put(
-                    WebAttributes.AUTHENTICATION_EXCEPTION, null);
-            FacesContext.getCurrentInstance().addMessage(null,
-              new FacesMessage(FacesMessage.SEVERITY_ERROR,
-                "Username or password not valid.", "Username or password not valid"));
-        }
-    }
-
-    /* (non-Javadoc)
-     * @see javax.faces.event.PhaseListener#getPhaseId()
-     *
-     * In which phase you want to interfere?
-     */
-    
-    public PhaseId getPhaseId() {
-        return PhaseId.RENDER_RESPONSE;
-    }
 
 }

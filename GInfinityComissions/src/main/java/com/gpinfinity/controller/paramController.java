@@ -250,7 +250,7 @@ public class paramController extends Utils implements Serializable {
             setCalcSelectedPeriodo("");
             addsimplemessages("Proceso de calculo ejecutado con exito");
             
-        } catch (Exception ex) {
+        } catch (NumberFormatException ex) {
             addsimplemessageserror("Ocurrio un error al ejecutar el Proceso de calculo");
         }
     }
