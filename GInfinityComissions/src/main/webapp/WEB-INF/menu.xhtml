@@ -19,9 +19,13 @@
                     </ui:fragment>
                     
                     <pu:menu widgetVar="me">
-                        <p:menuitem id="um_dashboard" value="Usuarios" icon="&#xE7FD;" outcome="/view/usuarios"/>                        
+                        <p:submenu id="um_sistema" label="Sistema" icon="&#xE871;">
+                        <p:menuitem id="um_dashboard" value="Usuarios" icon="&#xE7FD;" outcome="/view/usuarios"/>  
+                        </p:submenu>
+                        <p:submenu id="um_comisiones" label="Comisiones" icon="&#xE871;">
                         <p:menuitem id="um_parameters"  value="Parametros" icon="&#xE869;" outcome="/view/parametros"/>                        
-                        <p:menuitem id="um_indicadorfamempleados" value="Indicador Emp/Familia" icon="&#xE226;" outcome="/view/fileindicador"/>     
+                        <p:menuitem id="um_indicadorfamempleados" value="Indicador Emp/Familia" icon="&#xE226;" outcome="/view/fileindicador"/>                         
+                        </p:submenu>
                         <p:menuitem id="um_logout" value="logout" ajax="false" icon="&#xE8AC;" actionListener="#{loginController.logOut()}" />
                     </pu:menu>
                 </div>
