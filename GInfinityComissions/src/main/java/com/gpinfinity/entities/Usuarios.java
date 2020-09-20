@@ -33,18 +33,8 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 @Builder
 @Entity
-@Table(name = "usuarios")
+@Table(name = "ter_usuarios")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "Usuarios.findAll", query = "SELECT u FROM Usuarios u")
-    , @NamedQuery(name = "Usuarios.findByUserName", query = "SELECT u FROM Usuarios u WHERE u.userName = :userName")
-    , @NamedQuery(name = "Usuarios.findByPassword", query = "SELECT u FROM Usuarios u WHERE u.password = :password")
-    , @NamedQuery(name = "Usuarios.findByFullName", query = "SELECT u FROM Usuarios u WHERE u.fullName = :fullName")
-    , @NamedQuery(name = "Usuarios.findByEdad", query = "SELECT u FROM Usuarios u WHERE u.edad = :edad")
-    , @NamedQuery(name = "Usuarios.findByEmail", query = "SELECT u FROM Usuarios u WHERE u.email = :email")
-    , @NamedQuery(name = "Usuarios.findByFechaCreacion", query = "SELECT u FROM Usuarios u WHERE u.fechaCreacion = :fechaCreacion")
-    , @NamedQuery(name = "Usuarios.findByUsuarioCreacion", query = "SELECT u FROM Usuarios u WHERE u.usuarioCreacion = :usuarioCreacion")
-    , @NamedQuery(name = "Usuarios.findByStatus", query = "SELECT u FROM Usuarios u WHERE u.status = :status")})
 public class Usuarios implements Serializable {
 
     private static final long serialVersionUID = 1L;

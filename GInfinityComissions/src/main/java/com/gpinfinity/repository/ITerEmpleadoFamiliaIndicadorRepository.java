@@ -46,7 +46,7 @@ public interface ITerEmpleadoFamiliaIndicadorRepository extends JpaRepository<Te
             + "and f.id_empleado = a.id_empleado and f.id_indicador = a.id_indicador")
     public List<Object[]> allDataEmpFamIndicador();
 
-    @Procedure(procedureName = "spGenerarComisiones")
+    @Procedure(procedureName = "TER_COMISIONES_Generar")
     public void calculaComisiones(@Param("AREA_NEGOCIO") int area_negocio, @Param("PERIODO") int periodo);
 
     @Query(nativeQuery = true, value = "SELECT distinct cast(periodo as varchar) periodo_tbl FROM ter_empleado_familia_indicador order by 1 asc")
@@ -71,9 +71,9 @@ public interface ITerEmpleadoFamiliaIndicadorRepository extends JpaRepository<Te
             + ", cast(B.sueldo as varchar) suel\n"
             + ", cast(ISNULL(SUM(A.monto_calculado),0) as varchar) as calculado\n"
             + ", cast(ISNULL((SUM(A.monto_calculado)/B.sueldo)*100,0) as varchar) as porc_calculado\n"
-            + "FROM TERMO.dbo.TER_empleado_familia_indicador A\n"
-            + "INNER JOIN TERMO.dbo.TER_empleado B ON B.id = A.id_empleado\n"
-            + "INNER JOIN TERMO.dbo.TER_area_negocio C ON C.id = A.id_area_negocio\n"
+            + "FROM TER_empleado_familia_indicador A\n"
+            + "INNER JOIN TER_empleado B ON B.id = A.id_empleado\n"
+            + "INNER JOIN TER_area_negocio C ON C.id = A.id_area_negocio\n"
             + "group by \n"
             + "A.periodo\n"
             + ", A.id_area_negocio\n"

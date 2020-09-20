@@ -33,7 +33,7 @@
      <bean id="applicationContextProvder" class="com.gpinfinity.config.ApplicationContextProvider"/>
         
     <bean id="dataSource"  class="org.springframework.jndi.JndiObjectFactoryBean">
-        <property name="jndiName" value="java:/jdbc/apiservicesinfinitydb"/>
+        <property name="jndiName" value="java:/comtermoapp"/>
     </bean>
     
     <bean id="entityManagerFactory" class="org.springframework.orm.jpa.LocalContainerEntityManagerFactoryBean">

@@ -16,7 +16,7 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface IUsuarioRepository extends JpaRepository<Usuarios, String> {
-     @Query(nativeQuery = true ,value = "select *  from usuarios where user_name = ? and status ='A' ")
+     @Query(nativeQuery = true ,value = "select *  from ter_usuarios where user_name = ? and status ='A' ")
      Usuarios verificarUsuario(String userName);
     
 }
