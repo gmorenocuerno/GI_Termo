@@ -43,8 +43,8 @@ public interface ITerEmpleadoFamiliaIndicadorRepository extends JpaRepository<Te
             + "INNER JOIN ter_familia d on d.id = a.id_familia and d.id_area_negocio = a.id_area_negocio\n"
             + "INNER JOIN ter_indicador_area_negocio e ON e.id = a.id_indicador and e.id_area_negocio = a.id_area_negocio\n"
             + "INNER JOIN ter_empleado_familia f on f.id_area_negocio = a.id_area_negocio and f.id_familia = a.id_familia\n"
-            + "and f.id_empleado = a.id_empleado and f.id_indicador = a.id_indicador")
-    public List<Object[]> allDataEmpFamIndicador();
+            + "and f.id_empleado = a.id_empleado and f.id_indicador = a.id_indicador where  f.id_area_negocio = ?  and a.periodo = ? ")
+    public List<Object[]> allDataEmpFamIndicador(int idAreaNegocio , int periodo);
 
     @Procedure(procedureName = "TER_COMISIONES_Generar")
     public void calculaComisiones(@Param("AREA_NEGOCIO") int area_negocio, @Param("PERIODO") int periodo);

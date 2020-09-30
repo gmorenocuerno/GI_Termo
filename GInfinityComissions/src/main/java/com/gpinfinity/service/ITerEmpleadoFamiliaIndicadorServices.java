@@ -19,7 +19,7 @@ public interface ITerEmpleadoFamiliaIndicadorServices {
     
 public CsvIndicadorErrorLoad crearIndicadorFamEmp(IndicadorFamiliaEmpCsvDTO csvDto);
 
-public List<CsvDataTableEmpFamIndicador> allDataEmpFamIndicador();
+public List<CsvDataTableEmpFamIndicador> allDataEmpFamIndicador(int idAreaNegocio , int periodo);
 
 public void calcularComision(int areaNegocio , int periodo);
 

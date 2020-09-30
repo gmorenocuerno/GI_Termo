@@ -72,9 +72,9 @@ public class TerEmpleadoFamiliaIndicadorServicesImpl implements ITerEmpleadoFami
     }
 
     @Override
-    public List<CsvDataTableEmpFamIndicador> allDataEmpFamIndicador() {
+    public List<CsvDataTableEmpFamIndicador> allDataEmpFamIndicador(int idAreaNegocio , int periodo) {
         List<CsvDataTableEmpFamIndicador> listDataTableCsv = new ArrayList<>();
-        iterEmpleadoFamiliaIndicadorRepository.allDataEmpFamIndicador().forEach((obj) -> {
+        iterEmpleadoFamiliaIndicadorRepository.allDataEmpFamIndicador(idAreaNegocio,periodo).forEach((obj) -> {
             CsvDataTableEmpFamIndicador data = CsvDataTableEmpFamIndicador.builder()
                     .rowNum(obj[0].toString())
                     .descAreaNegocio(obj[1].toString())

@@ -56,6 +56,8 @@ public class paramController extends Utils implements Serializable {
     private int paramId;
     private String calcSelectedPeriodo;
     private String calcSelectedAreaNegocio;
+    private int buscarAreanegocio;
+    private int buscarPeriodo;
     private String paramIdIndicador;
     private String paramIdAreaNegocio;
     private String paramDescripcion;
@@ -63,6 +65,7 @@ public class paramController extends Utils implements Serializable {
     private String paramRnkFinal;
     private String paramPorcent;
     private String paramEstado;
+    
     private List<TerParametrosDTO> listTerParametroIndicador;
     private TerParametrosDTO selectedTerParametroIndicador;
     private List<SelectItem> listAreaNegocio;
@@ -86,7 +89,7 @@ public class paramController extends Utils implements Serializable {
 
         loadContextBeanSring();
         clearParametroForm();
-        loadDataEmpFamIndicador();
+        //loadDataEmpFamIndicador();
         loadListEmpleadosCalcDto();
         listAreaNegocio = new ArrayList<>();
         terAreaNegocioServices.listAllAreaNegocio().forEach((arn) -> {
@@ -235,9 +238,14 @@ public class paramController extends Utils implements Serializable {
         loadListEmpleadosCalcDto();
     }
 
+    public void loadData(){
+    listCsvDataTableEmpFamIndicador = new ArrayList<>();
+        listCsvDataTableEmpFamIndicador = iterEmpleadoFamiliaIndicadorServices.allDataEmpFamIndicador(buscarAreanegocio,buscarPeriodo);
+    }
+    
     public void loadDataEmpFamIndicador() {
         listCsvDataTableEmpFamIndicador = new ArrayList<>();
-        listCsvDataTableEmpFamIndicador = iterEmpleadoFamiliaIndicadorServices.allDataEmpFamIndicador();
+        listCsvDataTableEmpFamIndicador = iterEmpleadoFamiliaIndicadorServices.allDataEmpFamIndicador(buscarAreanegocio,buscarPeriodo);
 
     }
 
