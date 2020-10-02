@@ -118,23 +118,22 @@
                                 <p:column style="text-transform: capitalize;font-weight: bold" headerText="Periodo" >
                                     <h:outputText style="font-weight: normal" value="#{tbl_csv.per}" />
                                 </p:column>
-                                
-                                <p:column style="text-transform: capitalize;font-weight: bold" headerText="Valor mensual" >
-                                    <h:outputText style="font-weight: normal" value="#{tbl_csv.valorMensual}" />
-                                </p:column>
-                                
+                                                               
                                   <p:column style="text-transform: capitalize;font-weight: bold" headerText="Valor porsupuesto mensual" >
                                       <h:outputText style="font-weight: normal" value="#{tbl_csv.valorPresupuestoMensual}" />
                                 </p:column>
-
+                                
+                                <p:column style="text-transform: capitalize;font-weight: bold" headerText="Monto presupuesto acumulado" >
+                                      <h:outputText style="font-weight: normal" value="#{tbl_csv.montoPresupuestoAcumulado}" />
+                                </p:column>
+                                
                                 <p:rowExpansion>
                                     <p:panelGrid  columns="2" columnClasses="label,value" style="width:100%">
                                         <f:facet name="header">
                                             Datos
                                         </f:facet>
 
-                                        <h:outputText value="Monto presupuesto acumulado" />
-                                        <h:outputText value="#{tbl_csv.montoPresupuestoAcumulado}" />
+                                        
                                         
                                         <h:outputText value="Valor real mensual" />
                                         <h:outputText value="#{tbl_csv.valorRealMensual}" />
@@ -154,7 +153,23 @@
                                         <h:outputText value="Monto diferencia mesual" />
                                         <h:outputText value="#{tbl_csv.montoDiferenciaMensual}" />
 
+                                        <h:outputText value="Porcentaje Cumplimiento Mensual" />
+                                        <h:outputText value="#{tbl_csv.porcCumplimientoMensual}" />
                                         
+                                        <h:outputText value="Bono Mensual" />
+                                        <h:outputText value="#{tbl_csv.montoBonoMensual}" />
+                                        
+                                        <h:outputText value="Monto diferencia acumulado" />
+                                        <h:outputText value="#{tbl_csv.montoDiferenciaAcumulado}" />
+                                        
+                                        <h:outputText value="Porcentaje Cumplimiento Acumulado" />
+                                        <h:outputText value="#{tbl_csv.porcCumplimientoAcumulado}" />
+                                        
+                                        <h:outputText value="Bono Acumulado" />
+                                        <h:outputText value="#{tbl_csv.montoBonoAcumulado}" />
+                                        
+                                        <h:outputText value="Monto bono real" />
+                                        <h:outputText value="#{tbl_csv.montoBonoReal}" />
                                     </p:panelGrid>
                                 </p:rowExpansion>
                             </p:dataTable>
@@ -164,7 +179,7 @@
             </div>
         </div>            
 
-        <p:dialog header="Calculo Testiles" showEffect="clip" hideEffect="clip" widgetVar="dlgCalcEmp" modal="true" height="450" width="1000" responsive="true">
+        <p:dialog header="Calculo Textiles" showEffect="clip" hideEffect="clip" widgetVar="dlgCalcEmp" modal="true" height="450" width="1000" responsive="true">
 
             <h:form id="formExporte">
                 Exportar Textiles
