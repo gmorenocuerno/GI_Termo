@@ -5,17 +5,212 @@
                 xmlns:p="http://primefaces.org/ui"
                 template="/WEB-INF/template.xhtml">
 
+    <ui:define name="title">Archivo Textiles</ui:define>
+
     <ui:define name="content">
-        <div class="ui-g">
-            <div class="ui-g-12">
-                <div class="card">
-                    <h1>Empty Page</h1>
-                    <p>Use this page to start from scratch and place your custom content.</p>
-                    <p:button  value="Home" style="display:inline-block;margin-top:5px"/>
+
+        <p:growl globalOnly="true" id="msg" />
+        <div class="ui-g ui-fluid">
+            <div class="ui-g">
+                <div class="ui-g-12">
+                    <h:form id="formFileCsv">
+                        <div class="card card-w-title">
+                            
+                            <p:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank form-group">
+                                <p:fileUpload label="Buscar"  cancelLabel="Cancelar" uploadLabel="Cargar" listener="#{textilController.handleFileUpload}" mode="advanced" dragDropSupport="false"
+                                              multiple="true" update="msg,:findForm:findcalcperiodo,calcperiodo,:formExporte:calcEmpelados" sizeLimit="100000"  allowTypes="/(\.|\/)(csv)$/" style="width:100%" />
+
+                                <p:commandButton style="width:auto" value="Resultado de carga" update="tblcsv" onclick="PF('dlg2').show();" styleClass="NavyButton" />
+                            </p:panelGrid>
+                        </div>
+                        <div class="card card-w-title">
+                            <p:panelGrid columns="5" layout="grid"  styleClass="ui-panelgrid-blank form-group">
+
+                                <p:commandButton value="Calcular comision" update="msg,formFileCsv" actionListener="#{textilController.calcularComisionTextil()}"  styleClass="NavyButton" />
+
+                                
+                                <p:outputLabel style="display: none" for="calcperiodo" value="Periodo"/>
+                                <h:panelGroup styleClass="md-inputfield">
+                                    <p:selectOneMenu required="true"  effect="fold"  value="#{textilController.periodo}" id="calcperiodo">
+                                        <f:selectItem itemLabel="Seleccione Periodo" itemValue="" />
+                                        <f:selectItems value="#{textilController.listPeriodo}" />                                        
+                                    </p:selectOneMenu>
+                                    <p:message for="calcperiodo" />
+                                </h:panelGroup>
+
+                                <p:commandButton value="Mostrar calculo final" style="width:auto" update=":formExporte:calcEmpelados" onclick="PF('dlgCalcEmp').show();"  styleClass="NavyButton" />
+
+                            </p:panelGrid>
+
+
+                        </div>
+                    </h:form>
+                </div>
+                <p:dialog header="Resultados de carga" showEffect="clip" hideEffect="clip" widgetVar="dlg2" modal="true" height="450" width="800" responsive="true">
+                    <p:dataTable var="csvTbl" 
+                                 id="tblcsv" 
+                                 paginator="true"
+                                 paginatorPosition="bottom"
+                                 paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                 currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} filas"
+                                 rowsPerPageTemplate="5,10,15"
+                                 rows="10"
+                                 reflow="true"
+                                 value="#{textilController.listCsvLoadErrors}"  
+                                 rowKey="#{csvTbl.linea}">
+
+                        <f:facet  name="header">
+                            Datos Csv
+                        </f:facet>
+                        <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Linea" >
+                            <h:outputText style="font-weight: normal" value="#{csvTbl.linea}" />
+                        </p:column>
+
+                        <p:column style="text-align: center;font-weight: bold" headerText="Mensaje" >
+                            <h:outputText style="font-weight: normal" value="#{csvTbl.mensaje}" />
+                        </p:column>
+
+                        <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Estado" >
+                            <h:outputText style="font-weight: normal" value="#{((csvTbl.estadoLinea eq 'C') ?'Cargado':'Error')}" />
+                        </p:column>
+                    </p:dataTable>
+                </p:dialog>  
+
+
+                <div class="ui-g-12">
+                    <h:form id="findForm">
+                        <div class="card card-w-title">
+                            <p:fieldset legend="Busqueda Textiles" style="margin-bottom:20px">
+                                <p:panelGrid columns="5" layout="grid"  styleClass="ui-panelgrid-blank form-group">
+
+                                    
+                                    <p:outputLabel style="display: none" for="findcalcperiodo" value="Periodo"/>
+                                    <h:panelGroup styleClass="md-inputfield">
+                                        <p:selectOneMenu required="true"  effect="fold"  value="#{textilController.buscarPeriodo}" id="findcalcperiodo">
+                                            <f:selectItem itemLabel="Seleccione Periodo" itemValue="" />
+                                            <f:selectItems value="#{textilController.listPeriodo}" />                                        
+                                        </p:selectOneMenu>
+                                        <p:message for="findcalcperiodo" />
+                                    </h:panelGroup>
+
+                                    <p:commandButton value="Buscar" update="tblcsvempfam"   actionListener="#{textilController.loadData()}" styleClass="NavyButton" />
+
+                                </p:panelGrid>
+                            </p:fieldset>
+                            <p:dataTable var="tbl_csv" 
+                                         id="tblcsvempfam" 
+                                         paginator="true"
+                                         paginatorPosition="bottom"
+                                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                         currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} filas"
+                                         rowsPerPageTemplate="5,10,15"
+                                         rows="10"
+                                         reflow="true"
+                                         value="#{textilController.listTableTerComisionesTextil}"  
+                                        >
+
+                                <f:facet  name="header">
+                                    Textiles
+                                </f:facet>
+                                <p:column style="width:40px">
+                                    <p:rowToggler  />
+                                </p:column>
+                                <p:column style="text-transform: capitalize;font-weight: bold" headerText="Periodo" >
+                                    <h:outputText style="font-weight: normal" value="#{tbl_csv.per}" />
+                                </p:column>
+                                
+                                <p:column style="text-transform: capitalize;font-weight: bold" headerText="Valor mensual" >
+                                    <h:outputText style="font-weight: normal" value="#{tbl_csv.valorMensual}" />
+                                </p:column>
+                                
+                                  <p:column style="text-transform: capitalize;font-weight: bold" headerText="Valor porsupuesto mensual" >
+                                      <h:outputText style="font-weight: normal" value="#{tbl_csv.valorPresupuestoMensual}" />
+                                </p:column>
+
+                                <p:rowExpansion>
+                                    <p:panelGrid  columns="2" columnClasses="label,value" style="width:100%">
+                                        <f:facet name="header">
+                                            Datos
+                                        </f:facet>
+
+                                        <h:outputText value="Monto presupuesto acumulado" />
+                                        <h:outputText value="#{tbl_csv.montoPresupuestoAcumulado}" />
+                                        
+                                        <h:outputText value="Valor real mensual" />
+                                        <h:outputText value="#{tbl_csv.valorRealMensual}" />
+                                        
+                                        <h:outputText value="Valor cxc v30" />
+                                        <h:outputText value="#{tbl_csv.valorCxcV30}" />
+                                        
+                                        <h:outputText value="Valor inventario 45" />
+                                        <h:outputText value="#{tbl_csv.valorInventario45}" />
+                                        
+                                        <h:outputText value="Monto venta neta mensual" />
+                                        <h:outputText value="#{tbl_csv.montoVentaNetaMensual}" />
+                                        
+                                        <h:outputText value="Monto venta neta acumulada" />
+                                        <h:outputText value="#{tbl_csv.montoVentaNetaAcumulada}" />
+                                        
+                                        <h:outputText value="Monto diferencia mesual" />
+                                        <h:outputText value="#{tbl_csv.montoDiferenciaMensual}" />
+
+                                        
+                                    </p:panelGrid>
+                                </p:rowExpansion>
+                            </p:dataTable>
+                        </div>
+                    </h:form>
                 </div>
             </div>
-        </div>
-        
-    </ui:define>
+        </div>            
 
+        <p:dialog header="Calculo Testiles" showEffect="clip" hideEffect="clip" widgetVar="dlgCalcEmp" modal="true" height="450" width="1000" responsive="true">
+
+            <h:form id="formExporte">
+                Exportar Textiles
+                <h:commandLink  disabled="true" >                                 
+                    <p:graphicImage width="17" height="17" name="images/xlsx.png" library="ultima-layout" />
+                    <p:dataExporter type="xls" target="calcEmpelados" fileName="CalculoEmpleados"/>
+                </h:commandLink>
+                <p:dataTable rendered="false" var="caclempleado" 
+                             id="calcEmpelados" 
+                             paginator="true"
+                             paginatorPosition="bottom"
+                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exporters}"
+                             currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} filas"
+                             rowsPerPageTemplate="5,10,15"
+                             rows="10"
+                             reflow="true"
+                             value="#{paramController.listEmpleadosDto}"  
+                             >
+
+                    <f:facet  name="header">
+
+                        Textules
+
+                    </f:facet>
+                    <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Periodo" >
+                        <h:outputText style="font-weight: normal" value="#{caclempleado.periodo}" />
+                    </p:column>
+
+                    <p:column style="text-align: center;font-weight: bold" headerText="Area de Negocio" >
+                        <h:outputText style="font-weight: normal" value="#{caclempleado.areNegocio}" />
+                    </p:column>
+
+                    <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Empleado" >
+                        <h:outputText style="font-weight: normal" value="#{caclempleado.nombre}" />
+                    </p:column>
+                    <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Salario" >
+                        <h:outputText style="font-weight: normal" value="#{caclempleado.salario}" />
+                    </p:column>
+                    <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Calculado" >
+                        <h:outputText style="font-weight: normal" value="#{caclempleado.calculado}" />
+                    </p:column>
+                    <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Porcentaje Calculado" >
+                        <h:outputText style="font-weight: normal" value="#{caclempleado.porcenCalculado}" />
+                    </p:column>
+                </p:dataTable>
+            </h:form>
+        </p:dialog>  
+    </ui:define>
 </ui:composition>

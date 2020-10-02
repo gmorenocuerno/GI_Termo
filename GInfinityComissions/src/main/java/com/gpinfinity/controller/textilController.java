@@ -1,0 +1,142 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.gpinfinity.controller;
+
+import com.gpinfinity.DTO.CsvIndicadorErrorLoad;
+import com.gpinfinity.DTO.CsvTextilErrorLoad;
+import com.gpinfinity.DTO.IndicadorFamiliaEmpCsvDTO;
+import com.gpinfinity.DTO.TextilCsvLoad;
+import com.gpinfinity.config.ApplicationContextProvider;
+import com.gpinfinity.entities.TerComisionesTextil;
+import com.gpinfinity.service.ITerComisionesTextilServices;
+import com.gpinfinity.utils.Utils;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
+import javax.faces.model.SelectItem;
+import javax.inject.Named;
+import javax.faces.view.ViewScoped;
+import lombok.Data;
+import lombok.EqualsAndHashCode;
+import org.primefaces.event.FileUploadEvent;
+
+/**
+ *
+ * @author nivrist
+ */
+@Named(value = "textilController")
+@ViewScoped
+@Data
+@EqualsAndHashCode(callSuper = false)
+public class textilController extends Utils implements Serializable{
+
+    private List<CsvTextilErrorLoad> listCsvLoadErrors;
+    private String periodo;
+    private int buscarPeriodo;
+    private List<SelectItem> listPeriodo;
+    private List<TerComisionesTextil> listTableTerComisionesTextil;
+    
+    /**
+     * Creates a new instance of textilController
+     */
+    private ITerComisionesTextilServices iTerComisionesTextilServices;
+    @PostConstruct
+    public void init(){
+        loadContextBeanSring();
+        loadPeriodList();
+    }
+    
+    public textilController() {
+    }
+    
+    public void calcularComisionTextil(){
+        
+         try {
+            int flag = iTerComisionesTextilServices.ejecutarProcedimientoTextil(Integer.parseInt(periodo));
+            if(flag==0){
+                addsimplemessages("Proceso de calculo ejecutado con exito");
+            }else{
+                addsimplemessageserror("Ocurrio un error al ejecutar el Proceso de calculo");
+            }
+            
+            
+        } catch (NumberFormatException ex) {
+            addsimplemessageserror("Ocurrio un error al ejecutar el Proceso de calculo");
+        }
+    
+    }
+    
+    int linea = 2;
+    public void handleFileUpload(FileUploadEvent event) {
+        List<List<String>> records = new ArrayList<>();
+        List<TextilCsvLoad> listIndicadorFaEmCsv = new ArrayList<>();
+        try (BufferedReader br = new BufferedReader(new InputStreamReader(event.getFile().getInputStream(), "UTF-8"))) {
+            String line;
+            while ((line = br.readLine()) != null) {
+                String[] values = line.split(",");
+                records.add(Arrays.asList(values));
+            }
+        } catch (IOException ex) {
+            Logger.getLogger(paramController.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        records.remove(0);
+        records.forEach((rws) -> {
+
+            TextilCsvLoad csv = TextilCsvLoad.builder()
+                    .periodo(rws.get(0).replace("\"", "").trim())
+                    .valorMensual(rws.get(1).replace("\"", "").trim())
+                    .valorPresupuestoMensual(rws.get(2).replace("\"", "").trim())
+                    .valorRealMensual(rws.get(3).replace("\"", "").trim())
+                    .valorCxc30(rws.get(4).replace("\"", "").trim())
+                    .valorInventario45(rws.get(5).replace("\"", "").trim()).build();
+            listIndicadorFaEmCsv.add(csv);
+        });
+        linea = 2;
+        listCsvLoadErrors = new ArrayList<>();
+        System.out.println("Valor Csv"+listIndicadorFaEmCsv.size());
+        listIndicadorFaEmCsv.forEach((csvDto) -> {
+
+            CsvTextilErrorLoad resp = iTerComisionesTextilServices.crearTerTextiles(csvDto);
+            resp.setLinea(String.valueOf(linea));
+            linea += 1;
+            listCsvLoadErrors.add(resp);
+        });
+        //iterEmpleadoFamiliaIndicadorServices.mergeTableTerEmpFamIndicador();
+        addsimplemessages("Archivo " + event.getFile().getFileName() + " cargado");
+        //loadDataEmpFamIndicador();
+        loadPeriodList();
+        //loadListEmpleadosCalcDto();
+    }
+    public void loadPeriodList() {
+
+        listPeriodo = new ArrayList<>();
+        iTerComisionesTextilServices.allPeriodo().forEach((per) -> {
+            listPeriodo.add(new SelectItem(per, per));
+        });
+    }
+    
+    
+    public void loadData(){
+        
+        listTableTerComisionesTextil = new ArrayList<>();
+        listTableTerComisionesTextil  = iTerComisionesTextilServices.allTerComisionesTextiles(buscarPeriodo);
+    
+    }
+    
+    public void loadContextBeanSring() {
+
+        iTerComisionesTextilServices = ApplicationContextProvider.getApplicationContext().getBean(ITerComisionesTextilServices.class);
+        
+    }
+    
+}
