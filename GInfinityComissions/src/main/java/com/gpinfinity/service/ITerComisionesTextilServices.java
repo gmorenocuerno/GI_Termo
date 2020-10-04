@@ -6,7 +6,10 @@
 package com.gpinfinity.service;
 
 import com.gpinfinity.DTO.CsvTextilErrorLoad;
+import com.gpinfinity.DTO.TextilAnualDTO;
 import com.gpinfinity.DTO.TextilCsvLoad;
+import com.gpinfinity.DTO.TextilMensualDTO;
+import com.gpinfinity.DTO.TextilTotalDTO;
 import com.gpinfinity.entities.TerComisionesTextil;
 import java.util.List;
 
@@ -23,4 +26,10 @@ public interface ITerComisionesTextilServices {
     public int ejecutarProcedimientoTextil(int periodo);
     
     public List<TerComisionesTextil> allTerComisionesTextiles(int periodo);
+    
+    public List<TextilTotalDTO> textilesTotalList();
+    
+    public List<TextilMensualDTO> textilesMensualList();
+    
+    public List<TextilAnualDTO> textilesAcumuladoList();
 }

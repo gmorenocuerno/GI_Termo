@@ -5,10 +5,11 @@
  */
 package com.gpinfinity.controller;
 
-import com.gpinfinity.DTO.CsvIndicadorErrorLoad;
 import com.gpinfinity.DTO.CsvTextilErrorLoad;
-import com.gpinfinity.DTO.IndicadorFamiliaEmpCsvDTO;
+import com.gpinfinity.DTO.TextilAnualDTO;
 import com.gpinfinity.DTO.TextilCsvLoad;
+import com.gpinfinity.DTO.TextilMensualDTO;
+import com.gpinfinity.DTO.TextilTotalDTO;
 import com.gpinfinity.config.ApplicationContextProvider;
 import com.gpinfinity.entities.TerComisionesTextil;
 import com.gpinfinity.service.ITerComisionesTextilServices;
@@ -23,12 +24,15 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
+import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 
 /**
  *
@@ -38,45 +42,85 @@ import org.primefaces.event.FileUploadEvent;
 @ViewScoped
 @Data
 @EqualsAndHashCode(callSuper = false)
-public class textilController extends Utils implements Serializable{
+public class textilController extends Utils implements Serializable {
 
     private List<CsvTextilErrorLoad> listCsvLoadErrors;
     private String periodo;
     private int buscarPeriodo;
     private List<SelectItem> listPeriodo;
     private List<TerComisionesTextil> listTableTerComisionesTextil;
+    private List<TextilTotalDTO> textiBonoList;
+    private List<TextilMensualDTO> textiMensualList;
+    private List<TextilAnualDTO> textiAnulList;
+     private StreamedContent fileDowloadCsv; 
     
+
     /**
      * Creates a new instance of textilController
      */
     private ITerComisionesTextilServices iTerComisionesTextilServices;
+
     @PostConstruct
-    public void init(){
+    public void init() {
         loadContextBeanSring();
         loadPeriodList();
+        textilesLoadTotal();
+        textilesLoadMensual();
+        textilesLoadAcumulado();
+        /*fileDowloadCsv = DefaultStreamedContent.builder()
+                .name("plantilla_carga_textiles.csv")
+                .contentType("text/csv")
+                .stream(() -> FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream("/resources/planilla_carga_textiles.csv"))
+                .build();
+*/
+
     }
-    
+
+    public void textilesLoadTotal() {
+
+        textiBonoList = new ArrayList<>();
+        textiBonoList = iTerComisionesTextilServices.textilesTotalList();
+
+    }
+
+    public void textilesLoadMensual() {
+
+        textiMensualList = new ArrayList<>();
+        textiMensualList = iTerComisionesTextilServices.textilesMensualList();
+
+    }
+
+    public void textilesLoadAcumulado() {
+
+        textiAnulList = new ArrayList<>();
+        textiAnulList = iTerComisionesTextilServices.textilesAcumuladoList();
+
+    }
+
     public textilController() {
     }
-    
-    public void calcularComisionTextil(){
-        
-         try {
+
+    public void calcularComisionTextil() {
+
+        try {
             int flag = iTerComisionesTextilServices.ejecutarProcedimientoTextil(Integer.parseInt(periodo));
-            if(flag==0){
+            if (flag == 0) {
                 addsimplemessages("Proceso de calculo ejecutado con exito");
-            }else{
+                textilesLoadTotal();
+                textilesLoadMensual();
+                textilesLoadAcumulado();
+            } else {
                 addsimplemessageserror("Ocurrio un error al ejecutar el Proceso de calculo");
             }
-            
-            
+
         } catch (NumberFormatException ex) {
             addsimplemessageserror("Ocurrio un error al ejecutar el Proceso de calculo");
         }
-    
+
     }
-    
+
     int linea = 2;
+
     public void handleFileUpload(FileUploadEvent event) {
         List<List<String>> records = new ArrayList<>();
         List<TextilCsvLoad> listIndicadorFaEmCsv = new ArrayList<>();
@@ -103,7 +147,7 @@ public class textilController extends Utils implements Serializable{
         });
         linea = 2;
         listCsvLoadErrors = new ArrayList<>();
-        System.out.println("Valor Csv"+listIndicadorFaEmCsv.size());
+        System.out.println("Valor Csv" + listIndicadorFaEmCsv.size());
         listIndicadorFaEmCsv.forEach((csvDto) -> {
 
             CsvTextilErrorLoad resp = iTerComisionesTextilServices.crearTerTextiles(csvDto);
@@ -117,6 +161,7 @@ public class textilController extends Utils implements Serializable{
         loadPeriodList();
         //loadListEmpleadosCalcDto();
     }
+
     public void loadPeriodList() {
 
         listPeriodo = new ArrayList<>();
@@ -124,19 +169,18 @@ public class textilController extends Utils implements Serializable{
             listPeriodo.add(new SelectItem(per, per));
         });
     }
-    
-    
-    public void loadData(){
-        
+
+    public void loadData() {
+
         listTableTerComisionesTextil = new ArrayList<>();
-        listTableTerComisionesTextil  = iTerComisionesTextilServices.allTerComisionesTextiles(buscarPeriodo);
-    
+        listTableTerComisionesTextil = iTerComisionesTextilServices.allTerComisionesTextiles(buscarPeriodo);
+
     }
-    
+
     public void loadContextBeanSring() {
 
         iTerComisionesTextilServices = ApplicationContextProvider.getApplicationContext().getBean(ITerComisionesTextilServices.class);
-        
+
     }
-    
+
 }
