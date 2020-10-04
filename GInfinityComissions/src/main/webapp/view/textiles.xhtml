@@ -27,9 +27,6 @@
                         <div class="card card-w-title">
                             <p:panelGrid columns="5" layout="grid"  styleClass="ui-panelgrid-blank form-group">
 
-                                <p:commandButton value="Calcular comision" update="msg,formFileCsv" actionListener="#{textilController.calcularComisionTextil()}"  styleClass="NavyButton" />
-
-
                                 <p:outputLabel style="display: none" for="calcperiodo" value="Periodo"/>
                                 <h:panelGroup styleClass="md-inputfield">
                                     <p:selectOneMenu required="true"  effect="fold"  value="#{textilController.periodo}" id="calcperiodo">
@@ -38,8 +35,17 @@
                                     </p:selectOneMenu>
                                     <p:message for="calcperiodo" />
                                 </h:panelGroup>
-
+                                   
+                                <p:commandButton value="Calcular comision" update="msg,formFileCsv" actionListener="#{textilController.calcularComisionTextil()}"  styleClass="NavyButton" />
+                                
                                 <p:commandButton value="Mostrar calculo final" style="width:auto" update=":formExporte:panelForm:CalculoTotal :formExporte:panelForm:CalculoMensual :formExporte:panelForm:CalculoAcumulado" onclick="PF('dlgCalcEmp').show();"  styleClass="NavyButton" />
+                                
+                                <!--p:commandButton value="Calcular comision" update="msg,formFileCsv" actionListener="#{textilController.calcularComisionTextil()}"  styleClass="NavyButton" /-->
+                                
+                                <!--p:commandButton value="Mostrar calculo final" style="width:auto" update=":formExporte:calcEmpelados" onclick="PF('dlgCalcEmp').show();"  styleClass="NavyButton" / -->
+
+
+                                <!--p:commandButton value="Mostrar calculo final" style="width:auto" update=":formExporte:panelForm:CalculoTotal :formExporte:panelForm:CalculoMensual :formExporte:panelForm:CalculoAcumulado" onclick="PF('dlgCalcEmp').show();"  styleClass="NavyButton" / -->
 
                             </p:panelGrid>
 
@@ -120,12 +126,17 @@
                                     <h:outputText style="font-weight: normal" value="#{tbl_csv.per}" />
                                 </p:column>
 
-                                <p:column style="text-transform: capitalize;font-weight: bold" headerText="Valor porsupuesto mensual" >
-                                    <h:outputText style="font-weight: normal" value="#{tbl_csv.valorPresupuestoMensual}" />
+                                <p:column style="text-transform: capitalize;font-weight: bold" headerText="Valor presupuesto mensual" >
+                                    <h:outputText style="font-weight: normal" value="#{tbl_csv.valorPresupuestoMensual}">
+                                        <f:convertNumber type="currency" currencySymbol="$" locale="es-SV"/>
+                                    </h:outputText>
                                 </p:column>
 
                                 <p:column style="text-transform: capitalize;font-weight: bold" headerText="Monto presupuesto acumulado" >
-                                    <h:outputText style="font-weight: normal" value="#{tbl_csv.montoPresupuestoAcumulado}" />
+                                      <h:outputText style="font-weight: normal" value="#{tbl_csv.montoPresupuestoAcumulado}" >
+                                          <f:convertNumber type="currency" currencySymbol="$" locale="es-SV"/>
+                                          
+                                    </h:outputText>
                                 </p:column>
 
                                 <p:rowExpansion>
@@ -134,43 +145,61 @@
                                             Datos
                                         </f:facet>
 
-
-
                                         <h:outputText value="Valor real mensual" />
-                                        <h:outputText value="#{tbl_csv.valorRealMensual}" />
-
+                                        <h:outputText value="#{tbl_csv.valorRealMensual}">
+                                            <f:convertNumber type="currency" currencySymbol="$" locale="es-SV"/>
+                                        </h:outputText>
+                                        
                                         <h:outputText value="Valor cxc v30" />
-                                        <h:outputText value="#{tbl_csv.valorCxcV30}" />
-
+                                        <h:outputText value="#{tbl_csv.valorCxcV30}">
+                                            <f:convertNumber type="currency" currencySymbol="$" locale="es-SV"/>
+                                        </h:outputText>
+                                        
                                         <h:outputText value="Valor inventario 45" />
-                                        <h:outputText value="#{tbl_csv.valorInventario45}" />
-
+                                        <h:outputText value="#{tbl_csv.valorInventario45}">
+                                            <f:convertNumber type="currency" currencySymbol="$" locale="es-SV"/>
+                                        </h:outputText>
+                                        
                                         <h:outputText value="Monto venta neta mensual" />
-                                        <h:outputText value="#{tbl_csv.montoVentaNetaMensual}" />
-
+                                        <h:outputText value="#{tbl_csv.montoVentaNetaMensual}">
+                                            <f:convertNumber type="currency" currencySymbol="$" locale="es-SV"/>
+                                        </h:outputText>
+                                        
                                         <h:outputText value="Monto venta neta acumulada" />
-                                        <h:outputText value="#{tbl_csv.montoVentaNetaAcumulada}" />
-
+                                        <h:outputText value="#{tbl_csv.montoVentaNetaAcumulada}">
+                                            <f:convertNumber type="currency" currencySymbol="$" locale="es-SV"/>
+                                        </h:outputText>
+                                        
                                         <h:outputText value="Monto diferencia mesual" />
-                                        <h:outputText value="#{tbl_csv.montoDiferenciaMensual}" />
+                                        <h:outputText value="#{tbl_csv.montoDiferenciaMensual}">
+                                            <f:convertNumber type="currency" currencySymbol="$" locale="es-SV"/>
+                                        </h:outputText>
 
                                         <h:outputText value="Porcentaje Cumplimiento Mensual" />
-                                        <h:outputText value="#{tbl_csv.porcCumplimientoMensual}" />
+                                        <h:outputText value="#{tbl_csv.porcCumplimientoMensual} %" />
 
                                         <h:outputText value="Bono Mensual" />
-                                        <h:outputText value="#{tbl_csv.montoBonoMensual}" />
+                                        <h:outputText value="#{tbl_csv.montoBonoMensual}">
+                                            <f:convertNumber type="currency" currencySymbol="$" locale="es-SV"/>
+                                        </h:outputText>
 
                                         <h:outputText value="Monto diferencia acumulado" />
-                                        <h:outputText value="#{tbl_csv.montoDiferenciaAcumulado}" />
+                                        <h:outputText value="#{tbl_csv.montoDiferenciaAcumulado}">
+                                            <f:convertNumber type="currency" currencySymbol="$" locale="es-SV"/>
+                                        </h:outputText>
 
                                         <h:outputText value="Porcentaje Cumplimiento Acumulado" />
-                                        <h:outputText value="#{tbl_csv.porcCumplimientoAcumulado}" />
-
+                                        <h:outputText value="#{tbl_csv.porcCumplimientoAcumulado} %" />
+                                        
                                         <h:outputText value="Bono Acumulado" />
-                                        <h:outputText value="#{tbl_csv.montoBonoAcumulado}" />
+                                        <h:outputText value="#{tbl_csv.montoBonoAcumulado}">
+                                            <f:convertNumber type="currency" currencySymbol="$" locale="es-SV"/>
+                                        </h:outputText>
 
                                         <h:outputText value="Monto bono real" />
-                                        <h:outputText value="#{tbl_csv.montoBonoReal}" />
+                                        <h:outputText value="#{tbl_csv.montoBonoReal}">
+                                            <f:convertNumber type="currency" currencySymbol="$" locale="es-SV"/>
+                                        </h:outputText>
                                     </p:panelGrid>
                                 </p:rowExpansion>
                             </p:dataTable>

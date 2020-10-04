@@ -26,8 +26,6 @@
                         <div class="card card-w-title">
                             <p:panelGrid columns="5" layout="grid"  styleClass="ui-panelgrid-blank form-group">
 
-                                <p:commandButton value="Calcular comision" update="msg,formFileCsv" actionListener="#{paramController.calcularComisiones()}"  styleClass="NavyButton" />
-
                                 <p:outputLabel style="display: none" for="caclareanegocio" value="Area de Negoico"/>
                                 <h:panelGroup styleClass="md-inputfield">
                                     <p:selectOneMenu  required="true" effect="fold"  value="#{paramController.calcSelectedAreaNegocio}" id="caclareanegocio">
@@ -44,7 +42,9 @@
                                     </p:selectOneMenu>
                                     <p:message for="calcperiodo" />
                                 </h:panelGroup>
-
+                                
+                                <p:commandButton value="Calcular comision" update="msg,formFileCsv" actionListener="#{paramController.calcularComisiones()}"  styleClass="NavyButton" />
+                                
                                 <p:commandButton value="Mostrar calculo final" style="width:auto" update=":formExporte:calcEmpelados" onclick="PF('dlgCalcEmp').show();"  styleClass="NavyButton" />
 
                             </p:panelGrid>
@@ -148,6 +148,11 @@
                                 <p:column style="text-transform: capitalize;font-weight: bold" headerText="Periodo" >
                                     <h:outputText style="font-weight: normal" value="#{tbl_csv.periodo}" />
                                 </p:column>
+                                
+                                <p:column style="text-transform: capitalize;font-weight: bold" headerText="Monto Calculado" >
+                                    <h:outputText style="font-weight: normal" value="$ #{tbl_csv.montoCalculado}" />
+                                </p:column>
+                                
                                 <p:rowExpansion>
                                     <p:panelGrid  columns="2" columnClasses="label,value" style="width:100%">
                                         <f:facet name="header">
@@ -155,28 +160,27 @@
                                         </f:facet>
 
                                         <h:outputText value="Meta:" />
-                                        <h:outputText value="#{tbl_csv.meta}" />
+                                        <h:outputText value="$ #{tbl_csv.meta}" />
 
                                         <h:outputText value="Real:" />
-                                        <h:outputText value="#{tbl_csv.montoReal}" />
+                                        <h:outputText value="$ #{tbl_csv.montoReal}" />
 
                                         <h:outputText value="Porcentaje de Cumplimiento:" />
-                                        <h:outputText value="#{tbl_csv.porcentajeCumplimiento}"/>
+                                        <h:outputText value="#{tbl_csv.porcentajeCumplimiento} %"/>
 
                                         <h:outputText value="Peso:" />
                                         <h:outputText value="#{tbl_csv.peso}" />
 
                                         <h:outputText value="Porcentaje Variable:" />
-                                        <h:outputText value="#{tbl_csv.porcentajeVariable}" />
+                                        <h:outputText value="#{tbl_csv.porcentajeVariable} %" />
 
                                         <h:outputText value="Ponderacion:" />
                                         <h:outputText value="#{tbl_csv.ponderacion}" />
 
                                         <h:outputText value="Monto Aplicado:" />
-                                        <h:outputText value="#{tbl_csv.montoAplicado}" />
+                                        <h:outputText value="$ #{tbl_csv.montoAplicado}" />
 
-                                        <h:outputText value="Monto Calculado:" />
-                                        <h:outputText value="#{tbl_csv.montoCalculado}" />
+                                        
                                     </p:panelGrid>
                                 </p:rowExpansion>
                             </p:dataTable>
