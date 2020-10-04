@@ -15,10 +15,11 @@
                 <div class="ui-g-12">
                     <h:form id="formFileCsv">
                         <div class="card card-w-title">
-                            
+
+                               
                             <p:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank form-group">
                                 <p:fileUpload label="Buscar"  cancelLabel="Cancelar" uploadLabel="Cargar" listener="#{textilController.handleFileUpload}" mode="advanced" dragDropSupport="false"
-                                              multiple="true" update="msg,:findForm:findcalcperiodo,calcperiodo,:formExporte:calcEmpelados" sizeLimit="100000"  allowTypes="/(\.|\/)(csv)$/" style="width:100%" />
+                                              multiple="true" update="msg,:findForm:findcalcperiodo,calcperiodo,:formExporte:panelForm:CalculoTotal :formExporte:panelForm:CalculoMensual :formExporte:panelForm:CalculoAcumulado" sizeLimit="100000"  allowTypes="/(\.|\/)(csv)$/" style="width:100%" />
 
                                 <p:commandButton style="width:auto" value="Resultado de carga" update="tblcsv" onclick="PF('dlg2').show();" styleClass="NavyButton" />
                             </p:panelGrid>
@@ -28,7 +29,7 @@
 
                                 <p:commandButton value="Calcular comision" update="msg,formFileCsv" actionListener="#{textilController.calcularComisionTextil()}"  styleClass="NavyButton" />
 
-                                
+
                                 <p:outputLabel style="display: none" for="calcperiodo" value="Periodo"/>
                                 <h:panelGroup styleClass="md-inputfield">
                                     <p:selectOneMenu required="true"  effect="fold"  value="#{textilController.periodo}" id="calcperiodo">
@@ -38,7 +39,7 @@
                                     <p:message for="calcperiodo" />
                                 </h:panelGroup>
 
-                                <p:commandButton value="Mostrar calculo final" style="width:auto" update=":formExporte:calcEmpelados" onclick="PF('dlgCalcEmp').show();"  styleClass="NavyButton" />
+                                <p:commandButton value="Mostrar calculo final" style="width:auto" update=":formExporte:panelForm:CalculoTotal :formExporte:panelForm:CalculoMensual :formExporte:panelForm:CalculoAcumulado" onclick="PF('dlgCalcEmp').show();"  styleClass="NavyButton" />
 
                             </p:panelGrid>
 
@@ -83,7 +84,7 @@
                             <p:fieldset legend="Busqueda Textiles" style="margin-bottom:20px">
                                 <p:panelGrid columns="5" layout="grid"  styleClass="ui-panelgrid-blank form-group">
 
-                                    
+
                                     <p:outputLabel style="display: none" for="findcalcperiodo" value="Periodo"/>
                                     <h:panelGroup styleClass="md-inputfield">
                                         <p:selectOneMenu required="true"  effect="fold"  value="#{textilController.buscarPeriodo}" id="findcalcperiodo">
@@ -107,7 +108,7 @@
                                          rows="10"
                                          reflow="true"
                                          value="#{textilController.listTableTerComisionesTextil}"  
-                                        >
+                                         >
 
                                 <f:facet  name="header">
                                     Textiles
@@ -118,56 +119,56 @@
                                 <p:column style="text-transform: capitalize;font-weight: bold" headerText="Periodo" >
                                     <h:outputText style="font-weight: normal" value="#{tbl_csv.per}" />
                                 </p:column>
-                                                               
-                                  <p:column style="text-transform: capitalize;font-weight: bold" headerText="Valor porsupuesto mensual" >
-                                      <h:outputText style="font-weight: normal" value="#{tbl_csv.valorPresupuestoMensual}" />
+
+                                <p:column style="text-transform: capitalize;font-weight: bold" headerText="Valor porsupuesto mensual" >
+                                    <h:outputText style="font-weight: normal" value="#{tbl_csv.valorPresupuestoMensual}" />
                                 </p:column>
-                                
+
                                 <p:column style="text-transform: capitalize;font-weight: bold" headerText="Monto presupuesto acumulado" >
-                                      <h:outputText style="font-weight: normal" value="#{tbl_csv.montoPresupuestoAcumulado}" />
+                                    <h:outputText style="font-weight: normal" value="#{tbl_csv.montoPresupuestoAcumulado}" />
                                 </p:column>
-                                
+
                                 <p:rowExpansion>
                                     <p:panelGrid  columns="2" columnClasses="label,value" style="width:100%">
                                         <f:facet name="header">
                                             Datos
                                         </f:facet>
 
-                                        
-                                        
+
+
                                         <h:outputText value="Valor real mensual" />
                                         <h:outputText value="#{tbl_csv.valorRealMensual}" />
-                                        
+
                                         <h:outputText value="Valor cxc v30" />
                                         <h:outputText value="#{tbl_csv.valorCxcV30}" />
-                                        
+
                                         <h:outputText value="Valor inventario 45" />
                                         <h:outputText value="#{tbl_csv.valorInventario45}" />
-                                        
+
                                         <h:outputText value="Monto venta neta mensual" />
                                         <h:outputText value="#{tbl_csv.montoVentaNetaMensual}" />
-                                        
+
                                         <h:outputText value="Monto venta neta acumulada" />
                                         <h:outputText value="#{tbl_csv.montoVentaNetaAcumulada}" />
-                                        
+
                                         <h:outputText value="Monto diferencia mesual" />
                                         <h:outputText value="#{tbl_csv.montoDiferenciaMensual}" />
 
                                         <h:outputText value="Porcentaje Cumplimiento Mensual" />
                                         <h:outputText value="#{tbl_csv.porcCumplimientoMensual}" />
-                                        
+
                                         <h:outputText value="Bono Mensual" />
                                         <h:outputText value="#{tbl_csv.montoBonoMensual}" />
-                                        
+
                                         <h:outputText value="Monto diferencia acumulado" />
                                         <h:outputText value="#{tbl_csv.montoDiferenciaAcumulado}" />
-                                        
+
                                         <h:outputText value="Porcentaje Cumplimiento Acumulado" />
                                         <h:outputText value="#{tbl_csv.porcCumplimientoAcumulado}" />
-                                        
+
                                         <h:outputText value="Bono Acumulado" />
                                         <h:outputText value="#{tbl_csv.montoBonoAcumulado}" />
-                                        
+
                                         <h:outputText value="Monto bono real" />
                                         <h:outputText value="#{tbl_csv.montoBonoReal}" />
                                     </p:panelGrid>
@@ -179,52 +180,223 @@
             </div>
         </div>            
 
-        <p:dialog header="Calculo Textiles" showEffect="clip" hideEffect="clip" widgetVar="dlgCalcEmp" modal="true" height="450" width="1000" responsive="true">
+        <p:dialog header="Calculo Textiles" showEffect="clip" hideEffect="clip" widgetVar="dlgCalcEmp" modal="true" height="450" width="1200" responsive="true">
 
             <h:form id="formExporte">
-                Exportar Textiles
-                <h:commandLink  disabled="true" >                                 
-                    <p:graphicImage width="17" height="17" name="images/xlsx.png" library="ultima-layout" />
-                    <p:dataExporter type="xls" target="calcEmpelados" fileName="CalculoEmpleados"/>
-                </h:commandLink>
-                <p:dataTable rendered="false" var="caclempleado" 
-                             id="calcEmpelados" 
-                             paginator="true"
-                             paginatorPosition="bottom"
-                             paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exporters}"
-                             currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} filas"
-                             rowsPerPageTemplate="5,10,15"
-                             rows="10"
-                             reflow="true"
-                             value="#{paramController.listEmpleadosDto}"  
-                             >
+               
+                <p:accordionPanel id="panelForm">
+                    <p:tab title="Total">
+                         Exportar Totales:
+                        <h:commandLink   >                                 
+                            <p:graphicImage width="17" height="17" name="images/xlsx.png" library="ultima-layout" />
+                            <p:dataExporter type="xls" target="CalculoTotal" fileName="CalculoTotal"/>
+                        </h:commandLink>
+                        <p:dataTable  var="textBono" 
+                                      id="CalculoTotal" 
+                                      paginator="true"
+                                      paginatorPosition="bottom"
+                                      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exporters}"
+                                      currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} filas"
+                                      rowsPerPageTemplate="5,10,15"
+                                      rows="10"
+                                      reflow="true"
+                                      value="#{textilController.textiBonoList}"  
+                                      >
 
-                    <f:facet  name="header">
+                            <f:facet  name="header">
 
-                        Textules
+                                Textiles
 
-                    </f:facet>
-                    <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Periodo" >
-                        <h:outputText style="font-weight: normal" value="#{caclempleado.periodo}" />
-                    </p:column>
+                            </f:facet>
+                            <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Tipo Bono" >
+                                <h:outputText style="font-weight: normal" value="#{textBono.tipoBono}" />
+                            </p:column>
 
-                    <p:column style="text-align: center;font-weight: bold" headerText="Area de Negocio" >
-                        <h:outputText style="font-weight: normal" value="#{caclempleado.areNegocio}" />
-                    </p:column>
+                            <p:column style="text-align: center;font-weight: bold" headerText="Bono" >
+                                <h:outputText style="font-weight: normal" value="#{textBono.bono}" />
+                            </p:column>
 
-                    <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Empleado" >
-                        <h:outputText style="font-weight: normal" value="#{caclempleado.nombre}" />
-                    </p:column>
-                    <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Salario" >
-                        <h:outputText style="font-weight: normal" value="#{caclempleado.salario}" />
-                    </p:column>
-                    <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Calculado" >
-                        <h:outputText style="font-weight: normal" value="#{caclempleado.calculado}" />
-                    </p:column>
-                    <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Porcentaje Calculado" >
-                        <h:outputText style="font-weight: normal" value="#{caclempleado.porcenCalculado}" />
-                    </p:column>
-                </p:dataTable>
+                            <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Enero" >
+                                <h:outputText style="font-weight: normal" value="#{textBono.jan}" >
+                                    <f:convertNumber pattern="#0.000" />
+                                </h:outputText>
+                            </p:column>
+                            <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Febrero" >
+                                <h:outputText style="font-weight: normal" value="#{textBono.feb}" />
+                            </p:column>
+                            <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Marzo" >
+                                <h:outputText style="font-weight: normal" value="#{textBono.mar}" />
+                            </p:column>
+                            <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Abril" >
+                                <h:outputText style="font-weight: normal" value="#{textBono.apr}" />
+                            </p:column>
+                            <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Mayo" >
+                                <h:outputText style="font-weight: normal" value="#{textBono.may}" />
+                            </p:column>
+                            <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Junio" >
+                                <h:outputText style="font-weight: normal" value="#{textBono.jun}" />
+                            </p:column>
+                            <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Julio" >
+                                <h:outputText style="font-weight: normal" value="#{textBono.jul}" />
+                            </p:column>
+                            <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Agosto" >
+                                <h:outputText style="font-weight: normal" value="#{textBono.aug}" />
+                            </p:column>
+                            <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Septiembre" >
+                                <h:outputText style="font-weight: normal" value="#{textBono.sep}" />
+                            </p:column>
+                            <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Octubre" >
+                                <h:outputText style="font-weight: normal" value="#{textBono.oct}" />
+                            </p:column>
+                            <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Noviembre" >
+                                <h:outputText style="font-weight: normal" value="#{textBono.nov}" />
+                            </p:column>
+                            <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Diciembre" >
+                                <h:outputText style="font-weight: normal" value="#{textBono.dec}" />
+                            </p:column>
+                        </p:dataTable>
+                    </p:tab>
+                    <p:tab title="Mensual">
+                        
+                         Exportar Mensual
+                        <h:commandLink   >                                 
+                            <p:graphicImage width="17" height="17" name="images/xlsx.png" library="ultima-layout" />
+                            <p:dataExporter type="xls" target="CalculoMensual" fileName="CalculoMensual"/>
+                        </h:commandLink>
+                        <p:dataTable  var="textMensual" 
+                                      id="CalculoMensual" 
+                                      paginator="true"
+                                      paginatorPosition="bottom"
+                                      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exporters}"
+                                      currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} filas"
+                                      rowsPerPageTemplate="5,10,15"
+                                      rows="10"
+                                      reflow="true"
+                                      value="#{textilController.textiMensualList}"  
+                                      >
+
+                            <f:facet  name="header">
+
+                                Textiles
+
+                            </f:facet>
+                            <p:column  style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Tipo Bono" >
+                                <h:outputText style="font-weight: normal" value="#{textMensual.tipoBono}" />
+                            </p:column>
+                             <p:column style="text-align: center;font-weight: bold" headerText="" >
+                                <h:outputText style="font-weight: normal" value="#{(textMensual.bono eq '0.00'?'':textMensual.bono)}" />
+                            </p:column>
+
+                            <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Enero" >
+                                <h:outputText style="font-weight: normal" value="#{textMensual.jan}" >
+                                </h:outputText>
+                            </p:column>
+                            <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Febrero" >
+                                <h:outputText style="font-weight: normal" value="#{textMensual.feb}" />
+                            </p:column>
+                            <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Marzo" >
+                                <h:outputText style="font-weight: normal" value="#{textMensual.mar}" />
+                            </p:column>
+                            <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Abril" >
+                                <h:outputText style="font-weight: normal" value="#{textMensual.apr}" />
+                            </p:column>
+                            <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Mayo" >
+                                <h:outputText style="font-weight: normal" value="#{textMensual.may}" />
+                            </p:column>
+                            <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Junio" >
+                                <h:outputText style="font-weight: normal" value="#{textMensual.jun}" />
+                            </p:column>
+                            <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Julio" >
+                                <h:outputText style="font-weight: normal" value="#{textMensual.jul}" />
+                            </p:column>
+                            <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Agosto" >
+                                <h:outputText style="font-weight: normal" value="#{textMensual.aug}" />
+                            </p:column>
+                            <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Septiembre" >
+                                <h:outputText style="font-weight: normal" value="#{textMensual.sep}" />
+                            </p:column>
+                            <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Octubre" >
+                                <h:outputText style="font-weight: normal" value="#{textMensual.oct}" />
+                            </p:column>
+                            <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Noviembre" >
+                                <h:outputText style="font-weight: normal" value="#{textMensual.nov}" />
+                            </p:column>
+                            <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Diciembre" >
+                                <h:outputText style="font-weight: normal" value="#{textMensual.dec}" />
+                            </p:column>
+                        </p:dataTable>
+                        
+                    </p:tab>
+                    <p:tab title="Acumulado">
+                         Exportar Acumulado
+                        <h:commandLink   >                                 
+                            <p:graphicImage width="17" height="17" name="images/xlsx.png" library="ultima-layout" />
+                            <p:dataExporter type="xls" target="CalculoAcumulado" fileName="CalculoAcumulado"/>
+                        </h:commandLink>
+                        <p:dataTable  var="textAcumulado" 
+                                      id="CalculoAcumulado" 
+                                      paginator="true"
+                                      paginatorPosition="bottom"
+                                      paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown} {Exporters}"
+                                      currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} filas"
+                                      rowsPerPageTemplate="5,10,15"
+                                      rows="10"
+                                      reflow="true"
+                                      value="#{textilController.textiAnulList}"  
+                                      >
+
+                            <f:facet  name="header">
+
+                                Textiles
+
+                            </f:facet>
+                            <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Tipo Bono" >
+                                <h:outputText style="font-weight: normal" value="#{textAcumulado.tipoBono}" />
+                            </p:column>
+                            <p:column style="text-align: center;font-weight: bold" headerText="" >
+                                <h:outputText style="font-weight: normal" value="#{(textAcumulado.bono eq '0.00'?'':textAcumulado.bono)}" />
+                            </p:column>
+                            <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Enero" >
+                                <h:outputText style="font-weight: normal" value="#{textAcumulado.jan}" >
+                                    
+                                </h:outputText>
+                            </p:column>
+                            <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Febrero" >
+                                <h:outputText style="font-weight: normal" value="#{textAcumulado.feb}" />
+                            </p:column>
+                            <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Marzo" >
+                                <h:outputText style="font-weight: normal" value="#{textAcumulado.mar}" />
+                            </p:column>
+                            <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Abril" >
+                                <h:outputText style="font-weight: normal" value="#{textAcumulado.apr}" />
+                            </p:column>
+                            <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Mayo" >
+                                <h:outputText style="font-weight: normal" value="#{textAcumulado.may}" />
+                            </p:column>
+                            <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Junio" >
+                                <h:outputText style="font-weight: normal" value="#{textAcumulado.jun}" />
+                            </p:column>
+                            <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Julio" >
+                                <h:outputText style="font-weight: normal" value="#{textAcumulado.jul}" />
+                            </p:column>
+                            <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Agosto" >
+                                <h:outputText style="font-weight: normal" value="#{textAcumulado.aug}" />
+                            </p:column>
+                            <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Septiembre" >
+                                <h:outputText style="font-weight: normal" value="#{textAcumulado.sep}" />
+                            </p:column>
+                            <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Octubre" >
+                                <h:outputText style="font-weight: normal" value="#{textAcumulado.oct}" />
+                            </p:column>
+                            <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Noviembre" >
+                                <h:outputText style="font-weight: normal" value="#{textAcumulado.nov}" />
+                            </p:column>
+                            <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Diciembre" >
+                                <h:outputText style="font-weight: normal" value="#{textAcumulado.dec}" />
+                            </p:column>
+                        </p:dataTable>
+                    </p:tab>
+                </p:accordionPanel>
             </h:form>
         </p:dialog>  
     </ui:define>

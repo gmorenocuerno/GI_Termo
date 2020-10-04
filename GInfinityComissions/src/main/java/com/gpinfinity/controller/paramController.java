@@ -21,6 +21,7 @@ import com.gpinfinity.utils.UsrDetails;
 import com.gpinfinity.utils.Utils;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import javax.inject.Named;
 import java.io.Serializable;
@@ -30,11 +31,15 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
+import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.faces.view.ViewScoped;
+import javax.servlet.ServletContext;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import org.primefaces.event.FileUploadEvent;
+import org.primefaces.model.DefaultStreamedContent;
+import org.primefaces.model.StreamedContent;
 import org.primefaces.model.file.UploadedFile;
 
 /**
@@ -83,7 +88,8 @@ public class paramController extends Utils implements Serializable {
     ITerParametroIndicadorServices terParametroIndicadorServices;
     ITerEmpleadoFamiliaIndicadorServices iterEmpleadoFamiliaIndicadorServices;
     UsrDetails usrDetails;
-
+     
+    
     @PostConstruct
     public void Init() {
 
@@ -95,10 +101,16 @@ public class paramController extends Utils implements Serializable {
         terAreaNegocioServices.listAllAreaNegocio().forEach((arn) -> {
             listAreaNegocio.add(new SelectItem(arn.getId(), arn.getDescripcion()));
         });
+        
+       
 
         loadPeriodList();
 
     }
+    
+   
+    
+
 
     public void loadListEmpleadosCalcDto() {
         listEmpleadosDto = new ArrayList<>();

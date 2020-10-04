@@ -6,7 +6,10 @@
 package com.gpinfinity.service;
 
 import com.gpinfinity.DTO.CsvTextilErrorLoad;
+import com.gpinfinity.DTO.TextilAnualDTO;
 import com.gpinfinity.DTO.TextilCsvLoad;
+import com.gpinfinity.DTO.TextilMensualDTO;
+import com.gpinfinity.DTO.TextilTotalDTO;
 import com.gpinfinity.entities.TerComisionesTextil;
 import com.gpinfinity.repository.ITerComisionesTextilRespository;
 import com.gpinfinity.utils.UsrDetails;
@@ -94,6 +97,91 @@ public class TerComisionesTextilServicesImpl implements ITerComisionesTextilServ
     public List<TerComisionesTextil> allTerComisionesTextiles(int periodo) {        
         List<TerComisionesTextil> lista  =  iTerComisionesTextilRespository.allTerComisionesTextil(periodo);
        return lista;
+    }
+
+    @Override
+    public List<TextilTotalDTO> textilesTotalList() {
+        List<TextilTotalDTO> textilDto =  new ArrayList<>();
+        iTerComisionesTextilRespository.textilesTotal().forEach(obj->{
+        
+        TextilTotalDTO dto = TextilTotalDTO.builder()
+                .tipoBono((obj[0]!=null?obj[0].toString():""))
+                .bono((obj[1]!=null?obj[1].toString():"0"))
+                .jan((obj[2]!=null?obj[2].toString():"0"))
+                .feb((obj[3]!=null?obj[3].toString():"0"))
+                .mar((obj[4]!=null?obj[4].toString():"0"))
+                .apr((obj[5]!=null?obj[5].toString():"0"))
+                .may((obj[6]!=null?obj[6].toString():"0"))
+                .jun((obj[7]!=null?obj[7].toString():"0"))
+                .jul((obj[8]!=null?obj[8].toString():"0"))
+                .aug((obj[9]!=null?obj[9].toString():"0"))
+                .sep((obj[10]!=null?obj[10].toString():"0"))
+                .oct((obj[11]!=null?obj[11].toString():"0"))
+                .nov((obj[12]!=null?obj[12].toString():"0"))
+                .dec((obj[13]!=null?obj[13].toString():"0"))
+                .build();
+                textilDto.add(dto);
+        
+        });
+        
+        return textilDto;
+        
+    }
+
+    @Override
+    public List<TextilMensualDTO> textilesMensualList() {
+        List<TextilMensualDTO> textilDto =  new ArrayList<>();
+        iTerComisionesTextilRespository.textilesMensual().forEach(obj->{
+        
+        TextilMensualDTO dto = TextilMensualDTO.builder()
+                .tipoBono((obj[0]!=null?obj[0].toString():""))
+                .bono((obj[1]!=null?obj[1].toString():"0"))
+                .jan((obj[2]!=null?obj[2].toString():"0"))
+                .feb((obj[3]!=null?obj[3].toString():"0"))
+                .mar((obj[4]!=null?obj[4].toString():"0"))
+                .apr((obj[5]!=null?obj[5].toString():"0"))
+                .may((obj[6]!=null?obj[6].toString():"0"))
+                .jun((obj[7]!=null?obj[7].toString():"0"))
+                .jul((obj[8]!=null?obj[8].toString():"0"))
+                .aug((obj[9]!=null?obj[9].toString():"0"))
+                .sep((obj[10]!=null?obj[10].toString():"0"))
+                .oct((obj[11]!=null?obj[11].toString():"0"))
+                .nov((obj[12]!=null?obj[12].toString():"0"))
+                .dec((obj[13]!=null?obj[13].toString():"0"))
+                .build();
+                textilDto.add(dto);
+        
+        });
+        
+        return textilDto;
+    }
+
+    @Override
+    public List<TextilAnualDTO> textilesAcumuladoList() {
+        List<TextilAnualDTO> textilDto =  new ArrayList<>();
+        iTerComisionesTextilRespository.textilesAcumulado().forEach(obj->{
+        
+        TextilAnualDTO dto = TextilAnualDTO.builder()
+                .tipoBono((obj[0]!=null?obj[0].toString():""))
+                .bono((obj[1]!=null?obj[1].toString():"0"))
+                .jan((obj[2]!=null?obj[2].toString():"0"))
+                .feb((obj[3]!=null?obj[3].toString():"0"))
+                .mar((obj[4]!=null?obj[4].toString():"0"))
+                .apr((obj[5]!=null?obj[5].toString():"0"))
+                .may((obj[6]!=null?obj[6].toString():"0"))
+                .jun((obj[7]!=null?obj[7].toString():"0"))
+                .jul((obj[8]!=null?obj[8].toString():"0"))
+                .aug((obj[9]!=null?obj[9].toString():"0"))
+                .sep((obj[10]!=null?obj[10].toString():"0"))
+                .oct((obj[11]!=null?obj[11].toString():"0"))
+                .nov((obj[12]!=null?obj[12].toString():"0"))
+                .dec((obj[13]!=null?obj[13].toString():"0"))
+                .build();
+                textilDto.add(dto);
+        
+        });
+        
+        return textilDto;
     }
     
 }
