@@ -13,6 +13,17 @@
         <div class="ui-g ui-fluid">
             <div class="ui-g">
                 <div class="ui-g-12">
+                    <h:form>
+                        <div class="card card-w-title">
+                            <p:fieldset legend="Ejemplo plantilla de carga" style="margin-bottom:20px">
+                                <p:panelGrid columns="5" layout="grid" styleClass="ui-panelgrid-blank form-group">
+                                   Plantilla Indicadores <p:commandButton  style="width: auto" value="Descargar" styleClass="NavyButton" ajax="false"  >
+                                       <p:fileDownload  value="#{dowloadTemplate.dowloadFileCsvIndicadores}" />
+                                    </p:commandButton>    
+                                </p:panelGrid>
+                            </p:fieldset>
+                        </div>
+                    </h:form>
                     <h:form id="formFileCsv">
                         <div class="card card-w-title">
                             <h1 style="display: none">Indicadores</h1>

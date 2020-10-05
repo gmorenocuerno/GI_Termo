@@ -13,10 +13,21 @@
         <div class="ui-g ui-fluid">
             <div class="ui-g">
                 <div class="ui-g-12">
+                    <h:form>
+                        <div class="card card-w-title">
+                            <p:fieldset legend="Ejemplo plantilla de carga" style="margin-bottom:20px">
+                                <p:panelGrid columns="5" layout="grid" styleClass="ui-panelgrid-blank form-group">
+                                   Plantilla Textiles <p:commandButton  style="width: auto" value="Descargar" styleClass="NavyButton" ajax="false"  >
+                                        <p:fileDownload  value="#{dowloadTemplate.dowloadFileCsvTextiles}" />
+                                    </p:commandButton>    
+                                </p:panelGrid>
+                            </p:fieldset>
+                        </div>
+                    </h:form>
                     <h:form id="formFileCsv">
                         <div class="card card-w-title">
 
-                               
+
                             <p:panelGrid columns="1" layout="grid" styleClass="ui-panelgrid-blank form-group">
                                 <p:fileUpload label="Buscar"  cancelLabel="Cancelar" uploadLabel="Cargar" listener="#{textilController.handleFileUpload}" mode="advanced" dragDropSupport="false"
                                               multiple="true" update="msg,:findForm:findcalcperiodo,calcperiodo,:formExporte:panelForm:CalculoTotal :formExporte:panelForm:CalculoMensual :formExporte:panelForm:CalculoAcumulado" sizeLimit="100000"  allowTypes="/(\.|\/)(csv)$/" style="width:100%" />
@@ -35,13 +46,13 @@
                                     </p:selectOneMenu>
                                     <p:message for="calcperiodo" />
                                 </h:panelGroup>
-                                   
+
                                 <p:commandButton value="Calcular comision" update="msg,formFileCsv" actionListener="#{textilController.calcularComisionTextil()}"  styleClass="NavyButton" />
-                                
+
                                 <p:commandButton value="Mostrar calculo final" style="width:auto" update=":formExporte:panelForm:CalculoTotal :formExporte:panelForm:CalculoMensual :formExporte:panelForm:CalculoAcumulado" onclick="PF('dlgCalcEmp').show();"  styleClass="NavyButton" />
-                                
-                                <!--p:commandButton value="Calcular comision" update="msg,formFileCsv" actionListener="#{textilController.calcularComisionTextil()}"  styleClass="NavyButton" /-->
-                                
+
+<!--p:commandButton value="Calcular comision" update="msg,formFileCsv" actionListener="#{textilController.calcularComisionTextil()}"  styleClass="NavyButton" /-->
+
                                 <!--p:commandButton value="Mostrar calculo final" style="width:auto" update=":formExporte:calcEmpelados" onclick="PF('dlgCalcEmp').show();"  styleClass="NavyButton" / -->
 
 
@@ -133,9 +144,9 @@
                                 </p:column>
 
                                 <p:column style="text-transform: capitalize;font-weight: bold" headerText="Monto presupuesto acumulado" >
-                                      <h:outputText style="font-weight: normal" value="#{tbl_csv.montoPresupuestoAcumulado}" >
-                                          <f:convertNumber type="currency" currencySymbol="$" locale="es-SV"/>
-                                          
+                                    <h:outputText style="font-weight: normal" value="#{tbl_csv.montoPresupuestoAcumulado}" >
+                                        <f:convertNumber type="currency" currencySymbol="$" locale="es-SV"/>
+
                                     </h:outputText>
                                 </p:column>
 
@@ -149,27 +160,27 @@
                                         <h:outputText value="#{tbl_csv.valorRealMensual}">
                                             <f:convertNumber type="currency" currencySymbol="$" locale="es-SV"/>
                                         </h:outputText>
-                                        
+
                                         <h:outputText value="Valor cxc v30" />
                                         <h:outputText value="#{tbl_csv.valorCxcV30}">
                                             <f:convertNumber type="currency" currencySymbol="$" locale="es-SV"/>
                                         </h:outputText>
-                                        
+
                                         <h:outputText value="Valor inventario 45" />
                                         <h:outputText value="#{tbl_csv.valorInventario45}">
                                             <f:convertNumber type="currency" currencySymbol="$" locale="es-SV"/>
                                         </h:outputText>
-                                        
+
                                         <h:outputText value="Monto venta neta mensual" />
                                         <h:outputText value="#{tbl_csv.montoVentaNetaMensual}">
                                             <f:convertNumber type="currency" currencySymbol="$" locale="es-SV"/>
                                         </h:outputText>
-                                        
+
                                         <h:outputText value="Monto venta neta acumulada" />
                                         <h:outputText value="#{tbl_csv.montoVentaNetaAcumulada}">
                                             <f:convertNumber type="currency" currencySymbol="$" locale="es-SV"/>
                                         </h:outputText>
-                                        
+
                                         <h:outputText value="Monto diferencia mesual" />
                                         <h:outputText value="#{tbl_csv.montoDiferenciaMensual}">
                                             <f:convertNumber type="currency" currencySymbol="$" locale="es-SV"/>
@@ -190,7 +201,7 @@
 
                                         <h:outputText value="Porcentaje Cumplimiento Acumulado" />
                                         <h:outputText value="#{tbl_csv.porcCumplimientoAcumulado} %" />
-                                        
+
                                         <h:outputText value="Bono Acumulado" />
                                         <h:outputText value="#{tbl_csv.montoBonoAcumulado}">
                                             <f:convertNumber type="currency" currencySymbol="$" locale="es-SV"/>
@@ -212,13 +223,20 @@
         <p:dialog header="Calculo Textiles" showEffect="clip" hideEffect="clip" widgetVar="dlgCalcEmp" modal="true" height="450" width="1200" responsive="true">
 
             <h:form id="formExporte">
-               
+                Exportar todas las tablas
+                    <h:commandLink   >                                 
+                        <p:graphicImage width="17" height="17" name="images/xlsx.png" library="ultima-layout" />
+                        <p:dataExporter type="xls" target=":formExporte:panelForm:CalculoTotal,:formExporte:panelForm:CalculoMensual,:formExporte:panelForm:CalculoAcumulado" fileName="Total_Mensual_Acumulado"/>
+                    </h:commandLink>
+
+                
+
                 <p:accordionPanel id="panelForm">
                     <p:tab title="Total">
-                         Exportar Totales:
+                        Exportar Totales:
                         <h:commandLink   >                                 
                             <p:graphicImage width="17" height="17" name="images/xlsx.png" library="ultima-layout" />
-                            <p:dataExporter type="xls" target="CalculoTotal" fileName="CalculoTotal"/>
+                            <p:dataExporter type="xls" target="CalculoTotal" fileName="Calculo_Total"/>
                         </h:commandLink>
                         <p:dataTable  var="textBono" 
                                       id="CalculoTotal" 
@@ -286,11 +304,11 @@
                         </p:dataTable>
                     </p:tab>
                     <p:tab title="Mensual">
-                        
-                         Exportar Mensual
+
+                        Exportar Mensual
                         <h:commandLink   >                                 
                             <p:graphicImage width="17" height="17" name="images/xlsx.png" library="ultima-layout" />
-                            <p:dataExporter type="xls" target="CalculoMensual" fileName="CalculoMensual"/>
+                            <p:dataExporter type="xls" target="CalculoMensual" fileName="Calculo_Mensual"/>
                         </h:commandLink>
                         <p:dataTable  var="textMensual" 
                                       id="CalculoMensual" 
@@ -312,7 +330,7 @@
                             <p:column  style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Tipo Bono" >
                                 <h:outputText style="font-weight: normal" value="#{textMensual.tipoBono}" />
                             </p:column>
-                             <p:column style="text-align: center;font-weight: bold" headerText="" >
+                            <p:column style="text-align: center;font-weight: bold" headerText="" >
                                 <h:outputText style="font-weight: normal" value="#{(textMensual.bono eq '0.00'?'':textMensual.bono)}" />
                             </p:column>
 
@@ -354,13 +372,13 @@
                                 <h:outputText style="font-weight: normal" value="#{textMensual.dec}" />
                             </p:column>
                         </p:dataTable>
-                        
+
                     </p:tab>
                     <p:tab title="Acumulado">
-                         Exportar Acumulado
+                        Exportar Acumulado
                         <h:commandLink   >                                 
                             <p:graphicImage width="17" height="17" name="images/xlsx.png" library="ultima-layout" />
-                            <p:dataExporter type="xls" target="CalculoAcumulado" fileName="CalculoAcumulado"/>
+                            <p:dataExporter type="xls" target="CalculoAcumulado" fileName="Calculo_Acumulado"/>
                         </h:commandLink>
                         <p:dataTable  var="textAcumulado" 
                                       id="CalculoAcumulado" 
@@ -387,7 +405,7 @@
                             </p:column>
                             <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Enero" >
                                 <h:outputText style="font-weight: normal" value="#{textAcumulado.jan}" >
-                                    
+
                                 </h:outputText>
                             </p:column>
                             <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Febrero" >

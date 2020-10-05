@@ -67,12 +67,8 @@ public class textilController extends Utils implements Serializable {
         textilesLoadTotal();
         textilesLoadMensual();
         textilesLoadAcumulado();
-        /*fileDowloadCsv = DefaultStreamedContent.builder()
-                .name("plantilla_carga_textiles.csv")
-                .contentType("text/csv")
-                .stream(() -> FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream("/resources/planilla_carga_textiles.csv"))
-                .build();
-*/
+        
+
 
     }
 
@@ -81,6 +77,15 @@ public class textilController extends Utils implements Serializable {
         textiBonoList = new ArrayList<>();
         textiBonoList = iTerComisionesTextilServices.textilesTotalList();
 
+    }
+    
+    public void dowloadFileCsv(){
+    fileDowloadCsv = DefaultStreamedContent.builder()
+                .name("plantilla_carga_textiles.csv")
+                .contentType("text/csv")
+                .stream(() -> FacesContext.getCurrentInstance().getExternalContext().getResourceAsStream("/resources/planilla_carga_textiles.csv"))
+                .build();
+    System.out.println(fileDowloadCsv);
     }
 
     public void textilesLoadMensual() {
