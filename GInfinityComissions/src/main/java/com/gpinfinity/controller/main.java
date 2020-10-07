@@ -5,6 +5,9 @@
  */
 package com.gpinfinity.controller;
 
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 
 /**
@@ -14,8 +17,14 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 public class main {
 
     public static void main(String...args) {
-        BCryptPasswordEncoder pass = new BCryptPasswordEncoder(12);
-        System.out.println(pass.encode("123"));
+       try{
+        String mes="202001".substring(4);  
+        String anio="202001".substring(0,4); 
+        String sDate1 = "01/"+mes+"/"+anio;
+        Date date1=new SimpleDateFormat("dd/MM/yyyy").parse(sDate1);  
+        System.out.println("fecha"+date1);
+        }catch(ParseException es){
+        }
         
     }
     

@@ -1,0 +1,158 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="content">
+        <h:form id="formParameters">
+            <p:growl />
+            <div class="ui-fluid">
+                <div class="ui-g">
+                    <div class="ui-g-12">
+                        <div class="card card-w-title">
+                            <h1 style="display: none">listado de Parametros</h1>
+                            <p:dataTable var="para" 
+                                         id="tbluser" 
+                                         paginator="true"
+                                         paginatorPosition="bottom"
+                                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                         currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} filas"
+                                         rowsPerPageTemplate="5,10,15"
+                                         rows="5"
+                                         reflow="true"
+                                         value="#{paramTextil.litsParamBoniTextil}"  
+                                         selectionMode="single" 
+                                         selection="#{paramTextil.selectedParamBoniTextil}" 
+                                         rowKey="#{para.id}">
+
+                                <p:ajax event="rowSelect"  update="formParameters" listener="#{paramTextil.loadFormSelectedRow()}"  />
+                                <f:facet  name="header">
+                                    Listado de Parametros Bonificacion Textiles
+                                </f:facet>
+                                <p:column style="text-transform: capitalize;font-weight: bold" headerText="ID" >
+                                    <h:outputText style="font-weight: normal" value="#{para.id}" />
+                                </p:column>
+
+                                <p:column style="text-transform: capitalize;font-weight: bold" headerText="Are de Negocio" >
+                                    <h:outputText style="font-weight: normal" value="#{para.descripcionAreaNegocio}" />
+                                </p:column>
+
+                                <p:column style="text-transform: capitalize;font-weight: bold" headerText="Descripcion" >
+                                    <h:outputText style="font-weight: normal" value="#{para.descripcion}" />
+                                </p:column>
+                                
+                                <p:column style="text-transform: capitalize;;font-weight: bold" headerText="Bono" >
+                                    <h:outputText style="font-weight: normal" value="#{para.bono}" />
+                                </p:column>
+                                
+                                <p:column style="text-transform: capitalize;;font-weight: bold" headerText="Periodo" >
+                                    <h:outputText style="font-weight: normal" value="#{para.periodo}" />
+                                </p:column>
+
+                                <p:column style="text-transform: capitalize;font-weight: bold" headerText="Estado" >
+                                    <h:outputText style="font-weight: normal" value="#{((para.estado eq 'I') ?'Inactivo':'Activo')}" />
+                                </p:column>
+                            </p:dataTable>
+                        </div>
+                        <div class="card card-w-title">
+                            <h3>Parametros Bonificacion Textiles</h3>
+                            <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank form-group" style="border:0px none; background-color:transparent;">
+                                
+                                
+                                <p:outputLabel for="areanegocio" value="Area de negocio"/>
+                                <h:panelGroup styleClass="md-inputfield">
+                                    <p:selectOneMenu disabled="#{paramTextil.parametroselected}"  required="true" value="#{paramTextil.calcSelectedAreaNegocio}" id="areanegocio">
+                                        <f:selectItem itemLabel="Seleccion Uno" itemValue="" />
+                                        <f:selectItems value="#{paramTextil.listAreaNegocio}" />
+                                    </p:selectOneMenu>
+                                    <p:message for="areanegocio" />
+                                </h:panelGroup>
+
+                                
+                                <p:outputLabel for="idparameter" value="ID"/>
+                                <h:panelGroup styleClass="md-inputfield">
+                                    <p:inputText readonly="true" required="true" value="#{paramTextil.paramId}" id="idparameter"/>
+                                    <label>ID</label>
+                                    <p:message for="idparameter" />
+                                </h:panelGroup>
+                                
+                                
+                                <p:outputLabel for="paramDescripcion" value="Descripcion"/>
+                                <h:panelGroup styleClass="md-inputfield">
+                                    <p:inputText  required="true" value="#{paramTextil.paramDescripcion}" id="paramDescripcion"/>
+                                    <label>Descripcion</label>
+                                    <p:message for="paramDescripcion" />
+                                </h:panelGroup>
+                                
+
+                                <p:outputLabel for="paraPeriodo" value="Periodo"/>
+                                <h:panelGroup styleClass="md-inputfield">
+                                    <p:datePicker view="month" value="#{paramTextil.calPeriodo}" pattern="yyyy/MM" yearNavigator="true" yearRange="2000:2090" id="paraPeriodo"/>
+                                    <label>Periodo</label>
+                                    <p:message for="paraPeriodo" />
+                                </h:panelGroup>
+
+                                
+
+                                <p:outputLabel for="paramBono" value="Bono"/>
+                                <h:panelGroup styleClass="md-inputfield">
+                                    <p:inputNumber autocomplete="off" decimalPlaces="2" required="true" value="#{paramTextil.paramBono}" id="paramBono">
+                                    </p:inputNumber>   
+                                    <label>Bono</label>
+                                    <p:message for="paramBono"  />
+                                </h:panelGroup>
+
+                                <p:outputLabel for="paramTipo" value="Tipo"/>
+                                <h:panelGroup styleClass="md-inputfield">
+                                    <p:inputText autocomplete="off"  required="true" value="#{paramTextil.paramTipo}" id="paramTipo"/>                                     
+                                     <label>Tipo</label>
+                                    <p:message for="paramTipo"  />
+                                </h:panelGroup>
+                                
+                                
+                                                               
+                                <p:outputLabel for="estadoparameter" value="Estado"/>
+                                <h:panelGroup styleClass="md-inputfield">
+                                    <p:selectOneMenu required="true" value="#{paramTextil.paramEstado}" id="estadoparameter">
+                                        <f:selectItem itemLabel="Seleccion Uno" itemValue="" />
+                                        <f:selectItem itemLabel="Activo" itemValue="A" />
+                                        <f:selectItem itemLabel="Inactivo" itemValue="I" />
+                                    </p:selectOneMenu>
+                                    <p:message for="estadoparameter" />
+                                </h:panelGroup>
+                                
+                                <p:outputLabel for="blank" value=""/>
+                                <h:panelGroup rendered="false" styleClass="md-inputfield">
+                                    <p:inputText  id="blank"/>                                     
+                                    <p:message for="blank" />
+                                </h:panelGroup>
+                                
+                                <p:outputLabel for="blank2" value=""/>
+                                <h:panelGroup rendered="false" styleClass="md-inputfield">
+                                    <p:inputText  id="blank2"/>                                     
+                                    <p:message for="blank2" />
+                                </h:panelGroup>
+
+
+                                <p:commandButton id="dialog2" actionListener="#{paramTextil.crearParamteroBoniTextil()}" update="formParameters" value="Guardar" icon="ui-icon-save"   style="max-width:150px;"/>
+                                <p:commandButton process="@this" id="dialog3" actionListener="#{paramTextil.clearParamBoniTextil()}" update="formParameters" value="Limpiar" icon="ui-icon-cached"  style="max-width:150px;">
+
+                                </p:commandButton>
+                            </p:panelGrid>
+
+
+                        </div>
+
+                        
+                    </div>
+
+                </div>
+            </div>
+           
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>
