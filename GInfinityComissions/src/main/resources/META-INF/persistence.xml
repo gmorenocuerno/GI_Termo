@@ -12,6 +12,8 @@
         <class>com.gpinfinity.entities.TerParametroIndicador</class>
         <class>com.gpinfinity.entities.TerIndicadorAreaNegocio</class>
         <class>com.gpinfinity.entities.TerComisionesTextil</class>
+        <class>com.gpinfinity.entities.TerParamTextil</class>
+        <class>com.gpinfinity.entities.TerParamBonifTextil</class>
         <exclude-unlisted-classes>true</exclude-unlisted-classes>
         <properties>
             <property name="javax.persistence.schema-generation.database.action" value="create"/>

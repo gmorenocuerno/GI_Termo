@@ -72,6 +72,8 @@ public class TerAreaNegocio implements Serializable {
     private Collection<TerFamilia> terFamiliaCollection;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "terAreaNegocio")
     private Collection<TerIndicadorAreaNegocio> terIndicadorAreaNegocioCollection;
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "terAreaNegocio")
+    private Collection<TerParamBonifTextil> terParamBonifTextilCollection;
 
     public TerAreaNegocio() {
     }
@@ -163,6 +165,16 @@ public class TerAreaNegocio implements Serializable {
         this.terIndicadorAreaNegocioCollection = terIndicadorAreaNegocioCollection;
     }
 
+    @XmlTransient
+    public Collection<TerParamBonifTextil> getTerParamBonifTextilCollection() {
+        return terParamBonifTextilCollection;
+    }
+
+    public void setTerParamBonifTextilCollection(Collection<TerParamBonifTextil> terParamBonifTextilCollection) {
+        this.terParamBonifTextilCollection = terParamBonifTextilCollection;
+    }
+
+    
     @Override
     public int hashCode() {
         int hash = 0;
