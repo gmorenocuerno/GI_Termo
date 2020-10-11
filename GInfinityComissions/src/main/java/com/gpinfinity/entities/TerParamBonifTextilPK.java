@@ -24,15 +24,15 @@ public class TerParamBonifTextilPK implements Serializable {
     private int id;
     @Basic(optional = false)
     @NotNull
-    @Column(name = "id_arena_negocio")
-    private int idArenaNegocio;
+    @Column(name = "id_area_negocio")
+    private int idAreaNegocio;
 
     public TerParamBonifTextilPK() {
     }
 
-    public TerParamBonifTextilPK(int id, int idArenaNegocio) {
+    public TerParamBonifTextilPK(int id, int idAreaNegocio) {
         this.id = id;
-        this.idArenaNegocio = idArenaNegocio;
+        this.idAreaNegocio = idAreaNegocio;
     }
 
     public int getId() {
@@ -43,19 +43,19 @@ public class TerParamBonifTextilPK implements Serializable {
         this.id = id;
     }
 
-    public int getIdArenaNegocio() {
-        return idArenaNegocio;
+    public int getIdAreaNegocio() {
+        return idAreaNegocio;
     }
 
-    public void setIdArenaNegocio(int idArenaNegocio) {
-        this.idArenaNegocio = idArenaNegocio;
+    public void setIdAreaNegocio(int idAreaNegocio) {
+        this.idAreaNegocio = idAreaNegocio;
     }
 
     @Override
     public int hashCode() {
         int hash = 0;
         hash += (int) id;
-        hash += (int) idArenaNegocio;
+        hash += (int) idAreaNegocio;
         return hash;
     }
 
@@ -69,7 +69,7 @@ public class TerParamBonifTextilPK implements Serializable {
         if (this.id != other.id) {
             return false;
         }
-        if (this.idArenaNegocio != other.idArenaNegocio) {
+        if (this.idAreaNegocio != other.idAreaNegocio) {
             return false;
         }
         return true;
@@ -77,7 +77,7 @@ public class TerParamBonifTextilPK implements Serializable {
 
     @Override
     public String toString() {
-        return "com.gpinfinity.entities.TerParamBonifTextilPK[ id=" + id + ", idArenaNegocio=" + idArenaNegocio + " ]";
+        return "com.gpinfinity.entities.TerParamBonifTextilPK[ id=" + id + ", idAreaNegocio=" + idAreaNegocio + " ]";
     }
     
 }

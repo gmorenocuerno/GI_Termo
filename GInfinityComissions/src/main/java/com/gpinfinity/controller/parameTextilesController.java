@@ -151,7 +151,7 @@ public class parameTextilesController extends Utils implements Serializable {
             int periodo = Integer.parseInt(year + "" + ((month >= 1) && (month <= 9) ? Integer.valueOf("0") + "" + month : month));
             TerParamBonifTextilPK pk = new TerParamBonifTextilPK();
             pk.setId(getParamId());
-            pk.setIdArenaNegocio(Integer.parseInt(getCalcSelectedAreaNegocio()));
+            pk.setIdAreaNegocio(Integer.parseInt(getCalcSelectedAreaNegocio()));
             TerParamBonifTextil ter = new TerParamBonifTextil();
             ter.setBono(new BigDecimal(getParamBono()));
             ter.setDescripcion(getParamDescripcion());

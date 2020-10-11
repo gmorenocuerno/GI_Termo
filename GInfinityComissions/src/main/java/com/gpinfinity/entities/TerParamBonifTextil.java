@@ -28,19 +28,6 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "TER_PARAM_BONIF_TEXTIL")
 @XmlRootElement
-@NamedQueries({
-    @NamedQuery(name = "TerParamBonifTextil.findAll", query = "SELECT t FROM TerParamBonifTextil t")
-    , @NamedQuery(name = "TerParamBonifTextil.findById", query = "SELECT t FROM TerParamBonifTextil t WHERE t.terParamBonifTextilPK.id = :id")
-    , @NamedQuery(name = "TerParamBonifTextil.findByIdArenaNegocio", query = "SELECT t FROM TerParamBonifTextil t WHERE t.terParamBonifTextilPK.idArenaNegocio = :idArenaNegocio")
-    , @NamedQuery(name = "TerParamBonifTextil.findByDescripcion", query = "SELECT t FROM TerParamBonifTextil t WHERE t.descripcion = :descripcion")
-    , @NamedQuery(name = "TerParamBonifTextil.findByPeriodo", query = "SELECT t FROM TerParamBonifTextil t WHERE t.periodo = :periodo")
-    , @NamedQuery(name = "TerParamBonifTextil.findByBono", query = "SELECT t FROM TerParamBonifTextil t WHERE t.bono = :bono")
-    , @NamedQuery(name = "TerParamBonifTextil.findByTipo", query = "SELECT t FROM TerParamBonifTextil t WHERE t.tipo = :tipo")
-    , @NamedQuery(name = "TerParamBonifTextil.findByEstado", query = "SELECT t FROM TerParamBonifTextil t WHERE t.estado = :estado")
-    , @NamedQuery(name = "TerParamBonifTextil.findByUsuarioCreacion", query = "SELECT t FROM TerParamBonifTextil t WHERE t.usuarioCreacion = :usuarioCreacion")
-    , @NamedQuery(name = "TerParamBonifTextil.findByFechaCreacion", query = "SELECT t FROM TerParamBonifTextil t WHERE t.fechaCreacion = :fechaCreacion")
-    , @NamedQuery(name = "TerParamBonifTextil.findByUsuarioModificacion", query = "SELECT t FROM TerParamBonifTextil t WHERE t.usuarioModificacion = :usuarioModificacion")
-    , @NamedQuery(name = "TerParamBonifTextil.findByFechaModificacion", query = "SELECT t FROM TerParamBonifTextil t WHERE t.fechaModificacion = :fechaModificacion")})
 public class TerParamBonifTextil implements Serializable {
 
     private static final long serialVersionUID = 1L;
@@ -72,7 +59,7 @@ public class TerParamBonifTextil implements Serializable {
     @Column(name = "fecha_modificacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaModificacion;
-    @JoinColumn(name = "id_arena_negocio", referencedColumnName = "id", insertable = false, updatable = false)
+    @JoinColumn(name = "id_area_negocio", referencedColumnName = "id", insertable = false, updatable = false)
     @ManyToOne(optional = false)
     private TerAreaNegocio terAreaNegocio;
 
@@ -83,8 +70,8 @@ public class TerParamBonifTextil implements Serializable {
         this.terParamBonifTextilPK = terParamBonifTextilPK;
     }
 
-    public TerParamBonifTextil(int id, int idArenaNegocio) {
-        this.terParamBonifTextilPK = new TerParamBonifTextilPK(id, idArenaNegocio);
+    public TerParamBonifTextil(int id, int idAreaNegocio) {
+        this.terParamBonifTextilPK = new TerParamBonifTextilPK(id, idAreaNegocio);
     }
 
     public TerParamBonifTextilPK getTerParamBonifTextilPK() {

@@ -23,7 +23,7 @@ public interface ITerParamBonifTextilRepository extends JpaRepository<TerParamBo
     public int nextId();
     
     @Query(nativeQuery = true , value = "SELECT cast(a.id as varchar) idParam , b.descripcion descArea, a.descripcion , cast(a.bono as varchar) parambono , a.estado , cast(a.periodo as varchar) paramPeriodo , a.tipo , cast(b.id as varchar) idarea FROM TER_PARAM_BONIF_TEXTIL a , TER_AREA_NEGOCIO b\n" +
-"where a.id_arena_negocio=b.id")
+"where a.id_area_negocio=b.id")
     public List<Object[]> allParamBoniTextil();
     
 }
