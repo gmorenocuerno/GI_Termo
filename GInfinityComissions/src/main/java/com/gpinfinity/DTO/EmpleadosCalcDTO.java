@@ -26,6 +26,7 @@ public class EmpleadosCalcDTO {
     private String salario;
     private String calculado;
     private String porcenCalculado;
+    private String idEmpleado;
     
     
 }

@@ -70,17 +70,17 @@ public interface ITerEmpleadoFamiliaIndicadorRepository extends JpaRepository<Te
             + ", B.nombre\n"
             + ", cast(B.sueldo as varchar) suel\n"
             + ", cast(ISNULL(SUM(A.monto_calculado),0) as varchar) as calculado\n"
-            + ", cast(ISNULL((SUM(A.monto_calculado)/B.sueldo)*100,0) as varchar) as porc_calculado\n"
+            + ", cast(ISNULL((SUM(A.monto_calculado)/B.sueldo)*100,0) as varchar) as porc_calculado ,cast(b.id_empleado as varchar) idempe \n"
             + "FROM TER_empleado_familia_indicador A\n"
             + "INNER JOIN TER_empleado B ON B.id = A.id_empleado\n"
-            + "INNER JOIN TER_area_negocio C ON C.id = A.id_area_negocio\n"
+            + "INNER JOIN TER_area_negocio C ON C.id = A.id_area_negocio where  A.id_area_negocio=? and a.periodo=? \n"
             + "group by \n"
             + "A.periodo\n"
             + ", A.id_area_negocio\n"
             + ", C.descripcion\n"
             + ", B.nombre\n"
-            + ", B.sueldo\n"
+            + ", B.sueldo ,b.id_empleado \n"
             + "ORDER BY A.id_area_negocio\n")
-    public List<Object[]> listAllEmpleadosCalc();
+    public List<Object[]> listAllEmpleadosCalc(int idAreaNegocio , int periodo);
 
 }

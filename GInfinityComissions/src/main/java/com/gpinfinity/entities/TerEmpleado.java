@@ -60,6 +60,10 @@ public class TerEmpleado implements Serializable {
     @Size(max = 50)
     @Column(name = "usuario_creacion")
     private String usuarioCreacion;
+    @Column(name = "id_empleado")
+    private String idEmpleado;
+    @Column(name = "id_vendedor")
+    private String idVendedor;
     @Column(name = "fecha_creacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaCreacion;
@@ -185,6 +189,22 @@ public class TerEmpleado implements Serializable {
             return false;
         }
         return true;
+    }
+
+    public String getIdEmpleado() {
+        return idEmpleado;
+    }
+
+    public void setIdEmpleado(String idEmpleado) {
+        this.idEmpleado = idEmpleado;
+    }
+
+    public String getIdVendedor() {
+        return idVendedor;
+    }
+
+    public void setIdVendedor(String idVendedor) {
+        this.idVendedor = idVendedor;
     }
 
     @Override

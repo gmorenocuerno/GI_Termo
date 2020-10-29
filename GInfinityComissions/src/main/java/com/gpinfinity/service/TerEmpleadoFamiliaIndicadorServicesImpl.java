@@ -125,9 +125,9 @@ public class TerEmpleadoFamiliaIndicadorServicesImpl implements ITerEmpleadoFami
     }
 
     @Override
-    public List<EmpleadosCalcDTO> listAllEmpleadosCalc() {
+    public List<EmpleadosCalcDTO> listAllEmpleadosCalc(int idAreaNegocio , int periodo) {
         List<EmpleadosCalcDTO> listEmp =  new ArrayList<>();
-        iterEmpleadoFamiliaIndicadorRepository.listAllEmpleadosCalc().forEach((emp)->{
+        iterEmpleadoFamiliaIndicadorRepository.listAllEmpleadosCalc(idAreaNegocio,periodo).forEach((emp)->{
             EmpleadosCalcDTO empDto = EmpleadosCalcDTO.builder()
                     .periodo(emp[0].toString())
                     .areNegocio(emp[1].toString())
@@ -135,6 +135,7 @@ public class TerEmpleadoFamiliaIndicadorServicesImpl implements ITerEmpleadoFami
                     .salario(emp[3].toString())
                     .calculado(emp[4].toString())
                     .porcenCalculado(emp[5].toString())
+                    .idEmpleado(emp[6].toString())
                     .build();
             listEmp.add(empDto);
         

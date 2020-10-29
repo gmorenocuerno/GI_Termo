@@ -56,7 +56,7 @@
                                 
                                 <p:commandButton value="Calcular comision" update="msg,formFileCsv" actionListener="#{paramController.calcularComisiones()}"  styleClass="NavyButton" />
                                 
-                                <p:commandButton value="Mostrar calculo final" style="width:auto" update=":formExporte:calcEmpelados" onclick="PF('dlgCalcEmp').show();"  styleClass="NavyButton" />
+                                <p:commandButton value="Mostrar calculo final" actionListener="#{paramController.loadListEmpeladosCalcDtoFiltro()}" style="width:auto" update=":formExporte:calcEmpelados" onclick="PF('dlgCalcEmp').show();"  styleClass="NavyButton" />
 
                             </p:panelGrid>
 
@@ -236,6 +236,9 @@
 
                     <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Empleado" >
                         <h:outputText style="font-weight: normal" value="#{caclempleado.nombre}" />
+                    </p:column>
+                    <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="ID Empleado" >
+                        <h:outputText style="font-weight: normal" value="#{caclempleado.idEmpleado}" />
                     </p:column>
                     <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Salario" >
                         <h:outputText style="font-weight: normal" value="#{caclempleado.salario}" />

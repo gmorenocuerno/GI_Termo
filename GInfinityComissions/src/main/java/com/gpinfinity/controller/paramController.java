@@ -96,7 +96,7 @@ public class paramController extends Utils implements Serializable {
         loadContextBeanSring();
         clearParametroForm();
         //loadDataEmpFamIndicador();
-        loadListEmpleadosCalcDto();
+        //loadListEmpleadosCalcDto();
         listAreaNegocio = new ArrayList<>();
         terAreaNegocioServices.listAllAreaNegocio().forEach((arn) -> {
             listAreaNegocio.add(new SelectItem(arn.getId(), arn.getDescripcion()));
@@ -111,11 +111,13 @@ public class paramController extends Utils implements Serializable {
    
     
 
-
-    public void loadListEmpleadosCalcDto() {
+    public void loadListEmpeladosCalcDtoFiltro(){
+        
         listEmpleadosDto = new ArrayList<>();
-        listEmpleadosDto = iterEmpleadoFamiliaIndicadorServices.listAllEmpleadosCalc();
+        listEmpleadosDto = iterEmpleadoFamiliaIndicadorServices.listAllEmpleadosCalc(Integer.parseInt(calcSelectedAreaNegocio), Integer.parseInt(calcSelectedPeriodo));
     }
+
+   
 
     public void loadPeriodList() {
 
@@ -247,7 +249,7 @@ public class paramController extends Utils implements Serializable {
         addsimplemessages("Archivo " + event.getFile().getFileName() + " cargado");
         loadDataEmpFamIndicador();
         loadPeriodList();
-        loadListEmpleadosCalcDto();
+        
     }
 
     public void loadData(){
@@ -265,7 +267,6 @@ public class paramController extends Utils implements Serializable {
         try {
             iterEmpleadoFamiliaIndicadorServices.calcularComision(Integer.parseInt(calcSelectedAreaNegocio), Integer.parseInt(calcSelectedPeriodo));
             loadDataEmpFamIndicador();
-            loadListEmpleadosCalcDto();
             setCalcSelectedAreaNegocio("");
             setCalcSelectedPeriodo("");
             addsimplemessages("Proceso de calculo ejecutado con exito");

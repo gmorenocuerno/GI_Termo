@@ -27,6 +27,6 @@ public List<String> allPeriodo();
 
 public void mergeTableTerEmpFamIndicador();
 
-public List<EmpleadosCalcDTO> listAllEmpleadosCalc();
+public List<EmpleadosCalcDTO> listAllEmpleadosCalc(int idAreaNegocio , int periodo);
     
 }
