@@ -5,12 +5,21 @@
  */
 package com.gpinfinity.controller;
 
+import com.gpinfinity.config.ApplicationContextProvider;
+import com.gpinfinity.service.ITerEmpleadoFamiliaIndicadorServices;
+import java.io.BufferedOutputStream;
+import java.io.BufferedWriter;
+import java.io.IOException;
 import java.io.InputStream;
+import java.io.OutputStreamWriter;
 import java.io.Serializable;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+import javax.annotation.PostConstruct;
 import javax.inject.Named;
 import javax.enterprise.context.RequestScoped;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
-import javax.servlet.ServletContext;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
 
@@ -33,6 +42,13 @@ private StreamedContent fileDowloadCsv;
                 .build();*/
     }
 
+    ITerEmpleadoFamiliaIndicadorServices iTerEmpleadoFamiliaIndicadorServices;
+    @PostConstruct
+    public void Init(){
+        loadContextBeanSring();
+    
+    }
+    
     public StreamedContent getDowloadFileCsvTextiles(){  
         
          InputStream stream = getClass().getClassLoader().getResourceAsStream("planilla_carga_textiles.csv");
@@ -57,6 +73,58 @@ private StreamedContent fileDowloadCsv;
 
     public void setFileDowloadCsv(StreamedContent fileDowloadCsv) {
         this.fileDowloadCsv = fileDowloadCsv;
+    }
+    
+    
+    public void download()
+    {
+        String file_name =  "Template_indicadores.csv" ;
+       
+        FacesContext fc = FacesContext.getCurrentInstance();
+        ExternalContext ec= fc.getExternalContext();
+        ec.responseReset();
+        ec.setResponseContentType("text/csv");
+        ec.setResponseHeader("Content-Disposition", "attachment; filename=\""+file_name + "\"");
+       
+        BufferedOutputStream csvOut;
+        try {
+            csvOut = new BufferedOutputStream(ec.getResponseOutputStream());
+            BufferedWriter csvWriter = new BufferedWriter(new OutputStreamWriter(csvOut, "UTF-8"));
+       
+            csvWriter.append("id_area_negocio,area_de_negocio,id_empleado,cod_empleado,nombre,id_indicador,indicador,id_familia,familia,periodo,meta,real");
+            csvWriter.append("\n");
+            csvWriter.flush();
+            iTerEmpleadoFamiliaIndicadorServices.listaCsvIndicadorPlantilla().forEach((obj)->{
+                
+                try {
+                    csvWriter.append(obj.getIdAreaNeogocio()+","+obj.getAreaNegocio()+","+obj.getIdEmpelado()+","+obj.getCodEmpleado()+","+obj.getNombre()+","+obj.getIdIndicador()+","+obj.getIndicador()+","+obj.getIdFamilia()+","+obj.getFamilia()+", , , ");
+                    csvWriter.append("\n");
+                    csvWriter.flush();
+                } catch (IOException ex) {
+                    Logger.getLogger(dowloadTemplate.class.getName()).log(Level.SEVERE, null, ex);
+                }
+            
+            
+            });
+            
+
+            csvWriter.close();
+            csvOut.close();
+        } catch (IOException ex) {
+           
+        }
+        finally{
+            fc.responseComplete();
+        }
+      
+    }
+    
+    
+     public void loadContextBeanSring() {
+        iTerEmpleadoFamiliaIndicadorServices = ApplicationContextProvider.getApplicationContext().getBean(ITerEmpleadoFamiliaIndicadorServices.class);
+        
+        
+
     }
     
 }

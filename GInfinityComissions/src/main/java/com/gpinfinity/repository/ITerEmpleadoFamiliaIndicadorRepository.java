@@ -82,5 +82,28 @@ public interface ITerEmpleadoFamiliaIndicadorRepository extends JpaRepository<Te
             + ", B.sueldo ,b.id_empleado \n"
             + "ORDER BY A.id_area_negocio\n")
     public List<Object[]> listAllEmpleadosCalc(int idAreaNegocio , int periodo);
+    
+    @Query(nativeQuery = true, value = "SELECT cast(A.id_area_negocio as varchar) idAreaNegocio, \n" +
+"       B.descripcion as area_negocio, \n" +
+"	   cast(A.id as varchar) as idEmpleado, \n" +
+"	   cast(A.id_empleado as varchar) as cod_empleado, \n" +
+"	   replace(A.nombre,',',' '), \n" +
+"	   cast(C.id_indicador as varchar) as idIndicador, \n" +
+"	   d.descripcion as indicador, \n" +
+"	   cast(C.id_familia as varchar) as idFamilia, \n" +
+"	   E.descripcion as familia, \n" +
+"	   '' as periodo, \n" +
+"	   '' as monto_meta, \n" +
+"	   '' as monto_real\n" +
+"FROM TER_EMPLEADO A\n" +
+"INNER JOIN TER_AREA_NEGOCIO B ON B.ID = A.id_area_negocio AND B. estado = 'A'\n" +
+"INNER JOIN TER_EMPLEADO_FAMILIA C ON C.id_empleado =A.id and C.id_area_negocio = A.id_area_negocio\n" +
+"INNER JOIN TER_INDICADOR_AREA_NEGOCIO D ON D.id_area_negocio = A.id_area_negocio AND D.id = C.id_indicador AND D.estado = 'A'\n" +
+"INNER JOIN TER_FAMILIA E ON E.id_area_negocio = A.id_area_negocio AND E.id = C.id_familia AND E.estado = 'A'\n" +
+"where A.estado = 'A'\n" +
+"order by A.id_area_negocio, A.id_empleado")
+    public List<Object[]> listIndicadorCsvObject();
+    
+    
 
 }

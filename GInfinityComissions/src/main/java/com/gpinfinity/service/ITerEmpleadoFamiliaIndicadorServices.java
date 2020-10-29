@@ -5,6 +5,7 @@
  */
 package com.gpinfinity.service;
 
+import com.gpinfinity.DTO.CsvDataIndicadorPlantilla;
 import com.gpinfinity.DTO.CsvDataTableEmpFamIndicador;
 import com.gpinfinity.DTO.CsvIndicadorErrorLoad;
 import com.gpinfinity.DTO.EmpleadosCalcDTO;
@@ -26,6 +27,8 @@ public void calcularComision(int areaNegocio , int periodo);
 public List<String> allPeriodo();
 
 public void mergeTableTerEmpFamIndicador();
+
+public List<CsvDataIndicadorPlantilla> listaCsvIndicadorPlantilla();
 
 public List<EmpleadosCalcDTO> listAllEmpleadosCalc(int idAreaNegocio , int periodo);
     
