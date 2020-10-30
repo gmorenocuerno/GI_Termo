@@ -5,6 +5,7 @@
  */
 package com.gpinfinity.service;
 
+import com.gpinfinity.DTO.CsvDataIndicadorPlantilla;
 import com.gpinfinity.DTO.CsvDataTableEmpFamIndicador;
 import com.gpinfinity.DTO.CsvIndicadorErrorLoad;
 import com.gpinfinity.DTO.EmpleadosCalcDTO;
@@ -125,9 +126,9 @@ public class TerEmpleadoFamiliaIndicadorServicesImpl implements ITerEmpleadoFami
     }
 
     @Override
-    public List<EmpleadosCalcDTO> listAllEmpleadosCalc() {
+    public List<EmpleadosCalcDTO> listAllEmpleadosCalc(int idAreaNegocio , int periodo) {
         List<EmpleadosCalcDTO> listEmp =  new ArrayList<>();
-        iterEmpleadoFamiliaIndicadorRepository.listAllEmpleadosCalc().forEach((emp)->{
+        iterEmpleadoFamiliaIndicadorRepository.listAllEmpleadosCalc(idAreaNegocio,periodo).forEach((emp)->{
             EmpleadosCalcDTO empDto = EmpleadosCalcDTO.builder()
                     .periodo(emp[0].toString())
                     .areNegocio(emp[1].toString())
@@ -135,12 +136,32 @@ public class TerEmpleadoFamiliaIndicadorServicesImpl implements ITerEmpleadoFami
                     .salario(emp[3].toString())
                     .calculado(emp[4].toString())
                     .porcenCalculado(emp[5].toString())
+                    .idEmpleado(emp[6].toString())
                     .build();
             listEmp.add(empDto);
         
         });
         
         return listEmp;
+    }
+
+    @Override
+    public List<CsvDataIndicadorPlantilla> listaCsvIndicadorPlantilla() {
+         List<CsvDataIndicadorPlantilla> listEmp =  new ArrayList<>();
+         iterEmpleadoFamiliaIndicadorRepository.listIndicadorCsvObject().forEach((obj)->{
+         CsvDataIndicadorPlantilla emp =  CsvDataIndicadorPlantilla.builder()
+                 .idAreaNeogocio((obj[0]!=null?obj[0].toString():""))
+                 .areaNegocio((obj[1]!=null?obj[1].toString():""))
+                 .idEmpelado((obj[2]!=null?obj[2].toString():""))
+                 .codEmpleado((obj[3]!=null?obj[3].toString():""))
+                 .nombre((obj[4]!=null?obj[4].toString():""))
+                 .idIndicador((obj[5]!=null?obj[5].toString():""))
+                 .indicador((obj[6]!=null?obj[6].toString():""))
+                 .idFamilia((obj[7]!=null?obj[7].toString():""))
+                 .familia((obj[8]!=null?obj[8].toString():"")).build();
+         listEmp.add(emp);
+         });
+         return listEmp;
     }
 
 }

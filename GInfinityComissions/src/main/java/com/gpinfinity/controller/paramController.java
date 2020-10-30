@@ -96,7 +96,7 @@ public class paramController extends Utils implements Serializable {
         loadContextBeanSring();
         clearParametroForm();
         //loadDataEmpFamIndicador();
-        loadListEmpleadosCalcDto();
+        //loadListEmpleadosCalcDto();
         listAreaNegocio = new ArrayList<>();
         terAreaNegocioServices.listAllAreaNegocio().forEach((arn) -> {
             listAreaNegocio.add(new SelectItem(arn.getId(), arn.getDescripcion()));
@@ -111,11 +111,13 @@ public class paramController extends Utils implements Serializable {
    
     
 
-
-    public void loadListEmpleadosCalcDto() {
+    public void loadListEmpeladosCalcDtoFiltro(){
+        
         listEmpleadosDto = new ArrayList<>();
-        listEmpleadosDto = iterEmpleadoFamiliaIndicadorServices.listAllEmpleadosCalc();
+        listEmpleadosDto = iterEmpleadoFamiliaIndicadorServices.listAllEmpleadosCalc(Integer.parseInt(calcSelectedAreaNegocio), Integer.parseInt(calcSelectedPeriodo));
     }
+
+   
 
     public void loadPeriodList() {
 
@@ -226,12 +228,12 @@ public class paramController extends Utils implements Serializable {
 
             IndicadorFamiliaEmpCsvDTO csv = IndicadorFamiliaEmpCsvDTO.builder()
                     .idAreaNegocio(rws.get(0).replace("\"", "").trim())
-                    .idEmpleado(rws.get(1).replace("\"", "").trim())
-                    .idFamilia(rws.get(3).replace("\"", "").trim())
-                    .idIndicador(rws.get(2).replace("\"", "").trim())
-                    .meta(rws.get(5).replace("\"", "").trim())
-                    .periodo(rws.get(4).replace("\"", "").trim())
-                    .real(rws.get(6).replace("\"", "").trim()).build();
+                    .idEmpleado(rws.get(2).replace("\"", "").trim())
+                    .idFamilia(rws.get(7).replace("\"", "").trim())
+                    .idIndicador(rws.get(5).replace("\"", "").trim())
+                    .meta((!rws.get(10).equals(" ")?rws.get(10).replace("\"", "").trim():"0"))
+                    .periodo((!rws.get(9).equals(" ")?rws.get(9).replace("\"", "").trim():"0"))
+                    .real((!rws.get(11).equals(" ")?rws.get(11).replace("\"", "").trim():"0")).build();
             listIndicadorFaEmCsv.add(csv);
         });
         linea = 2;
@@ -247,7 +249,7 @@ public class paramController extends Utils implements Serializable {
         addsimplemessages("Archivo " + event.getFile().getFileName() + " cargado");
         loadDataEmpFamIndicador();
         loadPeriodList();
-        loadListEmpleadosCalcDto();
+        
     }
 
     public void loadData(){
@@ -265,7 +267,6 @@ public class paramController extends Utils implements Serializable {
         try {
             iterEmpleadoFamiliaIndicadorServices.calcularComision(Integer.parseInt(calcSelectedAreaNegocio), Integer.parseInt(calcSelectedPeriodo));
             loadDataEmpFamIndicador();
-            loadListEmpleadosCalcDto();
             setCalcSelectedAreaNegocio("");
             setCalcSelectedPeriodo("");
             addsimplemessages("Proceso de calculo ejecutado con exito");

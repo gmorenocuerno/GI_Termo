@@ -16,17 +16,19 @@ import lombok.NoArgsConstructor;
  */
 
 @Data
+@NoArgsConstructor
 @AllArgsConstructor
 @Builder
-@NoArgsConstructor
-public class EmpleadosCalcDTO {
-    private String periodo;
-    private String areNegocio;
+public class CsvDataIndicadorPlantilla {
+    private String idAreaNeogocio;
+    private String areaNegocio;
+    private String idEmpelado;
+    private String codEmpleado;
     private String nombre;
-    private String salario;
-    private String calculado;
-    private String porcenCalculado;
-    private String idEmpleado;
+    private String idIndicador;
+    private String indicador;
+    private String idFamilia;
+    private String familia;
     
     
 }

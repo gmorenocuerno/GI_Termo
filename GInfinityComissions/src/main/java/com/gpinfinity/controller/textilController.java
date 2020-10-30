@@ -47,6 +47,7 @@ public class textilController extends Utils implements Serializable {
     private List<CsvTextilErrorLoad> listCsvLoadErrors;
     private String periodo;
     private int buscarPeriodo;
+    private int selectedMes;
     private List<SelectItem> listPeriodo;
     private List<TerComisionesTextil> listTableTerComisionesTextil;
     private List<TextilTotalDTO> textiBonoList;
@@ -67,6 +68,7 @@ public class textilController extends Utils implements Serializable {
         textilesLoadTotal();
         textilesLoadMensual();
         textilesLoadAcumulado();
+        selectedMes = 0;  
         
 
 
@@ -103,8 +105,20 @@ public class textilController extends Utils implements Serializable {
     }
 
     public textilController() {
+        
     }
 
+    public void periodFilasMostrar(){
+    String mes=periodo.substring(4);  
+    if(mes.equals("")){
+    selectedMes = 0;            
+    }
+    else {
+    selectedMes =  Integer.parseInt(mes);
+    }
+    System.out.println("Mes Seleccionado" +  selectedMes);
+    }
+    
     public void calcularComisionTextil() {
 
         try {

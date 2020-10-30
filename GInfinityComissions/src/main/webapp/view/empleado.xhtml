@@ -1,0 +1,162 @@
+<ui:composition xmlns="http://www.w3.org/1999/xhtml"
+                xmlns:h="http://java.sun.com/jsf/html"
+                xmlns:f="http://java.sun.com/jsf/core"
+                xmlns:ui="http://java.sun.com/jsf/facelets"
+                xmlns:p="http://primefaces.org/ui"
+                template="/WEB-INF/template.xhtml">
+
+    <ui:define name="content">
+        <style type="text/css">
+   
+</style>
+        <h:form id="formParameters">
+            <p:growl />
+            <div class="ui-fluid">
+                <div class="ui-g">
+                    <div class="ui-g-12">
+                        <div class="card card-w-title">
+                            <h1 style="display: none">listado de Empleados</h1>
+                            <p:dataTable var="para" 
+                                         id="tbluser" 
+                                         paginator="true"
+                                         paginatorPosition="bottom"
+                                         paginatorTemplate="{CurrentPageReport} {FirstPageLink} {PreviousPageLink} {PageLinks} {NextPageLink} {LastPageLink} {RowsPerPageDropdown}"
+                                         currentPageReportTemplate="{startRecord}-{endRecord} de {totalRecords} filas"
+                                         rowsPerPageTemplate="5,10,15"
+                                         rows="5"
+                                         reflow="true"
+                                         widgetVar="empleadosvar"
+                                         value="#{empleadoController.listEmpleados}"  
+                                         selectionMode="single" 
+                                         selection="#{empleadoController.selectedEmpleados}" 
+                                         rowKey="#{para.terEmpleadoPK.id}">
+
+                                <p:ajax event="rowSelect"  update="formParameters" listener="#{empleadoController.loadFormSelectedRow()}"  />
+                                <f:facet  name="header">
+                                    Listado de Empleados
+                                    
+                                </f:facet>
+                                <p:column  style="text-transform: capitalize;font-weight: bold" headerText="ID" >
+                                    <h:outputText style="font-weight: normal" value="#{para.terEmpleadoPK.id}" />
+                                </p:column>
+
+                                <p:column style="text-transform: capitalize;font-weight: bold" headerText="Are de Negocio" >
+                                    <h:outputText style="font-weight: normal" value="#{para.terAreaNegocio.descripcion}" />
+                                </p:column>
+
+                                <p:column width="300" filterMatchMode="contains"  filterBy="#{para.nombre}" filterable="true" style="text-transform: capitalize;font-weight: bold" headerText="Nombre" >
+                                    <h:outputText style="font-weight: normal" value="#{para.nombre}" />
+                                </p:column>
+                                
+                                <p:column style="text-transform: capitalize;;font-weight: bold" headerText="Sueldo" >
+                                    <h:outputText style="font-weight: normal" value="#{para.sueldo}" />
+                                </p:column>
+                                
+                                <p:column style="text-transform: capitalize;;font-weight: bold" headerText="Id Empleado" >
+                                    <h:outputText style="font-weight: normal" value="#{para.idEmpleado}" />
+                                </p:column>
+                                
+                                <p:column style="text-transform: capitalize;;font-weight: bold" headerText="Id Vendedor" >
+                                    <h:outputText style="font-weight: normal" value="#{para.idVendedor}" />
+                                </p:column>
+
+                                <p:column style="text-transform: capitalize;font-weight: bold" headerText="Estado" >
+                                    <h:outputText style="font-weight: normal" value="#{((para.estado eq 'I') ?'Inactivo':'Activo')}" />
+                                </p:column>
+                            </p:dataTable>
+                        </div>
+                        <div class="card card-w-title">
+                            <h3>Parametros Bonificacion Textiles</h3>
+                            <p:panelGrid columns="4" columnClasses="ui-grid-col-2,ui-grid-col-4,ui-grid-col-2,ui-grid-col-4" layout="grid" styleClass="ui-panelgrid-blank form-group" style="border:0px none; background-color:transparent;">
+                                
+                                
+                                <p:outputLabel for="areanegocio" value="Area de negocio"/>
+                                <h:panelGroup styleClass="md-inputfield">
+                                    <p:selectOneMenu disabled="#{empleadoController.parametroSelectedEmpleado}"  required="true" value="#{empleadoController.calcSelectedAreaNegocio}" id="areanegocio">
+                                        <f:selectItem itemLabel="Seleccion Uno" itemValue="" />
+                                        <f:selectItems value="#{empleadoController.listAreaNegocio}" />
+                                    </p:selectOneMenu>
+                                    <p:message for="areanegocio" />
+                                </h:panelGroup>
+
+                                
+                                <p:outputLabel for="idparameter" value="ID"/>
+                                <h:panelGroup styleClass="md-inputfield">
+                                    <p:inputText readonly="true" required="true" value="#{empleadoController.paramId}" id="idparameter"/>
+                                    <label>ID</label>
+                                    <p:message for="idparameter" />
+                                </h:panelGroup>
+                                
+                                
+                                <p:outputLabel for="paramDescripcion" value="Nombre"/>
+                                <h:panelGroup styleClass="md-inputfield">
+                                    <p:inputText  required="true" value="#{empleadoController.paramNombre}" id="paramDescripcion"/>
+                                    <label>Descripcion</label>
+                                    <p:message for="paramDescripcion" />
+                                </h:panelGroup>
+                                
+                                <p:outputLabel for="paramBono" value="Suledo"/>
+                                <h:panelGroup styleClass="md-inputfield">
+                                    <p:inputNumber autocomplete="off" decimalPlaces="2" required="true" value="#{empleadoController.paramSueldo}" id="paramBono">
+                                    </p:inputNumber>   
+                                    <label>Sueldo</label>
+                                    <p:message for="paramBono"  />
+                                </h:panelGroup>
+
+                                <p:outputLabel for="paramTipo" value="Id Empleado"/>
+                                <h:panelGroup styleClass="md-inputfield">
+                                    <p:inputText autocomplete="off"  required="true" value="#{empleadoController.paramIdEmpleado}" id="paramTipo"/>                                     
+                                     <label>Id Empleado</label>
+                                    <p:message for="paramTipo"  />
+                                </h:panelGroup>
+                                
+                                <p:outputLabel for="paramvende" value="Id Vendedor"/>
+                                <h:panelGroup styleClass="md-inputfield">
+                                    <p:inputText autocomplete="off"  required="true" value="#{empleadoController.paramIdVendedor}" id="paramvende"/>                                     
+                                     <label>Id Vendedor</label>
+                                    <p:message for="paramvende"  />
+                                </h:panelGroup>
+                                                               
+                                <p:outputLabel for="estadoparameter" value="Estado"/>
+                                <h:panelGroup styleClass="md-inputfield">
+                                    <p:selectOneMenu required="true" value="#{empleadoController.paramEstado}" id="estadoparameter">
+                                        <f:selectItem itemLabel="Seleccion Uno" itemValue="" />
+                                        <f:selectItem itemLabel="Activo" itemValue="A" />
+                                        <f:selectItem itemLabel="Inactivo" itemValue="I" />
+                                    </p:selectOneMenu>
+                                    <p:message for="estadoparameter" />
+                                </h:panelGroup>
+                                
+                                <p:outputLabel for="blank" value=""/>
+                                <h:panelGroup rendered="false" styleClass="md-inputfield">
+                                    <p:inputText  id="blank"/>                                     
+                                    <p:message for="blank" />
+                                </h:panelGroup>
+                                
+                                <p:outputLabel for="blank2" value=""/>
+                                <h:panelGroup rendered="false" styleClass="md-inputfield">
+                                    <p:inputText  id="blank2"/>                                     
+                                    <p:message for="blank2" />
+                                </h:panelGroup>
+
+
+                                <p:commandButton id="dialog2" actionListener="#{empleadoController.createdEmpleado()}" update="formParameters" value="Guardar" icon="ui-icon-save"   style="max-width:150px;"/>
+                                <p:commandButton process="@this" id="dialog3" onclick="PF('empleadosvar').clearFilters()" actionListener="#{empleadoController.clearFormEmpleado()}" update="formParameters" value="Limpiar" icon="ui-icon-cached"  style="max-width:150px;">
+
+                                </p:commandButton>
+                            </p:panelGrid>
+
+
+                        </div>
+
+                        
+                    </div>
+
+                </div>
+            </div>
+           
+        </h:form>
+
+    </ui:define>
+
+</ui:composition>

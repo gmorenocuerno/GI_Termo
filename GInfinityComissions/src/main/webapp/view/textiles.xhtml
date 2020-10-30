@@ -43,13 +43,13 @@
                                     <p:selectOneMenu required="true"  effect="fold"  value="#{textilController.periodo}" id="calcperiodo">
                                         <f:selectItem itemLabel="Seleccione Periodo" itemValue="" />
                                         <f:selectItems value="#{textilController.listPeriodo}" />                                        
-                                    </p:selectOneMenu>
+                                     </p:selectOneMenu>
                                     <p:message for="calcperiodo" />
                                 </h:panelGroup>
 
                                 <p:commandButton value="Calcular comision" update="msg,formFileCsv" actionListener="#{textilController.calcularComisionTextil()}"  styleClass="NavyButton" />
 
-                                <p:commandButton value="Mostrar calculo final" style="width:auto" update=":formExporte:panelForm:CalculoTotal :formExporte:panelForm:CalculoMensual :formExporte:panelForm:CalculoAcumulado" onclick="PF('dlgCalcEmp').show();"  styleClass="NavyButton" />
+                                <p:commandButton value="Mostrar calculo final" actionListener="#{textilController.periodFilasMostrar()}" style="width:auto" update=":formExporte:panelForm:CalculoTotal :formExporte:panelForm:CalculoMensual :formExporte:panelForm:CalculoAcumulado" onclick="PF('dlgCalcEmp').show();"  styleClass="NavyButton" />
 
                             </p:panelGrid>
 
@@ -257,42 +257,42 @@
                                 <h:outputText style="font-weight: normal" value="#{textBono.bono}" />
                             </p:column>
 
-                            <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Enero" >
+                            <p:column rendered="#{(textilController.selectedMes eq 0 ? true : (textilController.selectedMes eq 1 ? true:false))}" style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Enero" >
                                 <h:outputText style="font-weight: normal" value="#{textBono.jan}" >
                                     <f:convertNumber pattern="#0.000" />
                                 </h:outputText>
                             </p:column>
-                            <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Febrero" >
+                            <p:column rendered="#{(textilController.selectedMes eq 0 ? true : (textilController.selectedMes eq 2 ? true:false))}" style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Febrero" >
                                 <h:outputText style="font-weight: normal" value="#{textBono.feb}" />
                             </p:column>
-                            <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Marzo" >
+                            <p:column rendered="#{(textilController.selectedMes eq 0 ? true : (textilController.selectedMes eq 3 ? true:false))}" style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Marzo" >
                                 <h:outputText style="font-weight: normal" value="#{textBono.mar}" />
                             </p:column>
-                            <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Abril" >
+                            <p:column  rendered="#{(textilController.selectedMes eq 0 ? true : (textilController.selectedMes eq 4 ? true:false))}" style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Abril" >
                                 <h:outputText style="font-weight: normal" value="#{textBono.apr}" />
                             </p:column>
-                            <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Mayo" >
+                            <p:column rendered="#{(textilController.selectedMes eq 0 ? true : (textilController.selectedMes eq 5 ? true:false))}" style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Mayo" >
                                 <h:outputText style="font-weight: normal" value="#{textBono.may}" />
                             </p:column>
-                            <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Junio" >
+                            <p:column rendered="#{(textilController.selectedMes eq 0 ? true : (textilController.selectedMes eq 6 ? true:false))}" style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Junio" >
                                 <h:outputText style="font-weight: normal" value="#{textBono.jun}" />
                             </p:column>
-                            <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Julio" >
+                            <p:column rendered="#{(textilController.selectedMes eq 0 ? true : (textilController.selectedMes eq 7 ? true:false))}" style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Julio" >
                                 <h:outputText style="font-weight: normal" value="#{textBono.jul}" />
                             </p:column>
-                            <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Agosto" >
+                            <p:column rendered="#{(textilController.selectedMes eq 0 ? true : (textilController.selectedMes eq 8 ? true:false))}" style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Agosto" >
                                 <h:outputText style="font-weight: normal" value="#{textBono.aug}" />
                             </p:column>
-                            <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Septiembre" >
+                            <p:column rendered="#{(textilController.selectedMes eq 0 ? true : (textilController.selectedMes eq 9 ? true:false))}" style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Septiembre" >
                                 <h:outputText style="font-weight: normal" value="#{textBono.sep}" />
                             </p:column>
-                            <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Octubre" >
+                            <p:column rendered="#{(textilController.selectedMes eq 0 ? true : (textilController.selectedMes eq 10 ? true:false))}" style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Octubre" >
                                 <h:outputText style="font-weight: normal" value="#{textBono.oct}" />
                             </p:column>
-                            <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Noviembre" >
+                            <p:column rendered="#{(textilController.selectedMes eq 0 ? true : (textilController.selectedMes eq 11 ? true:false))}" style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Noviembre" >
                                 <h:outputText style="font-weight: normal" value="#{textBono.nov}" />
                             </p:column>
-                            <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Diciembre" >
+                            <p:column rendered="#{(textilController.selectedMes eq 0 ? true : (textilController.selectedMes eq 12 ? true:false))}" style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Diciembre" >
                                 <h:outputText style="font-weight: normal" value="#{textBono.dec}" />
                             </p:column>
                         </p:dataTable>
