@@ -97,7 +97,7 @@ public interface ITerEmpleadoFamiliaIndicadorRepository extends JpaRepository<Te
 "	   '' as monto_real\n" +
 "FROM TER_EMPLEADO A\n" +
 "INNER JOIN TER_AREA_NEGOCIO B ON B.ID = A.id_area_negocio AND B. estado = 'A'\n" +
-"INNER JOIN TER_EMPLEADO_FAMILIA C ON C.id_empleado =A.id and C.id_area_negocio = A.id_area_negocio\n" +
+"INNER JOIN TER_EMPLEADO_FAMILIA C ON C.id_empleado =a.id /*A.id_empleado*/ and C.id_area_negocio = A.id_area_negocio\n" +
 "INNER JOIN TER_INDICADOR_AREA_NEGOCIO D ON D.id_area_negocio = A.id_area_negocio AND D.id = C.id_indicador AND D.estado = 'A'\n" +
 "INNER JOIN TER_FAMILIA E ON E.id_area_negocio = A.id_area_negocio AND E.id = C.id_familia AND E.estado = 'A'\n" +
 "where A.estado = 'A'\n" +

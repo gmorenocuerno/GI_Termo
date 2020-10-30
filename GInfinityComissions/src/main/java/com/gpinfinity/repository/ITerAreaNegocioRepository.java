@@ -6,7 +6,9 @@
 package com.gpinfinity.repository;
 
 import com.gpinfinity.entities.TerAreaNegocio;
+import java.util.List;
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
 /**
@@ -15,5 +17,8 @@ import org.springframework.stereotype.Repository;
  */
 @Repository
 public interface ITerAreaNegocioRepository extends JpaRepository<TerAreaNegocio, Integer>{
+    
+    @Query(nativeQuery = true, value = "select  *  from  ter_area_negocio where estado ='A'")
+    public List<TerAreaNegocio> findEstado();
     
 }

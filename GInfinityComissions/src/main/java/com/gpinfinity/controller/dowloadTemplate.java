@@ -9,10 +9,12 @@ import com.gpinfinity.config.ApplicationContextProvider;
 import com.gpinfinity.service.ITerEmpleadoFamiliaIndicadorServices;
 import java.io.BufferedOutputStream;
 import java.io.BufferedWriter;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.io.Serializable;
+import java.nio.charset.StandardCharsets;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
@@ -83,32 +85,32 @@ private StreamedContent fileDowloadCsv;
         FacesContext fc = FacesContext.getCurrentInstance();
         ExternalContext ec= fc.getExternalContext();
         ec.responseReset();
+        ec.setResponseCharacterEncoding("UTF-8");
         ec.setResponseContentType("text/csv");
         ec.setResponseHeader("Content-Disposition", "attachment; filename=\""+file_name + "\"");
        
         BufferedOutputStream csvOut;
         try {
             csvOut = new BufferedOutputStream(ec.getResponseOutputStream());
-            BufferedWriter csvWriter = new BufferedWriter(new OutputStreamWriter(csvOut, "UTF-8"));
-       
-            csvWriter.append("id_area_negocio,area_de_negocio,id_empleado,cod_empleado,nombre,id_indicador,indicador,id_familia,familia,periodo,meta,real");
-            csvWriter.append("\n");
-            csvWriter.flush();
-            iTerEmpleadoFamiliaIndicadorServices.listaCsvIndicadorPlantilla().forEach((obj)->{
+            
+            try (BufferedWriter csvWriter = new BufferedWriter(new OutputStreamWriter(csvOut, StandardCharsets.UTF_8))) {
+                csvWriter.append("id_area_negocio,area_de_negocio,id_empleado,cod_empleado,nombre,id_indicador,indicador,id_familia,familia,periodo,meta,real");
+                csvWriter.append("\n");
                 
-                try {
-                    csvWriter.append(obj.getIdAreaNeogocio()+","+obj.getAreaNegocio()+","+obj.getIdEmpelado()+","+obj.getCodEmpleado()+","+obj.getNombre()+","+obj.getIdIndicador()+","+obj.getIndicador()+","+obj.getIdFamilia()+","+obj.getFamilia()+", , , ");
-                    csvWriter.append("\n");
-                    csvWriter.flush();
-                } catch (IOException ex) {
-                    Logger.getLogger(dowloadTemplate.class.getName()).log(Level.SEVERE, null, ex);
-                }
-            
-            
-            });
-            
-
-            csvWriter.close();
+                iTerEmpleadoFamiliaIndicadorServices.listaCsvIndicadorPlantilla().forEach((obj)->{
+                    
+                    try {
+                        csvWriter.append(obj.getIdAreaNeogocio()+","+obj.getAreaNegocio()+","+obj.getIdEmpelado()+","+obj.getCodEmpleado()+","+obj.getNombre()+","+obj.getIdIndicador()+","+obj.getIndicador()+","+obj.getIdFamilia()+","+obj.getFamilia()+", , , ");
+                        csvWriter.append("\n");
+                       
+                    } catch (IOException ex) {
+                        Logger.getLogger(dowloadTemplate.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+                    
+                    
+                });
+                csvWriter.flush();
+            }
             csvOut.close();
         } catch (IOException ex) {
            

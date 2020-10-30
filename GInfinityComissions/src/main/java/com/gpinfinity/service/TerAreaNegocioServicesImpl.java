@@ -24,7 +24,7 @@ public class TerAreaNegocioServicesImpl  implements ITerAreaNegocioServices{
     
     @Override
     public List<TerAreaNegocio> listAllAreaNegocio() {
-        return iterAreaNegocioRepository.findAll();
+        return iterAreaNegocioRepository.findEstado();
     }
     
 }
