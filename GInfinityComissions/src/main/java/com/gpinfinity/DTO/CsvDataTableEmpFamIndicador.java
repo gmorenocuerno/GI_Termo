@@ -11,8 +11,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 /**
- *
- * @author nivrist
+ * Clase que define ls tabla para exportar los datos del resultado de los calculos para las areas de negocio de B2D, B2C, B2B Segmentado y Creditos y Cobros
+ * @author Grupo Infinity, S.A. DE C.V.
  */
 @Data
 @NoArgsConstructor
