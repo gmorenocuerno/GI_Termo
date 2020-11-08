@@ -78,7 +78,7 @@ public class parameTextilesController extends Utils implements Serializable {
         clearParamTextil();
 
         listAreaNegocio = new ArrayList<>();
-        terAreaNegocioServices.listAllAreaNegocio().forEach((arn) -> {
+        terAreaNegocioServices.listAllAreaNegocioConTextil().forEach((arn) -> {
             listAreaNegocio.add(new SelectItem(arn.getId(), arn.getDescripcion()));
         });
 

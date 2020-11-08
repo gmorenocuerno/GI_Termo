@@ -17,4 +17,6 @@ public interface ITerAreaNegocioServices {
     
     public List<TerAreaNegocio> listAllAreaNegocio();
     
+    public List<TerAreaNegocio> listAllAreaNegocioConTextil();
+    
 }

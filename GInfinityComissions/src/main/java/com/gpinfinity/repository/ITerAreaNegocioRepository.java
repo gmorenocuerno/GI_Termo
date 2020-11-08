@@ -18,7 +18,11 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface ITerAreaNegocioRepository extends JpaRepository<TerAreaNegocio, Integer>{
     
-    @Query(nativeQuery = true, value = "select  *  from  ter_area_negocio where estado ='A'")
+    @Query(nativeQuery = true, value = "select  *  from  ter_area_negocio where estado ='A' and upper(descripcion) not like '%TEXTIL%' ")
     public List<TerAreaNegocio> findEstado();
+    
+    
+    @Query(nativeQuery = true, value = "select  *  from  ter_area_negocio where estado ='A'")
+    public List<TerAreaNegocio> findEstadoAll();
     
 }

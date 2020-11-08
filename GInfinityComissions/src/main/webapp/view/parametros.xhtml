@@ -61,7 +61,7 @@
                                 <h:panelGroup styleClass="md-inputfield">
                                     <p:selectOneMenu disabled="#{paramController.parametroselected}" required="true" value="#{paramController.paramIdAreaNegocio}" id="areanegocio">
                                         <f:selectItem itemLabel="Seleccion Uno" itemValue="" />
-                                        <f:selectItems value="#{paramController.listAreaNegocio}" />
+                                        <f:selectItems value="#{paramController.listAreaNegocioParametro}" />
                                         <p:ajax listener="#{paramController.loadIndicador()}" update="indicador" />
                                     </p:selectOneMenu>
                                     <p:message for="areanegocio" />

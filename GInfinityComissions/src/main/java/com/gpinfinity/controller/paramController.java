@@ -74,6 +74,7 @@ public class paramController extends Utils implements Serializable {
     private List<TerParametrosDTO> listTerParametroIndicador;
     private TerParametrosDTO selectedTerParametroIndicador;
     private List<SelectItem> listAreaNegocio;
+    private List<SelectItem> listAreaNegocioParametro;
     private List<SelectItem> listPeriodo;
     private List<SelectItem> listIndicador;
     private UploadedFile file;
@@ -101,6 +102,13 @@ public class paramController extends Utils implements Serializable {
         terAreaNegocioServices.listAllAreaNegocio().forEach((arn) -> {
             listAreaNegocio.add(new SelectItem(arn.getId(), arn.getDescripcion()));
         });
+        listAreaNegocioParametro = new ArrayList<>();
+        terAreaNegocioServices.listAllAreaNegocioConTextil().forEach((arn) -> {
+            listAreaNegocioParametro.add(new SelectItem(arn.getId(), arn.getDescripcion()));
+        });
+        
+        
+        
         
        
 
