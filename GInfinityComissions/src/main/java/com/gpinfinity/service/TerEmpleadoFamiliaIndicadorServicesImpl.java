@@ -10,10 +10,12 @@ import com.gpinfinity.DTO.CsvDataTableEmpFamIndicador;
 import com.gpinfinity.DTO.CsvIndicadorErrorLoad;
 import com.gpinfinity.DTO.EmpleadosCalcDTO;
 import com.gpinfinity.DTO.IndicadorFamiliaEmpCsvDTO;
+import com.gpinfinity.DTO.ReporteComisionesDTO;
 import com.gpinfinity.entities.TerEmpleadoFamiliaIndicador;
 import com.gpinfinity.entities.TerEmpleadoFamiliaIndicadorPK;
 import com.gpinfinity.repository.ITerEmpleadoFamiliaIndicadorRepository;
 import com.gpinfinity.utils.UsrDetails;
+import java.io.File;
 import java.math.BigDecimal;
 import java.util.ArrayList;
 import java.util.List;
@@ -73,9 +75,9 @@ public class TerEmpleadoFamiliaIndicadorServicesImpl implements ITerEmpleadoFami
     }
 
     @Override
-    public List<CsvDataTableEmpFamIndicador> allDataEmpFamIndicador(int idAreaNegocio , int periodo) {
+    public List<CsvDataTableEmpFamIndicador> allDataEmpFamIndicador(int idAreaNegocio, int periodo) {
         List<CsvDataTableEmpFamIndicador> listDataTableCsv = new ArrayList<>();
-        iterEmpleadoFamiliaIndicadorRepository.allDataEmpFamIndicador(idAreaNegocio,periodo).forEach((obj) -> {
+        iterEmpleadoFamiliaIndicadorRepository.allDataEmpFamIndicador(idAreaNegocio, periodo).forEach((obj) -> {
             CsvDataTableEmpFamIndicador data = CsvDataTableEmpFamIndicador.builder()
                     .rowNum(obj[0].toString())
                     .descAreaNegocio(obj[1].toString())
@@ -91,6 +93,7 @@ public class TerEmpleadoFamiliaIndicadorServicesImpl implements ITerEmpleadoFami
                     .ponderacion(obj[11].toString())
                     .montoAplicado(obj[12].toString())
                     .montoCalculado(obj[13].toString())
+                    .filial(obj[14].toString())
                     .build();
             listDataTableCsv.add(data);
 
@@ -105,7 +108,7 @@ public class TerEmpleadoFamiliaIndicadorServicesImpl implements ITerEmpleadoFami
         try {
 
             iterEmpleadoFamiliaIndicadorRepository.calculaComisiones(areaNegocio, periodo);
-            
+
         } catch (Exception ex) {
             ex.printStackTrace();
         }
@@ -113,10 +116,10 @@ public class TerEmpleadoFamiliaIndicadorServicesImpl implements ITerEmpleadoFami
 
     @Override
     public List<String> allPeriodo() {
-        List<String> listPeriodo =  new ArrayList<>();
-        iterEmpleadoFamiliaIndicadorRepository.allPeriodo().forEach((obj)->{        
+        List<String> listPeriodo = new ArrayList<>();
+        iterEmpleadoFamiliaIndicadorRepository.allPeriodo().forEach((obj) -> {
             listPeriodo.add(obj);
-        });        
+        });
         return listPeriodo;
     }
 
@@ -126,9 +129,9 @@ public class TerEmpleadoFamiliaIndicadorServicesImpl implements ITerEmpleadoFami
     }
 
     @Override
-    public List<EmpleadosCalcDTO> listAllEmpleadosCalc(int idAreaNegocio , int periodo) {
-        List<EmpleadosCalcDTO> listEmp =  new ArrayList<>();
-        iterEmpleadoFamiliaIndicadorRepository.listAllEmpleadosCalc(idAreaNegocio,periodo).forEach((emp)->{
+    public List<EmpleadosCalcDTO> listAllEmpleadosCalc(int idAreaNegocio, int periodo) {
+        List<EmpleadosCalcDTO> listEmp = new ArrayList<>();
+        iterEmpleadoFamiliaIndicadorRepository.listAllEmpleadosCalc(idAreaNegocio, periodo).forEach((emp) -> {
             EmpleadosCalcDTO empDto = EmpleadosCalcDTO.builder()
                     .periodo(emp[0].toString())
                     .areNegocio(emp[1].toString())
@@ -139,29 +142,52 @@ public class TerEmpleadoFamiliaIndicadorServicesImpl implements ITerEmpleadoFami
                     .idEmpleado(emp[6].toString())
                     .build();
             listEmp.add(empDto);
-        
+
         });
-        
+
         return listEmp;
     }
 
     @Override
     public List<CsvDataIndicadorPlantilla> listaCsvIndicadorPlantilla() {
-         List<CsvDataIndicadorPlantilla> listEmp =  new ArrayList<>();
-         iterEmpleadoFamiliaIndicadorRepository.listIndicadorCsvObject().forEach((obj)->{
-         CsvDataIndicadorPlantilla emp =  CsvDataIndicadorPlantilla.builder()
-                 .idAreaNeogocio((obj[0]!=null?obj[0].toString():""))
-                 .areaNegocio((obj[1]!=null?obj[1].toString():""))
-                 .idEmpelado((obj[2]!=null?obj[2].toString():""))
-                 .codEmpleado((obj[3]!=null?obj[3].toString():""))
-                 .nombre((obj[4]!=null?obj[4].toString():""))
-                 .idIndicador((obj[5]!=null?obj[5].toString():""))
-                 .indicador((obj[6]!=null?obj[6].toString():""))
-                 .idFamilia((obj[7]!=null?obj[7].toString():""))
-                 .familia((obj[8]!=null?obj[8].toString():"")).build();
-         listEmp.add(emp);
-         });
-         return listEmp;
+        List<CsvDataIndicadorPlantilla> listEmp = new ArrayList<>();
+        iterEmpleadoFamiliaIndicadorRepository.listIndicadorCsvObject().forEach((obj) -> {
+            CsvDataIndicadorPlantilla emp = CsvDataIndicadorPlantilla.builder()
+                    .idAreaNeogocio((obj[0] != null ? obj[0].toString() : ""))
+                    .areaNegocio((obj[1] != null ? obj[1].toString() : ""))
+                    .idEmpelado((obj[2] != null ? obj[2].toString() : ""))
+                    .codEmpleado((obj[3] != null ? obj[3].toString() : ""))
+                    .nombre((obj[4] != null ? obj[4].toString() : ""))
+                    .idIndicador((obj[5] != null ? obj[5].toString() : ""))
+                    .indicador((obj[6] != null ? obj[6].toString() : ""))
+                    .idFamilia((obj[7] != null ? obj[7].toString() : ""))
+                    .familia((obj[8] != null ? obj[8].toString() : "")).build();
+            listEmp.add(emp);
+        });
+        return listEmp;
+    }
+
+    @Override
+    public List<ReporteComisionesDTO> reporteData(int periodoInicial, int periodoFinal) {
+
+        List<ReporteComisionesDTO> listEmp = new ArrayList<>();
+        iterEmpleadoFamiliaIndicadorRepository.genReporteUn(periodoInicial, periodoFinal).forEach(o -> {
+           ReporteComisionesDTO dta =  ReporteComisionesDTO.builder()
+                   .periodo((o[0] !=null ? o[0].toString():""))
+                   .areanegocio((o[1] !=null ? o[1].toString():""))
+                   .filial((o[2] !=null ? o[2].toString():""))
+                   .idEmpleado((o[3] !=null ? o[3].toString():""))
+                   .empleado((o[4] !=null ? o[4].toString():""))
+                   .Salario((o[5] !=null ? o[5].toString():""))
+                   .calculo((o[6] !=null ? o[6].toString():""))
+                   .porceVariable((o[7] !=null ? o[7].toString():""))
+                   .build();
+           listEmp.add(dta);
+           String path = File.separator + "var"+ File.separator + "temp";
+
+        });
+
+        return listEmp;
     }
 
 }

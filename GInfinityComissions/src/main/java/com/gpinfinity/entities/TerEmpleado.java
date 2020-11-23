@@ -70,6 +70,10 @@ public class TerEmpleado implements Serializable {
     @Size(max = 50)
     @Column(name = "usuario_modificacion")
     private String usuarioModificacion;
+    @Column(name = "filial")
+    private String filial;
+    @Column(name = "TASA_CONVERSION")
+    private BigDecimal tasaConversion;
     @Column(name = "fecha_modificacion")
     @Temporal(TemporalType.TIMESTAMP)
     private Date fechaModificacion;
@@ -124,6 +128,22 @@ public class TerEmpleado implements Serializable {
 
     public String getUsuarioCreacion() {
         return usuarioCreacion;
+    }
+
+    public String getFilial() {
+        return filial;
+    }
+
+    public void setFilial(String filial) {
+        this.filial = filial;
+    }
+
+    public BigDecimal getTasaConversion() {
+        return tasaConversion;
+    }
+
+    public void setTasaConversion(BigDecimal tasaConversion) {
+        this.tasaConversion = tasaConversion;
     }
 
     public void setUsuarioCreacion(String usuarioCreacion) {

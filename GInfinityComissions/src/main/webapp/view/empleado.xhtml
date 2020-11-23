@@ -116,7 +116,23 @@
                                      <label>Id Vendedor</label>
                                     <p:message for="paramvende"  />
                                 </h:panelGroup>
-                                                               
+                                  
+                                <p:outputLabel for="paramFilial" value="Filial"/>
+                                <h:panelGroup styleClass="md-inputfield">
+                                    <p:inputText autocomplete="off"  required="true" value="#{empleadoController.paramFilial}" id="paramFilial"/>                                     
+                                     <label>Filial</label>
+                                    <p:message for="paramFilial"  />
+                                </h:panelGroup>
+                                
+                                
+                                 <p:outputLabel for="paramTasa" value="Tasa"/>
+                                <h:panelGroup styleClass="md-inputfield">
+                                    <p:inputNumber autocomplete="off" decimalPlaces="2"  required="true" value="#{empleadoController.paramTasa}" id="paramTasa"/>                                     
+                                     <label>Tasa</label>
+                                    <p:message for="paramTasa"  />
+                                </h:panelGroup>
+                                
+                                
                                 <p:outputLabel for="estadoparameter" value="Estado"/>
                                 <h:panelGroup styleClass="md-inputfield">
                                     <p:selectOneMenu required="true" value="#{empleadoController.paramEstado}" id="estadoparameter">

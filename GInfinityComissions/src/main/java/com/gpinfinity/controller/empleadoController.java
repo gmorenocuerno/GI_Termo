@@ -41,6 +41,8 @@ public class empleadoController extends Utils implements Serializable {
      private String paramIdEmpleado;
      private String paramIdVendedor;
      private String paramEstado;
+     private String paramFilial;
+     private String paramTasa;
      private List<SelectItem> listAreaNegocio;
      private List<TerEmpleado> listEmpleados;
      private List<TerEmpleado> listEmpleadosFilter;
@@ -80,6 +82,8 @@ public class empleadoController extends Utils implements Serializable {
             ter.setIdEmpleado(getParamIdEmpleado());
             ter.setIdVendedor(getParamIdVendedor());
             ter.setSueldo(new BigDecimal(getParamSueldo()));
+            ter.setFilial(getParamFilial());
+            ter.setTasaConversion(new BigDecimal(getParamTasa()));
             ter.setTerEmpleadoPK(pk);
             if (parametroSelectedEmpleado) {
                 ter.setUsuarioModificacion(usrDetails.get_userName());
@@ -112,6 +116,8 @@ public class empleadoController extends Utils implements Serializable {
         setParamSueldo(selectedEmpleados.getSueldo().toString());
         setParamIdEmpleado(selectedEmpleados.getIdEmpleado());
         setParamIdVendedor(selectedEmpleados.getIdVendedor());
+        setParamFilial(selectedEmpleados.getFilial());
+        setParamTasa(String.valueOf((selectedEmpleados.getTasaConversion()!=null?selectedEmpleados.getTasaConversion():0)));
         
 
     }
@@ -125,7 +131,10 @@ public class empleadoController extends Utils implements Serializable {
         setParamIdEmpleado("");
         setParamIdVendedor("");
         setParamNombre("");
-        setParamSueldo("");     
+        setParamSueldo("");  
+        setParamFilial("");
+        setParamTasa("");
+                
          parametroSelectedEmpleado = false;
         setParamId((terEmpleadoServices.getNextId()));
     }

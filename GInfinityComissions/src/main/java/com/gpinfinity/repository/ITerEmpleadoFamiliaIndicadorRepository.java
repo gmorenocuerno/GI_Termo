@@ -36,7 +36,8 @@ public interface ITerEmpleadoFamiliaIndicadorRepository extends JpaRepository<Te
             + "cast(isnull(a.porcentaje_variable,0) as varchar) as porcentaje_variable,\n"
             + "cast(isnull(a.ponderacion,0) as varchar) as ponderacion ,\n"
             + "cast(isnull(a.monto_aplicado,0) as varchar) as monto_aplicado,\n"
-            + "cast(isnull(a.monto_calculado,0) as varchar) as monto_calculado\n"
+            + "cast(isnull(a.monto_calculado,0) as varchar) as monto_calculado , \n" 
+            + "isnull(b.filial,'') fili\n"
             + "FROM ter_empleado_familia_indicador a\n"
             + "INNER JOIN ter_empleado b on b.id = a.id_empleado and b.id_area_negocio = a.id_area_negocio\n"
             + "INNER JOIN ter_area_negocio c on c.id = a.id_area_negocio\n"
@@ -45,6 +46,24 @@ public interface ITerEmpleadoFamiliaIndicadorRepository extends JpaRepository<Te
             + "INNER JOIN ter_empleado_familia f on f.id_area_negocio = a.id_area_negocio and f.id_familia = a.id_familia\n"
             + "and f.id_empleado = a.id_empleado and f.id_indicador = a.id_indicador where  f.id_area_negocio = ?  and a.periodo = ? ")
     public List<Object[]> allDataEmpFamIndicador(int idAreaNegocio , int periodo);
+    
+     @Query(nativeQuery = true, value = "SELECT      cast(isnull(a.periodo,0) as varchar) as periodo ,\n" +
+"            c.descripcion as descareaNegocio ,           \n" +
+"			isnull(b.filial,'') fili,\n" +
+"			cast(b.id_empleado as varchar) as idEmpleado,\n" +
+"			b.nombre nombreEmpleado ,\n" +
+"			cast(b.sueldo as varchar) salario,\n" +
+"			cast(isnull(a.monto_calculado,0) as varchar) as monto_calculado,\n" +
+"			cast(isnull(a.porcentaje_variable,0) as varchar) as porcentaje_variable           		\n" +
+"            FROM ter_empleado_familia_indicador a\n" +
+"            INNER JOIN ter_empleado b on b.id = a.id_empleado and b.id_area_negocio = a.id_area_negocio\n" +
+"            INNER JOIN ter_area_negocio c on c.id = a.id_area_negocio\n" +
+"            INNER JOIN ter_familia d on d.id = a.id_familia and d.id_area_negocio = a.id_area_negocio\n" +
+"            INNER JOIN ter_indicador_area_negocio e ON e.id = a.id_indicador and e.id_area_negocio = a.id_area_negocio\n" +
+"            INNER JOIN ter_empleado_familia f on f.id_area_negocio = a.id_area_negocio and f.id_familia = a.id_familia\n" +
+"            and f.id_empleado = a.id_empleado and f.id_indicador = a.id_indicador\n" +
+"			where a.periodo between ? and  ?")
+    public List<Object[]> genReporteUn(int periodoInicial , int periodoFinal);
 
     @Procedure(procedureName = "TER_COMISIONES_Generar")
     public void calculaComisiones(@Param("AREA_NEGOCIO") int area_negocio, @Param("PERIODO") int periodo);

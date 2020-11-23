@@ -34,6 +34,7 @@ public class CsvDataTableEmpFamIndicador {
     private String ponderacion;
     private String montoAplicado;
     private String montoCalculado;
+    private String filial;
     
     
     
