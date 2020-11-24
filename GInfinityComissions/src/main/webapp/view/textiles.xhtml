@@ -47,10 +47,15 @@
                                     <p:message for="calcperiodo" />
                                 </h:panelGroup>
 
-                                <p:commandButton value="Calcular comision" update="msg,formFileCsv" actionListener="#{textilController.calcularComisionTextil()}"  styleClass="NavyButton" />
+                                <p:commandButton value="Calcular comision" update="msg,formFileCsv" actionListener="#{textilController.calcularComisionTextil()}"  styleClass="NavyButton" >
+                                <p:confirm header="Calculo de comisiones Textiles" message="Desea realizar el calulo de comision ?" icon="pi pi-exclamation-triangle" />
+                                </p:commandButton>
 
                                 <p:commandButton value="Mostrar calculo final" actionListener="#{textilController.periodFilasMostrar()}" style="width:auto" update=":formExporte:panelForm:CalculoTotal :formExporte:panelForm:CalculoMensual :formExporte:panelForm:CalculoAcumulado" onclick="PF('dlgCalcEmp').show();"  styleClass="NavyButton" />
-
+ <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+        <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+        <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+    </p:confirmDialog>  
                             </p:panelGrid>
 
 

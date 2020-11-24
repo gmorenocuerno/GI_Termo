@@ -18,7 +18,7 @@
                             <p:fieldset legend="Ejemplo plantilla de carga" style="margin-bottom:20px">
                                 <p:panelGrid columns="5" layout="grid" styleClass="ui-panelgrid-blank form-group">
                                     Plantilla Indicadores <p:commandButton  style="width: auto" actionListener="#{dowloadTemplate.downloadPlantilla()}" value="Descargar" styleClass="NavyButton" ajax="false"  >
-                                      
+
                                     </p:commandButton>    
                                 </p:panelGrid>
                             </p:fieldset>
@@ -35,7 +35,7 @@
                             </p:panelGrid>
                         </div>
                         <div class="card card-w-title">
-                            <p:panelGrid columns="5" layout="grid"  styleClass="ui-panelgrid-blank form-group">
+                            <p:panelGrid columns="7" layout="grid"  styleClass="ui-panelgrid-blank form-group">
 
                                 <p:outputLabel style="display: none" for="caclareanegocio" value="Area de Negoico"/>
                                 <h:panelGroup styleClass="md-inputfield">
@@ -53,11 +53,18 @@
                                     </p:selectOneMenu>
                                     <p:message for="calcperiodo" />
                                 </h:panelGroup>
-                                
-                                <p:commandButton value="Calcular comision" update="msg,formFileCsv" actionListener="#{paramController.calcularComisiones()}"  styleClass="NavyButton" />
-                                
-                                <p:commandButton value="Mostrar calculo final" actionListener="#{paramController.loadListEmpeladosCalcDtoFiltro()}" style="width:auto" update=":formExporte:calcEmpelados" onclick="PF('dlgCalcEmp').show();"  styleClass="NavyButton" />
 
+
+
+
+                                <p:commandButton value="Calcular comision" update="msg,formFileCsv" actionListener="#{paramController.calcularComisiones()}"  styleClass="NavyButton" >
+                                    <p:confirm header="Calculo de comisiones B2D" message="Desea realizar el calulo de comision ?" icon="pi pi-exclamation-triangle" />
+                                </p:commandButton>                                
+                                <p:commandButton value="Mostrar calculo final" actionListener="#{paramController.loadListEmpeladosCalcDtoFiltro()}" style="width:auto" update=":formExporte:calcEmpelados" onclick="PF('dlgCalcEmp').show();"  styleClass="NavyButton" />
+                                <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
+                                    <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
+                                    <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
+                                </p:confirmDialog>  
                             </p:panelGrid>
 
 
@@ -99,7 +106,7 @@
                     <h:form id="findForm">
                         <div class="card card-w-title">
                             <p:fieldset legend="Busqueda Indicadores" style="margin-bottom:20px">
-                                <p:panelGrid columns="5" layout="grid"  styleClass="ui-panelgrid-blank form-group">
+                                <p:panelGrid columns="7" layout="grid"  styleClass="ui-panelgrid-blank form-group">
 
                                     <p:outputLabel style="display: none" for="findcaclareanegocio" value="Area de Negoico"/>
                                     <h:panelGroup styleClass="md-inputfield">
@@ -119,6 +126,7 @@
                                     </h:panelGroup>
 
                                     <p:commandButton value="Buscar" update="tblcsvempfam"   actionListener="#{paramController.loadData()}" styleClass="NavyButton" />
+                                    <p:commandButton value="Reporte" onclick="PF('dlgReporteComi').show();"   actionListener="#{paramController.loadData()}" styleClass="NavyButton" />
 
                                 </p:panelGrid>
                             </p:fieldset>
@@ -148,6 +156,10 @@
                                     <h:outputText style="font-weight: normal" value="#{tbl_csv.nombreEmpleado}" />
                                 </p:column>
 
+                                <p:column style="text-transform: capitalize;font-weight: bold" headerText="Filial" >
+                                    <h:outputText style="font-weight: normal" value="#{tbl_csv.filial}" />
+                                </p:column>
+
                                 <p:column style="text-transform: capitalize;font-weight: bold" headerText="Indicador" >
                                     <h:outputText style="font-weight: normal" value="#{tbl_csv.descIndicador}" />
                                 </p:column>
@@ -159,11 +171,11 @@
                                 <p:column style="text-transform: capitalize;font-weight: bold" headerText="Periodo" >
                                     <h:outputText style="font-weight: normal" value="#{tbl_csv.periodo}" />
                                 </p:column>
-                                
+
                                 <p:column style="text-transform: capitalize;font-weight: bold" headerText="Monto Calculado" >
                                     <h:outputText style="font-weight: normal" value="$ #{tbl_csv.montoCalculado}" />
                                 </p:column>
-                                
+
                                 <p:rowExpansion>
                                     <p:panelGrid  columns="2" columnClasses="label,value" style="width:100%">
                                         <f:facet name="header">
@@ -191,7 +203,7 @@
                                         <h:outputText value="Monto Aplicado:" />
                                         <h:outputText value="$ #{tbl_csv.montoAplicado}" />
 
-                                        
+
                                     </p:panelGrid>
                                 </p:rowExpansion>
                             </p:dataTable>
@@ -233,15 +245,15 @@
                     <p:column style="text-align: center;font-weight: bold" headerText="Area de Negocio" >
                         <h:outputText style="font-weight: normal" value="#{caclempleado.areNegocio}" />
                     </p:column>
-                    
+
                     <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="ID Empleado" >
                         <h:outputText style="font-weight: normal" value="#{caclempleado.idEmpleado}" />
                     </p:column>
                     <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Empleado" >
                         <h:outputText style="font-weight: normal" value="#{caclempleado.nombre}" />
                     </p:column>
-                    
-                    <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Variable" >
+
+                    <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Salario" >
                         <h:outputText style="font-weight: normal" value="#{caclempleado.salario}" />
                     </p:column>
                     <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Calculado" >
@@ -253,5 +265,37 @@
                 </p:dataTable>
             </h:form>
         </p:dialog>  
+
+
+        <p:dialog header="Reporte de comisiones por  UN" showEffect="clip" hideEffect="clip" widgetVar="dlgReporteComi" modal="true" height="200" width="1000" responsive="true">
+
+            <h:form id="formExporteUn">
+                <p:fieldset legend="Reporte" style="margin-bottom:20px">
+                    <p:panelGrid columns="7" layout="grid"  styleClass="ui-panelgrid-blank form-group">
+                        <p:outputLabel style="display: none" for="calcperiodoIni" value="Periodo Inicial"/>
+                        <h:panelGroup styleClass="md-inputfield">
+                            <p:selectOneMenu required="true"  effect="fold"  value="#{paramController.rptPeriodoInicial}" id="calcperiodoIni">
+                                <f:selectItem itemLabel="Seleccione Periodo Inicial" itemValue="" />
+                                <f:selectItems value="#{paramController.listPeriodo}" />                                        
+                            </p:selectOneMenu>
+                            <p:message for="calcperiodoIni" />
+                        </h:panelGroup>
+                        
+                        <p:outputLabel style="display: none" for="calcperiodoFin" value="Periodo Final"/>
+                        <h:panelGroup styleClass="md-inputfield">
+                            <p:selectOneMenu required="true"  effect="fold"  value="#{paramController.rptPeriodoFinal}" id="calcperiodoFin">
+                                <f:selectItem itemLabel="Seleccione Periodo Final" itemValue="" />
+                                <f:selectItems value="#{paramController.listPeriodo}" />                                        
+                            </p:selectOneMenu>
+                            <p:message for="calcperiodoFin" />
+                        </h:panelGroup>
+                        
+                        <p:commandButton value="Generar Reporte" ajax="false"  actionListener="#{paramController.generarReporte()}" styleClass="NavyButton" />
+                    </p:panelGrid>
+                </p:fieldset>
+            </h:form>
+        </p:dialog>  
+
+
     </ui:define>
 </ui:composition>

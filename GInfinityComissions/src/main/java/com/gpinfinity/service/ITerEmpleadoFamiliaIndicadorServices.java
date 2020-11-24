@@ -10,6 +10,7 @@ import com.gpinfinity.DTO.CsvDataTableEmpFamIndicador;
 import com.gpinfinity.DTO.CsvIndicadorErrorLoad;
 import com.gpinfinity.DTO.EmpleadosCalcDTO;
 import com.gpinfinity.DTO.IndicadorFamiliaEmpCsvDTO;
+import com.gpinfinity.DTO.ReporteComisionesDTO;
 import java.util.List;
 
 /**
@@ -23,6 +24,8 @@ public CsvIndicadorErrorLoad crearIndicadorFamEmp(IndicadorFamiliaEmpCsvDTO csvD
 public List<CsvDataTableEmpFamIndicador> allDataEmpFamIndicador(int idAreaNegocio , int periodo);
 
 public void calcularComision(int areaNegocio , int periodo);
+
+public List<ReporteComisionesDTO> reporteData(int periodoInicial , int periodoFinal);
 
 public List<String> allPeriodo();
 
