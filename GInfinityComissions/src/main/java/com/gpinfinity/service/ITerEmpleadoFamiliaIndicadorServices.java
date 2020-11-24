@@ -27,6 +27,8 @@ public void calcularComision(int areaNegocio , int periodo);
 
 public List<ReporteComisionesDTO> reporteData(int periodoInicial , int periodoFinal);
 
+public List<ReporteComisionesDTO> reporteDataTextiles(int periodoInicial , int periodoFinal);
+
 public List<String> allPeriodo();
 
 public void mergeTableTerEmpFamIndicador();

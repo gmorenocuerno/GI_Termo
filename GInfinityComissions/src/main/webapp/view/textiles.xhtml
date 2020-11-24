@@ -110,6 +110,8 @@
                                     </h:panelGroup>
 
                                     <p:commandButton value="Buscar" update="tblcsvempfam"   actionListener="#{textilController.loadData()}" styleClass="NavyButton" />
+                                    
+                                    <p:commandButton value="Reporte" onclick="PF('dlgReporteComi').show();"   styleClass="NavyButton" />
 
                                 </p:panelGrid>
                             </p:fieldset>
@@ -443,5 +445,36 @@
                 </p:accordionPanel>
             </h:form>
         </p:dialog>  
+        
+        <p:dialog header="Reporte de comisiones por  UN" showEffect="clip" hideEffect="clip" widgetVar="dlgReporteComi" modal="true" height="200" width="1000" responsive="true">
+
+            <h:form id="formExporteUn">
+                <p:fieldset legend="Reporte" style="margin-bottom:20px">
+                    <p:panelGrid columns="7" layout="grid"  styleClass="ui-panelgrid-blank form-group">
+                        <p:outputLabel style="display: none" for="calcperiodoIni" value="Periodo Inicial"/>
+                        <h:panelGroup styleClass="md-inputfield">
+                            <p:selectOneMenu required="true"  effect="fold"  value="#{textilController.rptPeriodoInicial}" id="calcperiodoIni">
+                                <f:selectItem itemLabel="Seleccione Periodo Inicial" itemValue="" />
+                                <f:selectItems value="#{textilController.listPeriodo}" />                                        
+                            </p:selectOneMenu>
+                            <p:message for="calcperiodoIni" />
+                        </h:panelGroup>
+                        
+                        <p:outputLabel style="display: none" for="calcperiodoFin" value="Periodo Final"/>
+                        <h:panelGroup styleClass="md-inputfield">
+                            <p:selectOneMenu required="true"  effect="fold"  value="#{textilController.rptPeriodoFinal}" id="calcperiodoFin">
+                                <f:selectItem itemLabel="Seleccione Periodo Final" itemValue="" />
+                                <f:selectItems value="#{textilController.listPeriodo}" />                                        
+                            </p:selectOneMenu>
+                            <p:message for="calcperiodoFin" />
+                        </h:panelGroup>
+                        
+                        <p:commandButton value="Generar Reporte" ajax="false"  actionListener="#{textilController.generarReporte()}" styleClass="NavyButton" />
+                    </p:panelGrid>
+                </p:fieldset>
+            </h:form>
+        </p:dialog>  
+
+        
     </ui:define>
 </ui:composition>

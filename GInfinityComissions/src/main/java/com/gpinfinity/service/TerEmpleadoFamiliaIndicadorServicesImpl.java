@@ -190,4 +190,26 @@ public class TerEmpleadoFamiliaIndicadorServicesImpl implements ITerEmpleadoFami
         return listEmp;
     }
 
+    @Override
+    public List<ReporteComisionesDTO> reporteDataTextiles(int periodoInicial, int periodoFinal) {
+        List<ReporteComisionesDTO> listEmp = new ArrayList<>();
+        iterEmpleadoFamiliaIndicadorRepository.genReporteUnTextil(periodoInicial, periodoFinal).forEach(o -> {
+           ReporteComisionesDTO dta =  ReporteComisionesDTO.builder()
+                   .periodo((o[0] !=null ? o[0].toString():""))
+                   .areanegocio((o[1] !=null ? o[1].toString():""))
+                   .filial((o[2] !=null ? o[2].toString():""))
+                   .idEmpleado((o[3] !=null ? o[3].toString():""))
+                   .empleado((o[4] !=null ? o[4].toString():""))
+                   .Salario((o[5] !=null ? o[5].toString():""))
+                   .calculo((o[6] !=null ? o[6].toString():""))
+                   .porceVariable((o[7] !=null ? o[7].toString():""))
+                   .build();
+           listEmp.add(dta);
+           String path = File.separator + "var"+ File.separator + "temp";
+
+        });
+
+        return listEmp;
+    }
+
 }

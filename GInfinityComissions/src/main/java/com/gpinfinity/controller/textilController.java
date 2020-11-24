@@ -13,10 +13,14 @@ import com.gpinfinity.DTO.TextilTotalDTO;
 import com.gpinfinity.config.ApplicationContextProvider;
 import com.gpinfinity.entities.TerComisionesTextil;
 import com.gpinfinity.service.ITerComisionesTextilServices;
+import com.gpinfinity.service.ITerEmpleadoFamiliaIndicadorServices;
 import com.gpinfinity.utils.Utils;
+import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStreamReader;
+import java.io.OutputStream;
+import java.io.OutputStreamWriter;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,12 +28,15 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import javax.annotation.PostConstruct;
+import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.inject.Named;
 import javax.faces.view.ViewScoped;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import org.apache.commons.csv.CSVFormat;
+import org.apache.commons.csv.CSVPrinter;
 import org.primefaces.event.FileUploadEvent;
 import org.primefaces.model.DefaultStreamedContent;
 import org.primefaces.model.StreamedContent;
@@ -48,6 +55,8 @@ public class textilController extends Utils implements Serializable {
     private String periodo;
     private int buscarPeriodo;
     private int selectedMes;
+    private int rptPeriodoInicial;
+    private int rptPeriodoFinal;
     private List<SelectItem> listPeriodo;
     private List<TerComisionesTextil> listTableTerComisionesTextil;
     private List<TextilTotalDTO> textiBonoList;
@@ -60,6 +69,7 @@ public class textilController extends Utils implements Serializable {
      * Creates a new instance of textilController
      */
     private ITerComisionesTextilServices iTerComisionesTextilServices;
+    ITerEmpleadoFamiliaIndicadorServices iterEmpleadoFamiliaIndicadorServices;
 
     @PostConstruct
     public void init() {
@@ -181,6 +191,69 @@ public class textilController extends Utils implements Serializable {
         //loadListEmpleadosCalcDto();
     }
 
+    public void generarReporte(){
+    String file_name = "Reporte_Comisiones.csv";
+
+        FacesContext fc = FacesContext.getCurrentInstance();
+        ExternalContext ec = fc.getExternalContext();
+        ec.responseReset();
+        ec.setResponseCharacterEncoding("UTF-8");
+        ec.setResponseContentType("text/csv");
+        ec.setResponseHeader("Content-Disposition", "attachment; filename=\"" + file_name + "\"");
+        BufferedOutputStream csvOut = null;
+        try {
+            csvOut = new BufferedOutputStream(ec.getResponseOutputStream());
+            List<List<Object>> lists = new ArrayList<>();
+            iterEmpleadoFamiliaIndicadorServices.reporteDataTextiles(rptPeriodoInicial, rptPeriodoFinal).forEach((obj) -> {
+
+                    try {
+                         List<Object> list1 = new ArrayList<>();
+                        list1.add(obj.getPeriodo());
+                        list1.add(obj.getAreanegocio());
+                        list1.add(obj.getFilial());
+                        list1.add(obj.getIdEmpleado());
+                        list1.add(obj.getEmpleado());
+                        list1.add(obj.getSalario());
+                        list1.add(obj.getCalculo());
+                        list1.add(obj.getPorceVariable());
+                        lists.add(list1);
+
+                      
+                    } catch (Exception ex) {
+                        Logger.getLogger(dowloadTemplate.class.getName()).log(Level.SEVERE, null, ex);
+                    }
+
+                });            
+            String[] header = {"Periodo","Area de Negocio","Filial","Id Empleado","Empleado","Salario","Calculo","Porcentaje Calculado"};
+
+            exportCSVFile(csvOut, lists, "UTF-8", header);
+            csvOut.close();
+        } catch (IOException ex) {
+            Logger.getLogger(dowloadTemplate.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        finally {
+            fc.responseComplete();
+        }
+    
+    }
+public void exportCSVFile(OutputStream out, Iterable<?> iter, String charset, String... header) {
+        try {
+            // Write bom to prevent Chinese miscoding  
+            byte[] bytes = {(byte) 0xEF, (byte) 0xBB, (byte) 0xBF};
+            out.write(bytes);
+
+            OutputStreamWriter osw = new OutputStreamWriter(out, charset);
+            CSVFormat csvFormat = CSVFormat.EXCEL.withHeader(header);
+            
+            CSVPrinter csvPrinter = new CSVPrinter(osw, csvFormat);
+            csvPrinter.printRecords(iter);
+            csvPrinter.flush();
+            csvPrinter.close();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+    
     public void loadPeriodList() {
 
         listPeriodo = new ArrayList<>();
@@ -199,6 +272,7 @@ public class textilController extends Utils implements Serializable {
     public void loadContextBeanSring() {
 
         iTerComisionesTextilServices = ApplicationContextProvider.getApplicationContext().getBean(ITerComisionesTextilServices.class);
+        iterEmpleadoFamiliaIndicadorServices =  ApplicationContextProvider.getApplicationContext().getBean(ITerEmpleadoFamiliaIndicadorServices.class);
 
     }
 
