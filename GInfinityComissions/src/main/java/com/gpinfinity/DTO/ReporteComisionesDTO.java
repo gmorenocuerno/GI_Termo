@@ -25,7 +25,9 @@ public class ReporteComisionesDTO {
     private String filial;
     private String idEmpleado;
     private String Salario;
-    private String calculo;
-    private String porceVariable;
+    private String calculoMensual;
+    private String calculoAcumulado;
+    private String porceVariableMensual;
+    private String porceVariableAcumulado;
     private String empleado;
 }

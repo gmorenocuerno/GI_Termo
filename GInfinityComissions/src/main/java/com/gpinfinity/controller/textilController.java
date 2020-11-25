@@ -119,14 +119,14 @@ public class textilController extends Utils implements Serializable {
     }
 
     public void periodFilasMostrar(){
-    String mes=periodo.substring(4);  
-    if(mes.equals("")){
-    selectedMes = 0;            
-    }
-    else {
-    selectedMes =  Integer.parseInt(mes);
-    }
-    System.out.println("Mes Seleccionado" +  selectedMes);
+        String mes=periodo.substring(4);  
+        if(mes.equals("")){
+            selectedMes = 0;            
+        }
+        else {
+         selectedMes =  Integer.parseInt(mes);
+        }
+        //System.out.println("Mes Seleccionado" +  selectedMes);
     }
     
     public void calcularComisionTextil() {
@@ -214,8 +214,8 @@ public class textilController extends Utils implements Serializable {
                         list1.add(obj.getIdEmpleado());
                         list1.add(obj.getEmpleado());
                         list1.add(obj.getSalario());
-                        list1.add(obj.getCalculo());
-                        list1.add(obj.getPorceVariable());
+                        list1.add(obj.getCalculoMensual());
+                        list1.add(obj.getPorceVariableMensual());
                         lists.add(list1);
 
                       

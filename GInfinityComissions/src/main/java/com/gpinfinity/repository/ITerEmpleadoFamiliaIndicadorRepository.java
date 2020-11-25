@@ -72,28 +72,21 @@ public interface ITerEmpleadoFamiliaIndicadorRepository extends JpaRepository<Te
     public List<Object[]> genReporteUn(int periodoInicial , int periodoFinal);
     
     
-         @Query(nativeQuery = true, value = "SELECT \n" +
-"             cast(isnull(a.periodo,0) as varchar) as periodo\n" +
-"             , C.descripcion \n" +
-"			 ,isnull(b.filial,'') fili\n" +
-"			 ,cast(b.id_empleado as varchar) idempe \n" +
-"             , B.descripcion\n" +
-"             , cast(B.valor as varchar) suel\n" +
-"             , cast(ISNULL(SUM(A.monto_calculado),0) as varchar) as calculado\n" +
-"             , cast(ISNULL((SUM(A.monto_calculado)/B.valor)*100,0) as varchar) as porc_calculado 			   \n" +
-"             FROM TER_empleado_familia_indicador A\n" +
-"             INNER JOIN TER_TIPO_BONO_TEXTIL B ON B.id = A.id_empleado\n" +
-"             INNER JOIN TER_area_negocio C ON C.id = A.id_area_negocio \n" +
-"			 where a.periodo between ? and  ? and upper(c.descripcion)  like '%TEXTIL%' \n" +
-"             group by \n" +
-"             A.periodo\n" +
-"             , A.id_area_negocio\n" +
-"             , C.descripcion\n" +
-"			 , B.FILIAL\n" +
-"			 , b.id_empleado\n" +
-"             , B.descripcion\n" +
-"             , B.valor 			 \n" +
-"             ORDER BY A.id_area_negocio")
+         @Query(nativeQuery = true, value = "select  \n" +
+                                    "cast(isnull(A.periodo,0) as varchar) as periodo \n" +
+                                    ", 'B2B-TX' as descripcion \n" +
+                                    ",isnull(A.filial,'') fili \n" +
+                                    ",cast(b.id_empleado as varchar) idempe  \n" +
+                                    ", B.descripcion \n" +
+                                    ", cast(B.valor as varchar) suel \n" +
+                                    ", cast(ISNULL((A.monto_bonificacion_mensual),0) as varchar) as calculado_mensual\n" +
+                                    ", cast(ISNULL((A.monto_bonificacion_acumulado),0) as varchar) as calculado_acumulado\n" +
+                                    ", cast(ISNULL(((A.porc_cumplimiento_mensual)),0) as varchar) as porc_calculado_mensual\n" +
+                                    ", cast(ISNULL(((A.porc_cumplimiento_acumulado)),0) as varchar) as porc_calculado_acumulado\n" +
+                                    "from TER_COMISIONES_TOTALES_TEXTIL A\n" +
+                                    "INNER JOIN TER_TIPO_BONO_TEXTIL B ON B.id = A.id_tipo_bono_textil AND B.periodo = A.periodo\n" +
+                                    " where a.periodo between ? and  ? \n" +
+                                    " order by a.periodo, b.id_empleado")
     public List<Object[]> genReporteUnTextil(int periodoInicial , int periodoFinal);
 
     

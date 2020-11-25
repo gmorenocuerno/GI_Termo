@@ -179,8 +179,8 @@ public class TerEmpleadoFamiliaIndicadorServicesImpl implements ITerEmpleadoFami
                    .idEmpleado((o[3] !=null ? o[3].toString():""))
                    .empleado((o[4] !=null ? o[4].toString():""))
                    .Salario((o[5] !=null ? o[5].toString():""))
-                   .calculo((o[6] !=null ? o[6].toString():""))
-                   .porceVariable((o[7] !=null ? o[7].toString():""))
+                   .calculoMensual((o[6] !=null ? o[6].toString():""))
+                   .porceVariableMensual((o[7] !=null ? o[7].toString():""))
                    .build();
            listEmp.add(dta);
            String path = File.separator + "var"+ File.separator + "temp";
@@ -201,8 +201,10 @@ public class TerEmpleadoFamiliaIndicadorServicesImpl implements ITerEmpleadoFami
                    .idEmpleado((o[3] !=null ? o[3].toString():""))
                    .empleado((o[4] !=null ? o[4].toString():""))
                    .Salario((o[5] !=null ? o[5].toString():""))
-                   .calculo((o[6] !=null ? o[6].toString():""))
-                   .porceVariable((o[7] !=null ? o[7].toString():""))
+                   .calculoMensual((o[6] !=null ? o[6].toString():""))
+                   .calculoAcumulado((o[7] !=null ? o[7].toString():""))
+                   .porceVariableMensual((o[8] !=null ? o[8].toString():""))
+                   .porceVariableAcumulado((o[9] !=null ? o[9].toString():""))
                    .build();
            listEmp.add(dta);
            String path = File.separator + "var"+ File.separator + "temp";

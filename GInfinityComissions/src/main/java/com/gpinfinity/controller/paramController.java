@@ -153,8 +153,8 @@ public class paramController extends Utils implements Serializable {
                         list1.add(obj.getIdEmpleado());
                         list1.add(obj.getEmpleado());
                         list1.add(obj.getSalario());
-                        list1.add(obj.getCalculo());
-                        list1.add(obj.getPorceVariable());
+                        list1.add(obj.getCalculoMensual());
+                        list1.add(obj.getPorceVariableMensual());
                         lists.add(list1);
 
                       
