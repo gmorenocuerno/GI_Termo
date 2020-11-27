@@ -64,6 +64,7 @@ public class paramController extends Utils implements Serializable {
     private String calcSelectedPeriodo;
     private int rptPeriodoInicial;
     private int rptPeriodoFinal;
+    private int rptAreaNegocio;
     private String calcSelectedAreaNegocio;
     private int buscarAreanegocio;
     private int buscarPeriodo;
@@ -143,18 +144,19 @@ public class paramController extends Utils implements Serializable {
         try {
             csvOut = new BufferedOutputStream(ec.getResponseOutputStream());
             List<List<Object>> lists = new ArrayList<>();
-            iterEmpleadoFamiliaIndicadorServices.reporteData(rptPeriodoInicial, rptPeriodoFinal).forEach((obj) -> {
+            iterEmpleadoFamiliaIndicadorServices.reporteData(rptPeriodoInicial, rptPeriodoFinal, rptAreaNegocio).forEach((obj) -> {
 
                     try {
                          List<Object> list1 = new ArrayList<>();
                         list1.add(obj.getPeriodo());
                         list1.add(obj.getAreanegocio());
                         list1.add(obj.getFilial());
+                        list1.add(obj.getTasa());
                         list1.add(obj.getIdEmpleado());
                         list1.add(obj.getEmpleado());
                         list1.add(obj.getSalario());
-                        list1.add(obj.getCalculoMensual());
-                        list1.add(obj.getPorceVariableMensual());
+                        list1.add(obj.getCalculoMensualLocal());
+                        list1.add(obj.getPorceVariableMensualLocal());
                         lists.add(list1);
 
                       
@@ -163,7 +165,7 @@ public class paramController extends Utils implements Serializable {
                     }
 
                 });            
-            String[] header = {"Periodo","Area de Negocio","Filial","Id Empleado","Empleado","Salario","Calculo","Porcentaje Calculado"};
+            String[] header = {"Periodo","Area de Negocio","Filial","Tasa", "Id Empleado","Empleado","Salario","Calculo","Porcentaje Calculado"};
 
             exportCSVFile(csvOut, lists, "UTF-8", header);
             csvOut.close();

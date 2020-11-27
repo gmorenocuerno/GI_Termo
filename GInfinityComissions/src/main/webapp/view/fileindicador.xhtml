@@ -159,7 +159,7 @@
                                 <p:column style="text-transform: capitalize;font-weight: bold" headerText="Filial" >
                                     <h:outputText style="font-weight: normal" value="#{tbl_csv.filial}" />
                                 </p:column>
-
+                                
                                 <p:column style="text-transform: capitalize;font-weight: bold" headerText="Indicador" >
                                     <h:outputText style="font-weight: normal" value="#{tbl_csv.descIndicador}" />
                                 </p:column>
@@ -200,10 +200,11 @@
                                         <h:outputText value="Ponderacion:" />
                                         <h:outputText value="#{tbl_csv.ponderacion}" />
 
+                                        <h:outputText value="Tasa Conversión:" />
+                                        <h:outputText value="#{tbl_csv.tasa}" />
+
                                         <h:outputText value="Monto Aplicado:" />
-                                        <h:outputText value="$ #{tbl_csv.montoAplicado}" />
-
-
+                                        <h:outputText value="$ #{tbl_csv.montoAplicadoLocal}" />
                                     </p:panelGrid>
                                 </p:rowExpansion>
                             </p:dataTable>
@@ -289,6 +290,16 @@
                             </p:selectOneMenu>
                             <p:message for="calcperiodoFin" />
                         </h:panelGroup>
+                        
+                        <p:outputLabel style="display: none" for="findrptareanegocio" value="Area de Negocio"/>
+                        <h:panelGroup styleClass="md-inputfield">
+                            <p:selectOneMenu  required="true" effect="fold"  value="#{paramController.rptAreaNegocio}" id="findrptareanegocio">
+                                <f:selectItem itemLabel="Seleccione Area de Negocio" itemValue="" />
+                                <f:selectItems value="#{paramController.listAreaNegocio}" />                                        
+                            </p:selectOneMenu>
+                            <p:message for="findrptareanegocio" />
+                        </h:panelGroup>
+                        
                         
                         <p:commandButton value="Generar Reporte" ajax="false"  actionListener="#{paramController.generarReporte()}" styleClass="NavyButton" />
                     </p:panelGrid>

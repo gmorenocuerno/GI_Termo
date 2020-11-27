@@ -94,6 +94,9 @@ public class TerEmpleadoFamiliaIndicadorServicesImpl implements ITerEmpleadoFami
                     .montoAplicado(obj[12].toString())
                     .montoCalculado(obj[13].toString())
                     .filial(obj[14].toString())
+                    .tasa(obj[15].toString())
+                    .montoAplicadoLocal(obj[16].toString())
+                    .montoCalculadoLocal(obj[17].toString())
                     .build();
             listDataTableCsv.add(data);
 
@@ -168,10 +171,10 @@ public class TerEmpleadoFamiliaIndicadorServicesImpl implements ITerEmpleadoFami
     }
 
     @Override
-    public List<ReporteComisionesDTO> reporteData(int periodoInicial, int periodoFinal) {
+    public List<ReporteComisionesDTO> reporteData(int periodoInicial, int periodoFinal, int areaNegocio) {
 
         List<ReporteComisionesDTO> listEmp = new ArrayList<>();
-        iterEmpleadoFamiliaIndicadorRepository.genReporteUn(periodoInicial, periodoFinal).forEach(o -> {
+        iterEmpleadoFamiliaIndicadorRepository.genReporteUn(periodoInicial, periodoFinal, areaNegocio).forEach(o -> {
            ReporteComisionesDTO dta =  ReporteComisionesDTO.builder()
                    .periodo((o[0] !=null ? o[0].toString():""))
                    .areanegocio((o[1] !=null ? o[1].toString():""))
@@ -181,6 +184,9 @@ public class TerEmpleadoFamiliaIndicadorServicesImpl implements ITerEmpleadoFami
                    .Salario((o[5] !=null ? o[5].toString():""))
                    .calculoMensual((o[6] !=null ? o[6].toString():""))
                    .porceVariableMensual((o[7] !=null ? o[7].toString():""))
+                   .tasa((o[8] !=null ? o[8].toString():""))
+                   .calculoMensualLocal((o[9] !=null ? o[9].toString():""))
+                   .porceVariableMensualLocal((o[10] !=null ? o[10].toString():""))
                    .build();
            listEmp.add(dta);
            String path = File.separator + "var"+ File.separator + "temp";

@@ -37,7 +37,10 @@ public interface ITerEmpleadoFamiliaIndicadorRepository extends JpaRepository<Te
             + "cast(isnull(a.ponderacion,0) as varchar) as ponderacion ,\n"
             + "cast(isnull(a.monto_aplicado,0) as varchar) as monto_aplicado,\n"
             + "cast(isnull(a.monto_calculado,0) as varchar) as monto_calculado , \n" 
-            + "isnull(b.filial,'') fili\n"
+            + "isnull(b.filial,'') fili, \n"
+            + "cast(isnull(a.tasa_conversion,0) as varchar) tasa,\n"
+            + "cast(isnull(a.monto_aplicado_local,0) as varchar) as monto_aplicado_local,\n"
+            + "cast(isnull(a.monto_calculado_local,0) as varchar) as monto_calculado_local \n" 
             + "FROM ter_empleado_familia_indicador a\n"
             + "INNER JOIN ter_empleado b on b.id = a.id_empleado and b.id_area_negocio = a.id_area_negocio\n"
             + "INNER JOIN ter_area_negocio c on c.id = a.id_area_negocio\n"
@@ -47,29 +50,21 @@ public interface ITerEmpleadoFamiliaIndicadorRepository extends JpaRepository<Te
             + "and f.id_empleado = a.id_empleado and f.id_indicador = a.id_indicador where  f.id_area_negocio = ?  and a.periodo = ? ")
     public List<Object[]> allDataEmpFamIndicador(int idAreaNegocio , int periodo);
     
-     @Query(nativeQuery = true, value = "SELECT \n" +
-"             cast(isnull(a.periodo,0) as varchar) as periodo\n" +
-"             , C.descripcion \n" +
-"			 ,isnull(b.filial,'') fili\n" +
-"			 ,cast(b.id_empleado as varchar) idempe \n" +
-"             , B.nombre\n" +
-"             , cast(B.sueldo as varchar) suel\n" +
-"             , cast(ISNULL(SUM(A.monto_calculado),0) as varchar) as calculado\n" +
-"             , cast(ISNULL((SUM(A.monto_calculado)/B.sueldo)*100,0) as varchar) as porc_calculado 			   \n" +
-"             FROM TER_empleado_familia_indicador A\n" +
-"             INNER JOIN TER_empleado B ON B.id = A.id_empleado\n" +
-"             INNER JOIN TER_area_negocio C ON C.id = A.id_area_negocio \n" +
-"			 where a.periodo between ? and  ? and upper(c.descripcion) not like '%TEXTIL%' \n" +
-"             group by \n" +
-"             A.periodo\n" +
-"             , A.id_area_negocio\n" +
-"             , C.descripcion\n" +
-"			 , B.FILIAL\n" +
-"			 , b.id_empleado\n" +
-"             , B.nombre\n" +
-"             , B.sueldo 			 \n" +
-"             ORDER BY A.id_area_negocio")
-    public List<Object[]> genReporteUn(int periodoInicial , int periodoFinal);
+     @Query(nativeQuery = true, value = "SELECT cast(isnull(a.periodo,0) as varchar) as periodo , C.descripcion ,isnull(b.filial,'') fili \n" +
+            ",cast(b.id_empleado as varchar) idempe , B.nombre , cast(B.sueldo as varchar) suel \n" +
+            ", cast(ISNULL(SUM(A.monto_calculado),0) as varchar) as calculado \n" +
+            ", cast(ISNULL((SUM(A.monto_calculado)/B.sueldo)*100,0) as varchar) as porc_calculado \n" +
+            ",cast(isnull(A.tasa_conversion,0) as varchar) tasa \n" +
+            ", cast(ISNULL(SUM(A.monto_calculado)*ISNULL(A.tasa_conversion,0),0) as varchar) as calculado_local \n" +
+            ", cast(ISNULL(((SUM(A.monto_calculado)*ISNULL(A.tasa_conversion,0))/B.sueldo)*100,0) as varchar) as porc_calculado_local \n" +
+            "FROM TER_empleado_familia_indicador A \n" +
+            "INNER JOIN TER_empleado B ON B.id = A.id_empleado \n" +
+            "INNER JOIN TER_area_negocio C ON C.id = A.id_area_negocio \n" +
+            "where a.periodo between ? and ? and upper(c.descripcion) not like '%TEXTIL%' " +
+            "and a.id_area_negocio = ?\n" +
+            "group by A.periodo , A.id_area_negocio , C.descripcion , B.FILIAL , b.id_empleado , B.nombre , B.sueldo , A.tasa_conversion \n" +
+            "ORDER BY A.id_area_negocio")
+    public List<Object[]> genReporteUn(int periodoInicial , int periodoFinal, int areaNegocio);
     
     
          @Query(nativeQuery = true, value = "select  \n" +

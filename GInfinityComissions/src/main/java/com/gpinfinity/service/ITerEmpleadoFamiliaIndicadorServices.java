@@ -25,7 +25,7 @@ public List<CsvDataTableEmpFamIndicador> allDataEmpFamIndicador(int idAreaNegoci
 
 public void calcularComision(int areaNegocio , int periodo);
 
-public List<ReporteComisionesDTO> reporteData(int periodoInicial , int periodoFinal);
+public List<ReporteComisionesDTO> reporteData(int periodoInicial , int periodoFinal, int areaNegocio);
 
 public List<ReporteComisionesDTO> reporteDataTextiles(int periodoInicial , int periodoFinal);
 

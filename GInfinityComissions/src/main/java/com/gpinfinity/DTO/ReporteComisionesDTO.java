@@ -30,4 +30,8 @@ public class ReporteComisionesDTO {
     private String porceVariableMensual;
     private String porceVariableAcumulado;
     private String empleado;
+    private String tasa;
+    private String calculoMensualLocal;
+    private String porceVariableMensualLocal;
+    
 }
