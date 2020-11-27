@@ -7,6 +7,7 @@ package com.gpinfinity.config;
 
 import com.gpinfinity.entities.Usuarios;
 import com.gpinfinity.service.IUsuarioServices;
+import com.gpinfinity.utils.AuthLDAP;
 import com.gpinfinity.utils.UsrDetails;
 import java.util.ArrayList;
 import java.util.List;
@@ -49,21 +50,19 @@ public class AuthenticationProviderSec implements AuthenticationProvider {
         List<GrantedAuthority> roles = new ArrayList<>();
         GrantedAuthority role = null;
         String usuario = auth.getPrincipal().toString().trim();
-        Usuarios user = usuarioService.getUsuarioVerificar(usuario);
+        //Usuarios user = usuarioService.getUsuarioVerificar(usuario);
         String password = auth.getCredentials().toString().trim();
-
-        if(user==null){
-             
-            throw new BadCredentialsException("Usuario o Contraseña Invalidos");
-        }
         
         if (usuario.isEmpty() && password.isEmpty()) {
               
             throw new BadCredentialsException("Usuario y contraseña con requeridos");
 
         } else {
+            
+            
+            AuthLDAP autLDAP = new AuthLDAP("ldap://172.16.1.3:389", "simple", usuario, password);
 
-            if (pass.matches(password, user.getPassword().trim())) {
+            if (autLDAP.isAutenticado()) {
                 role = new SimpleGrantedAuthority("ROLE_AUTHENTICATION");
                 roles.add(role);
                 usrDetails.set_userName(usuario);
