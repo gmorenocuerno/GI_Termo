@@ -50,7 +50,7 @@ public class AuthenticationProviderSec implements AuthenticationProvider {
         List<GrantedAuthority> roles = new ArrayList<>();
         GrantedAuthority role = null;
         String usuario = auth.getPrincipal().toString().trim();
-        //Usuarios user = usuarioService.getUsuarioVerificar(usuario);
+        Usuarios user = usuarioService.getUsuarioVerificar(usuario);
         String password = auth.getCredentials().toString().trim();
         
         if (usuario.isEmpty() && password.isEmpty()) {
@@ -59,18 +59,19 @@ public class AuthenticationProviderSec implements AuthenticationProvider {
 
         } else {
             
-            
-            AuthLDAP autLDAP = new AuthLDAP("ldap://172.16.1.3:389", "simple", usuario, password);
+            if(user!=null){
+                AuthLDAP autLDAP = new AuthLDAP("ldap://172.16.1.3:389", "simple", usuario, password);
 
-            if (autLDAP.isAutenticado()) {
-                role = new SimpleGrantedAuthority("ROLE_AUTHENTICATION");
-                roles.add(role);
-                usrDetails.set_userName(usuario);
-                authRet = new UsernamePasswordAuthenticationToken(usuario, password, roles);
+                if (autLDAP.isAutenticado()) {
+                    role = new SimpleGrantedAuthority("ROLE_AUTHENTICATION");
+                    roles.add(role);
+                    usrDetails.set_userName(usuario);
+                    authRet = new UsernamePasswordAuthenticationToken(usuario, password, roles);
 
-            } else {
-               
-                throw new BadCredentialsException("Usuario o Contraseña Invalidos");
+                } else {
+
+                    throw new BadCredentialsException("Usuario o Contraseña Invalidos");
+                }
             }
 
         }

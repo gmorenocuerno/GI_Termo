@@ -2,7 +2,7 @@
  * To change this license header, choose License Headers in Project Properties.
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
- */
+// */
 package com.gpinfinity.controller;
 
 import com.gpinfinity.DTO.CsvDataTableEmpFamIndicador;
@@ -155,6 +155,8 @@ public class paramController extends Utils implements Serializable {
                         list1.add(obj.getIdEmpleado());
                         list1.add(obj.getEmpleado());
                         list1.add(obj.getSalario());
+                        list1.add(obj.getCalculoMensual());
+                        list1.add(obj.getPorceVariableMensual());
                         list1.add(obj.getCalculoMensualLocal());
                         list1.add(obj.getPorceVariableMensualLocal());
                         lists.add(list1);
@@ -165,7 +167,7 @@ public class paramController extends Utils implements Serializable {
                     }
 
                 });            
-            String[] header = {"Periodo","Area de Negocio","Filial","Tasa", "Id Empleado","Empleado","Salario","Calculo","Porcentaje Calculado"};
+            String[] header = {"Periodo","Area de Negocio","Filial","Tasa", "Id Empleado","Empleado","Variable","Calculo $","Porcentaje Calculado $","Calculo Moneda Local","Porcentaje Calculado Moneda Local"};
 
             exportCSVFile(csvOut, lists, "UTF-8", header);
             csvOut.close();

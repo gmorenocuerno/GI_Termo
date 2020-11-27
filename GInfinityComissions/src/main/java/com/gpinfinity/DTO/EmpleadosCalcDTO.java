@@ -26,7 +26,10 @@ public class EmpleadosCalcDTO {
     private String salario;
     private String calculado;
     private String porcenCalculado;
+    private String calculadoLocal;
+    private String porcenCalculadoLocal;
     private String idEmpleado;
-    
+    private String filial;
+    private String tasaConversion;
     
 }

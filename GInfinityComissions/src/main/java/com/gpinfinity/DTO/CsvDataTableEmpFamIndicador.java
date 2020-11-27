@@ -37,7 +37,7 @@ public class CsvDataTableEmpFamIndicador {
     private String filial;
     private String montoAplicadoLocal;
     private String montoCalculadoLocal;
-    private String tasa;
-    
+    private String tasaConversion;
+    private String variable;
     
 }

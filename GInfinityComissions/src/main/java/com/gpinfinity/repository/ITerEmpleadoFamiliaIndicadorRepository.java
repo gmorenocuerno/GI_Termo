@@ -38,16 +38,18 @@ public interface ITerEmpleadoFamiliaIndicadorRepository extends JpaRepository<Te
             + "cast(isnull(a.monto_aplicado,0) as varchar) as monto_aplicado,\n"
             + "cast(isnull(a.monto_calculado,0) as varchar) as monto_calculado , \n" 
             + "isnull(b.filial,'') fili, \n"
-            + "cast(isnull(a.tasa_conversion,0) as varchar) tasa,\n"
+            + "cast(isnull(b.tasa_conversion,0) as varchar) tasa,\n"
             + "cast(isnull(a.monto_aplicado_local,0) as varchar) as monto_aplicado_local,\n"
-            + "cast(isnull(a.monto_calculado_local,0) as varchar) as monto_calculado_local \n" 
+            + "cast(isnull(a.monto_calculado_local,0) as varchar) as monto_calculado_local, \n" 
+            + "cast(isnull(b.sueldo,0) as varchar) as variable \n" 
             + "FROM ter_empleado_familia_indicador a\n"
             + "INNER JOIN ter_empleado b on b.id = a.id_empleado and b.id_area_negocio = a.id_area_negocio\n"
             + "INNER JOIN ter_area_negocio c on c.id = a.id_area_negocio\n"
             + "INNER JOIN ter_familia d on d.id = a.id_familia and d.id_area_negocio = a.id_area_negocio\n"
             + "INNER JOIN ter_indicador_area_negocio e ON e.id = a.id_indicador and e.id_area_negocio = a.id_area_negocio\n"
             + "INNER JOIN ter_empleado_familia f on f.id_area_negocio = a.id_area_negocio and f.id_familia = a.id_familia\n"
-            + "and f.id_empleado = a.id_empleado and f.id_indicador = a.id_indicador where  f.id_area_negocio = ?  and a.periodo = ? ")
+            + "and f.id_empleado = a.id_empleado and f.id_indicador = a.id_indicador "
+            + "where  f.id_area_negocio = ?  and a.periodo = ? ")
     public List<Object[]> allDataEmpFamIndicador(int idAreaNegocio , int periodo);
     
      @Query(nativeQuery = true, value = "SELECT cast(isnull(a.periodo,0) as varchar) as periodo , C.descripcion ,isnull(b.filial,'') fili \n" +
@@ -70,8 +72,8 @@ public interface ITerEmpleadoFamiliaIndicadorRepository extends JpaRepository<Te
          @Query(nativeQuery = true, value = "select  \n" +
                                     "cast(isnull(A.periodo,0) as varchar) as periodo \n" +
                                     ", 'B2B-TX' as descripcion \n" +
-                                    ",isnull(A.filial,'') fili \n" +
-                                    ",cast(b.id_empleado as varchar) idempe  \n" +
+                                    ", isnull(A.filial,'') fili \n" +
+                                    ", cast(b.id_empleado as varchar) idempe  \n" +
                                     ", B.descripcion \n" +
                                     ", cast(B.valor as varchar) suel \n" +
                                     ", cast(ISNULL((A.monto_bonificacion_mensual),0) as varchar) as calculado_mensual\n" +
@@ -111,7 +113,12 @@ public interface ITerEmpleadoFamiliaIndicadorRepository extends JpaRepository<Te
             + ", B.nombre\n"
             + ", cast(B.sueldo as varchar) suel\n"
             + ", cast(ISNULL(SUM(A.monto_calculado),0) as varchar) as calculado\n"
-            + ", cast(ISNULL((SUM(A.monto_calculado)/B.sueldo)*100,0) as varchar) as porc_calculado ,cast(b.id_empleado as varchar) idempe \n"
+            + ", cast(ISNULL((SUM(A.monto_calculado)/B.sueldo)*100,0) as varchar) as porc_calculado " 
+            + ", cast(b.id_empleado as varchar) idempe \n"
+            + ", cast(ISNULL(A.filial,'') as varchar) as filial \n"
+            + ", cast(ISNULL(A.tasa_conversion,0) as varchar) as tasa \n"
+            + ", cast(ISNULL(SUM(A.monto_calculado_local),0) as varchar) as calculado\n"
+            + ", cast(ISNULL((SUM(A.monto_calculado_local)/B.sueldo)*100,0) as varchar) as porc_calculado " 
             + "FROM TER_empleado_familia_indicador A\n"
             + "INNER JOIN TER_empleado B ON B.id = A.id_empleado\n"
             + "INNER JOIN TER_area_negocio C ON C.id = A.id_area_negocio where  A.id_area_negocio=? and a.periodo=? \n"
@@ -120,7 +127,12 @@ public interface ITerEmpleadoFamiliaIndicadorRepository extends JpaRepository<Te
             + ", A.id_area_negocio\n"
             + ", C.descripcion\n"
             + ", B.nombre\n"
-            + ", B.sueldo ,b.id_empleado \n"
+            + ", B.sueldo "
+            + ", B.id_empleado \n"
+            + ", A.filial \n"
+            + ", A.tasa_conversion \n"
+            + ", A.monto_calculado_local \n"
+            + ", A.monto_calculado_local \n"
             + "ORDER BY A.id_area_negocio\n")
     public List<Object[]> listAllEmpleadosCalc(int idAreaNegocio , int periodo);
     

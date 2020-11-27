@@ -61,6 +61,11 @@ public class TerEmpleadoFamiliaIndicador implements Serializable {
     private BigDecimal montoCalculado;
     @Column(name = "monto_aplicado")
     private BigDecimal montoAplicado;
+    @Size(max = 25)
+    @Column(name = "filial")
+    private String filial;
+    @Column(name = "tasa_conversion")
+    private BigDecimal tasaConversion;
     @Size(max = 1)
     @Column(name = "estado")
     private String estado;

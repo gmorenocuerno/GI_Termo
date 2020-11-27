@@ -47,6 +47,7 @@ public class TerEmpleadoFamiliaIndicadorServicesImpl implements ITerEmpleadoFami
                     .idFamilia(Integer.parseInt(csvDto.getIdFamilia()))
                     .idIndicador(Integer.parseInt(csvDto.getIdIndicador()))
                     .build();
+            //ACA SACAR LA INFORMACION DE LA FILIAL Y LA TASA DE CONVERSION
             TerEmpleadoFamiliaIndicador terFamEmp = TerEmpleadoFamiliaIndicador.builder()
                     .estado("A")
                     .fechaCreacion(usrDet.getDate())
@@ -94,9 +95,10 @@ public class TerEmpleadoFamiliaIndicadorServicesImpl implements ITerEmpleadoFami
                     .montoAplicado(obj[12].toString())
                     .montoCalculado(obj[13].toString())
                     .filial(obj[14].toString())
-                    .tasa(obj[15].toString())
+                    .tasaConversion(obj[15].toString())
                     .montoAplicadoLocal(obj[16].toString())
                     .montoCalculadoLocal(obj[17].toString())
+                    .variable(obj[18].toString())
                     .build();
             listDataTableCsv.add(data);
 
@@ -143,6 +145,10 @@ public class TerEmpleadoFamiliaIndicadorServicesImpl implements ITerEmpleadoFami
                     .calculado(emp[4].toString())
                     .porcenCalculado(emp[5].toString())
                     .idEmpleado(emp[6].toString())
+                    .filial(emp[7].toString())
+                    .tasaConversion(emp[8].toString())
+                    .calculadoLocal(emp[9].toString())
+                    .porcenCalculadoLocal(emp[10].toString())
                     .build();
             listEmp.add(empDto);
 

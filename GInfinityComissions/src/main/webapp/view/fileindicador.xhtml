@@ -37,7 +37,7 @@
                         <div class="card card-w-title">
                             <p:panelGrid columns="7" layout="grid"  styleClass="ui-panelgrid-blank form-group">
 
-                                <p:outputLabel style="display: none" for="caclareanegocio" value="Area de Negoico"/>
+                                <p:outputLabel style="display: none" for="caclareanegocio" value="Area de Negocio"/>
                                 <h:panelGroup styleClass="md-inputfield">
                                     <p:selectOneMenu  required="true" effect="fold"  value="#{paramController.calcSelectedAreaNegocio}" id="caclareanegocio">
                                         <f:selectItem itemLabel="Seleccione Area de Negocio" itemValue="" />
@@ -53,9 +53,6 @@
                                     </p:selectOneMenu>
                                     <p:message for="calcperiodo" />
                                 </h:panelGroup>
-
-
-
 
                                 <p:commandButton value="Calcular comision" update="msg,formFileCsv" actionListener="#{paramController.calcularComisiones()}"  styleClass="NavyButton" >
                                     <p:confirm header="Calculo de comisiones B2D" message="Desea realizar el calulo de comision ?" icon="pi pi-exclamation-triangle" />
@@ -126,7 +123,7 @@
                                     </h:panelGroup>
 
                                     <p:commandButton value="Buscar" update="tblcsvempfam"   actionListener="#{paramController.loadData()}" styleClass="NavyButton" />
-                                    <p:commandButton value="Reporte" onclick="PF('dlgReporteComi').show();"   styleClass="NavyButton" />
+                                    <p:commandButton value="Reporte Acumulado" onclick="PF('dlgReporteComi').show();"   styleClass="NavyButton" />
 
                                 </p:panelGrid>
                             </p:fieldset>
@@ -175,6 +172,10 @@
                                 <p:column style="text-transform: capitalize;font-weight: bold" headerText="Monto Calculado" >
                                     <h:outputText style="font-weight: normal" value="$ #{tbl_csv.montoCalculado}" />
                                 </p:column>
+                                
+                                <p:column style="text-transform: capitalize;font-weight: bold" headerText="Variable" >
+                                    <h:outputText style="font-weight: normal" value="$ #{tbl_csv.variable}" />
+                                </p:column>
 
                                 <p:rowExpansion>
                                     <p:panelGrid  columns="2" columnClasses="label,value" style="width:100%">
@@ -199,11 +200,14 @@
 
                                         <h:outputText value="Ponderacion:" />
                                         <h:outputText value="#{tbl_csv.ponderacion}" />
+                                        
+                                        <h:outputText value="Monto Aplicado:" />
+                                        <h:outputText value="$ #{tbl_csv.montoAplicado}" />
 
                                         <h:outputText value="Tasa Conversión:" />
-                                        <h:outputText value="#{tbl_csv.tasa}" />
+                                        <h:outputText value="#{tbl_csv.tasaConversion}" />
 
-                                        <h:outputText value="Monto Aplicado:" />
+                                        <h:outputText value="Monto Aplicado Local:" />
                                         <h:outputText value="$ #{tbl_csv.montoAplicadoLocal}" />
                                     </p:panelGrid>
                                 </p:rowExpansion>
@@ -246,7 +250,14 @@
                     <p:column style="text-align: center;font-weight: bold" headerText="Area de Negocio" >
                         <h:outputText style="font-weight: normal" value="#{caclempleado.areNegocio}" />
                     </p:column>
-
+                    
+                    <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Filial" >
+                        <h:outputText style="font-weight: normal" value="#{caclempleado.filial}" />
+                    </p:column>
+                    <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Tasa Conversión" >
+                        <h:outputText style="font-weight: normal" value="#{caclempleado.tasaConversion}" />
+                    </p:column>
+                    
                     <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="ID Empleado" >
                         <h:outputText style="font-weight: normal" value="#{caclempleado.idEmpleado}" />
                     </p:column>
@@ -254,14 +265,21 @@
                         <h:outputText style="font-weight: normal" value="#{caclempleado.nombre}" />
                     </p:column>
 
-                    <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Salario" >
+                    <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Variable" >
                         <h:outputText style="font-weight: normal" value="#{caclempleado.salario}" />
                     </p:column>
-                    <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Calculado" >
+                    <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Calculado $" >
                         <h:outputText style="font-weight: normal" value="#{caclempleado.calculado}" />
                     </p:column>
-                    <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Porcentaje Calculado" >
+                    <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Porcentaje Calculado $" >
                         <h:outputText style="font-weight: normal" value="#{caclempleado.porcenCalculado}" />
+                    </p:column>
+                    
+                    <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Calculado Moneda Local" >
+                        <h:outputText style="font-weight: normal" value="#{caclempleado.calculadoLocal}" />
+                    </p:column>
+                    <p:column style="text-transform: capitalize;text-align: center;font-weight: bold" headerText="Porcentaje Calculado  Moneda Local" >
+                        <h:outputText style="font-weight: normal" value="#{caclempleado.porcenCalculadoLocal}" />
                     </p:column>
                 </p:dataTable>
             </h:form>
