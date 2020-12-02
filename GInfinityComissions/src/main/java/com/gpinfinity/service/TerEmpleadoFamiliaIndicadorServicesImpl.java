@@ -11,6 +11,7 @@ import com.gpinfinity.DTO.CsvIndicadorErrorLoad;
 import com.gpinfinity.DTO.EmpleadosCalcDTO;
 import com.gpinfinity.DTO.IndicadorFamiliaEmpCsvDTO;
 import com.gpinfinity.DTO.ReporteComisionesDTO;
+import com.gpinfinity.entities.TerEmpleado;
 import com.gpinfinity.entities.TerEmpleadoFamiliaIndicador;
 import com.gpinfinity.entities.TerEmpleadoFamiliaIndicadorPK;
 import com.gpinfinity.repository.ITerEmpleadoFamiliaIndicadorRepository;
@@ -224,6 +225,12 @@ public class TerEmpleadoFamiliaIndicadorServicesImpl implements ITerEmpleadoFami
         });
 
         return listEmp;
+    }
+
+    @Override
+    public List<Object[]> listEmpeladoByAreaNegocio(int idAreaNegocio) {
+            return iterEmpleadoFamiliaIndicadorRepository.listEmpeladoByAreaNegocio(idAreaNegocio);
+         
     }
 
 }

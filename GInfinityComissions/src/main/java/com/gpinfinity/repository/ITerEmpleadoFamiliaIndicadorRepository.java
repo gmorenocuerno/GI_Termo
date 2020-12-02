@@ -5,6 +5,7 @@
  */
 package com.gpinfinity.repository;
 
+import com.gpinfinity.entities.TerEmpleado;
 import com.gpinfinity.entities.TerEmpleadoFamiliaIndicador;
 import com.gpinfinity.entities.TerEmpleadoFamiliaIndicadorPK;
 import java.util.List;
@@ -68,6 +69,9 @@ public interface ITerEmpleadoFamiliaIndicadorRepository extends JpaRepository<Te
             "ORDER BY A.id_area_negocio")
     public List<Object[]> genReporteUn(int periodoInicial , int periodoFinal, int areaNegocio);
     
+    
+    @Query(nativeQuery = true, value = "select id , nombre from  TER_EMPLEADO where id_area_negocio = ?")
+    public List<Object[]> listEmpeladoByAreaNegocio(int idAreaNegocio);
     
          @Query(nativeQuery = true, value = "select  \n" +
                                     "cast(isnull(A.periodo,0) as varchar) as periodo \n" +

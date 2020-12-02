@@ -22,13 +22,16 @@ import com.gpinfinity.utils.Utils;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import javax.inject.Named;
 import java.io.Serializable;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.HashMap;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -37,8 +40,14 @@ import javax.faces.context.ExternalContext;
 import javax.faces.context.FacesContext;
 import javax.faces.model.SelectItem;
 import javax.faces.view.ViewScoped;
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
+import javax.sql.DataSource;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+import net.sf.jasperreports.engine.JREmptyDataSource;
+import net.sf.jasperreports.engine.JRException;
+import net.sf.jasperreports.engine.JasperRunManager;
 import org.apache.commons.csv.CSVFormat;
 import org.apache.commons.csv.CSVPrinter;
 import org.primefaces.event.FileUploadEvent;
@@ -65,6 +74,8 @@ public class paramController extends Utils implements Serializable {
     private int rptPeriodoInicial;
     private int rptPeriodoFinal;
     private int rptAreaNegocio;
+    private int rptAreaNegocioPdf;
+    private int idEmpeladoPdf;
     private String calcSelectedAreaNegocio;
     private int buscarAreanegocio;
     private int buscarPeriodo;
@@ -79,6 +90,7 @@ public class paramController extends Utils implements Serializable {
     private List<TerParametrosDTO> listTerParametroIndicador;
     private TerParametrosDTO selectedTerParametroIndicador;
     private List<SelectItem> listAreaNegocio;
+    private List<SelectItem> listEmpeladoAreaNegocio;
     private List<SelectItem> listAreaNegocioParametro;
     private List<SelectItem> listPeriodo;
     private List<SelectItem> listIndicador;
@@ -94,6 +106,7 @@ public class paramController extends Utils implements Serializable {
     ITerParametroIndicadorServices terParametroIndicadorServices;
     ITerEmpleadoFamiliaIndicadorServices iterEmpleadoFamiliaIndicadorServices;
     UsrDetails usrDetails;
+    private DataSource datasoruce;
      
     
     @PostConstruct
@@ -179,6 +192,17 @@ public class paramController extends Utils implements Serializable {
         }
     
     }
+    
+    
+    public void loadEmpeladoByAreaNegocio(){
+    
+        listEmpeladoAreaNegocio = new ArrayList<>();
+        iterEmpleadoFamiliaIndicadorServices.listEmpeladoByAreaNegocio(rptAreaNegocioPdf).forEach((arn) -> {
+            listEmpeladoAreaNegocio.add(new SelectItem(arn[0].toString(), arn[1].toString()));
+        });
+    
+    }
+    
 public void exportCSVFile(OutputStream out, Iterable<?> iter, String charset, String... header) {
         try {
             // Write bom to prevent Chinese miscoding  
@@ -328,6 +352,34 @@ public void exportCSVFile(OutputStream out, Iterable<?> iter, String charset, St
         loadPeriodList();
         
     }
+    
+    
+    public void jasperReport() throws JRException, IOException, SQLException{
+    
+        HttpServletResponse response = (HttpServletResponse) FacesContext.getCurrentInstance().getExternalContext().getResponse();
+        response.addHeader("Content-disposition", "attachment; filename=Reporte-Comisionesb2d.pdf");  
+        //1. Get the compiled jasper template file stream
+        InputStream reportStream = this.getClass().getClassLoader().getResourceAsStream("report2.jasper");
+        //2. Getting the output stream    
+        System.out.println("Conexion"+datasoruce.getConnection());
+        ServletOutputStream outputStream = response.getOutputStream();
+        //2. Create parameter values and fill them in
+        HashMap<String, Object> hashMap = new HashMap<>();
+        hashMap.put("id_area_negocio", rptAreaNegocioPdf);
+        hashMap.put("id_empleado", idEmpeladoPdf);
+        //3. Call Jasper Report Engine
+        try {
+            JasperRunManager.runReportToPdfStream(reportStream, outputStream, hashMap ,datasoruce.getConnection());
+            response.setContentType("application/pdf");
+            outputStream.flush();
+            outputStream.close(); 
+            FacesContext.getCurrentInstance().responseComplete();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    
+    }
+    
 
     public void loadData(){
     listCsvDataTableEmpFamIndicador = new ArrayList<>();
@@ -360,6 +412,9 @@ public void exportCSVFile(OutputStream out, Iterable<?> iter, String charset, St
         terIndicadorAreaNegocioServices = ApplicationContextProvider.getApplicationContext().getBean(ITerIndicadorAreaNegocioServices.class);
         usrDetails = ApplicationContextProvider.getApplicationContext().getBean(UsrDetails.class);
         iterEmpleadoFamiliaIndicadorServices = ApplicationContextProvider.getApplicationContext().getBean(ITerEmpleadoFamiliaIndicadorServices.class);
+        iterEmpleadoFamiliaIndicadorServices = ApplicationContextProvider.getApplicationContext().getBean(ITerEmpleadoFamiliaIndicadorServices.class);
+        datasoruce  =ApplicationContextProvider.getApplicationContext().getBean(DataSource.class);
+        
     }
 
 }

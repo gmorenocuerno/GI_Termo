@@ -58,6 +58,10 @@
                                     <p:confirm header="Calculo de comisiones B2D" message="Desea realizar el calulo de comision ?" icon="pi pi-exclamation-triangle" />
                                 </p:commandButton>                                
                                 <p:commandButton value="Mostrar calculo final" actionListener="#{paramController.loadListEmpeladosCalcDtoFiltro()}" style="width:auto" update=":formExporte:calcEmpelados" onclick="PF('dlgCalcEmp').show();"  styleClass="NavyButton" />
+                                
+                                
+                                <p:commandButton value="Reporte PDF" onclick="PF('dlgReporteComiPdf').show();"  style="width:auto"  styleClass="NavyButton" />
+                                
                                 <p:confirmDialog global="true" showEffect="fade" hideEffect="fade">
                                     <p:commandButton value="Si" type="button" styleClass="ui-confirmdialog-yes" icon="pi pi-check" />
                                     <p:commandButton value="No" type="button" styleClass="ui-confirmdialog-no" icon="pi pi-times" />
@@ -67,6 +71,7 @@
 
                         </div>
                     </h:form>
+                    
                 </div>
                 <p:dialog header="Resultados de carga" showEffect="clip" hideEffect="clip" widgetVar="dlg2" modal="true" height="450" width="800" responsive="true">
                     <p:dataTable var="csvTbl" 
@@ -226,6 +231,10 @@
                     <p:graphicImage width="17" height="17" name="images/xlsx.png" library="ultima-layout" />
                     <p:dataExporter type="xls" target="calcEmpelados" fileName="CalculoEmpleados"/>
                 </h:commandLink>
+                <h:commandLink  >                                 
+                    <p:graphicImage width="17" height="17" name="images/pdf.png" library="ultima-layout" />
+                    <p:dataExporter type="pdf" target="calcEmpelados" fileName="CalculoEmpleados"/>
+                </h:commandLink>
                 <p:dataTable var="caclempleado" 
                              id="calcEmpelados" 
                              paginator="true"
@@ -325,6 +334,42 @@
             </h:form>
         </p:dialog>  
 
+        
+        
+        <p:dialog header="Reporte de comisiones " showEffect="clip" hideEffect="clip" widgetVar="dlgReporteComiPdf" modal="true" height="200" width="1000" responsive="true">
+
+            <h:form id="formExportePdf">
+                <p:fieldset legend="Reporte" style="margin-bottom:20px">
+                    <p:panelGrid columns="7" layout="grid"  styleClass="ui-panelgrid-blank form-group">
+                                                
+                        <p:outputLabel style="display: none" for="findrptareanegocioPdf" value="Area de Negocio"/>
+                        <h:panelGroup styleClass="md-inputfield">
+                            <p:selectOneMenu  required="true" effect="fold"  value="#{paramController.rptAreaNegocioPdf}" id="findrptareanegocioPdf">
+                                <f:selectItem itemLabel="Seleccione Area de Negocio" itemValue="" />
+                                <f:selectItems value="#{paramController.listAreaNegocio}" />    
+                                <p:ajax listener="#{paramController.loadEmpeladoByAreaNegocio()}" update="empleadpdf" />
+                            </p:selectOneMenu>
+                            <p:message for="findrptareanegocioPdf" />
+                        </h:panelGroup>
+                        
+                        
+                        <p:outputLabel style="display: none" for="empleadpdf" value="Empleado"/>
+                        <h:panelGroup styleClass="md-inputfield">
+                            <p:selectOneMenu  required="true" effect="fold"  value="#{paramController.idEmpeladoPdf}" id="empleadpdf">
+                                <f:selectItem itemLabel="Seleccione Empelado" itemValue="" />
+                                <f:selectItems value="#{paramController.listEmpeladoAreaNegocio}" />    
+                                
+                            </p:selectOneMenu>
+                            <p:message for="empleadpdf" />
+                        </h:panelGroup>                      
+                        
+                        
+                        <p:commandButton value="Generar Reporte" ajax="false"  actionListener="#{paramController.jasperReport()}" styleClass="NavyButton" />
+                    </p:panelGrid>
+                </p:fieldset>
+            </h:form>
+        </p:dialog>
+        
 
     </ui:define>
 </ui:composition>

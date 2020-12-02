@@ -11,6 +11,7 @@ import com.gpinfinity.DTO.CsvIndicadorErrorLoad;
 import com.gpinfinity.DTO.EmpleadosCalcDTO;
 import com.gpinfinity.DTO.IndicadorFamiliaEmpCsvDTO;
 import com.gpinfinity.DTO.ReporteComisionesDTO;
+import com.gpinfinity.entities.TerEmpleado;
 import java.util.List;
 
 /**
@@ -32,6 +33,8 @@ public List<ReporteComisionesDTO> reporteDataTextiles(int periodoInicial , int p
 public List<String> allPeriodo();
 
 public void mergeTableTerEmpFamIndicador();
+
+public List<Object[]> listEmpeladoByAreaNegocio(int  idAreaNegocio);
 
 public List<CsvDataIndicadorPlantilla> listaCsvIndicadorPlantilla();
 
