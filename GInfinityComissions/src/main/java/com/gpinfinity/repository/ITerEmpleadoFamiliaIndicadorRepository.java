@@ -119,13 +119,14 @@ public interface ITerEmpleadoFamiliaIndicadorRepository extends JpaRepository<Te
             + ", cast(ISNULL(SUM(A.monto_calculado),0) as varchar) as calculado\n"
             + ", cast(ISNULL((SUM(A.monto_calculado)/B.sueldo)*100,0) as varchar) as porc_calculado " 
             + ", cast(b.id_empleado as varchar) idempe \n"
-            + ", cast(ISNULL(A.filial,'') as varchar) as filial \n"
+            + ", cast(ISNULL(B.filial,'') as varchar) as filial \n"
             + ", cast(ISNULL(A.tasa_conversion,0) as varchar) as tasa \n"
             + ", cast(ISNULL(SUM(A.monto_calculado_local),0) as varchar) as calculado\n"
             + ", cast(ISNULL((SUM(A.monto_calculado_local)/B.sueldo)*100,0) as varchar) as porc_calculado " 
             + "FROM TER_empleado_familia_indicador A\n"
             + "INNER JOIN TER_empleado B ON B.id = A.id_empleado\n"
-            + "INNER JOIN TER_area_negocio C ON C.id = A.id_area_negocio where  A.id_area_negocio=? and a.periodo=? \n"
+            + "INNER JOIN TER_area_negocio C ON LTRIM(RTRIM(C.id)) = LTRIM(RTRIM(A.id_area_negocio)) \n"
+            + "where  A.id_area_negocio=? and a.periodo=? \n"
             + "group by \n"
             + "A.periodo\n"
             + ", A.id_area_negocio\n"
@@ -133,10 +134,11 @@ public interface ITerEmpleadoFamiliaIndicadorRepository extends JpaRepository<Te
             + ", B.nombre\n"
             + ", B.sueldo "
             + ", B.id_empleado \n"
-            + ", A.filial \n"
+            + ", B.filial \n"
             + ", A.tasa_conversion \n"
             + ", A.monto_calculado_local \n"
             + ", A.monto_calculado_local \n"
+            + ", A.id_indicador \n"
             + "ORDER BY A.id_area_negocio\n")
     public List<Object[]> listAllEmpleadosCalc(int idAreaNegocio , int periodo);
     
@@ -154,7 +156,7 @@ public interface ITerEmpleadoFamiliaIndicadorRepository extends JpaRepository<Te
 "	   '' as monto_real\n" +
 "FROM TER_EMPLEADO A\n" +
 "INNER JOIN TER_AREA_NEGOCIO B ON B.ID = A.id_area_negocio AND B. estado = 'A'\n" +
-"INNER JOIN TER_EMPLEADO_FAMILIA C ON C.id_empleado =a.id /*A.id_empleado*/ and C.id_area_negocio = A.id_area_negocio\n" +
+"INNER JOIN TER_EMPLEADO_FAMILIA C ON LTRIM(RTRIM(C.id_empleado)) = LTRIM(RTRIM(a.id)) /*A.id_empleado*/ and C.id_area_negocio = A.id_area_negocio\n" +
 "INNER JOIN TER_INDICADOR_AREA_NEGOCIO D ON D.id_area_negocio = A.id_area_negocio AND D.id = C.id_indicador AND D.estado = 'A'\n" +
 "INNER JOIN TER_FAMILIA E ON E.id_area_negocio = A.id_area_negocio AND E.id = C.id_familia AND E.estado = 'A'\n" +
 "where A.estado = 'A'\n" +
