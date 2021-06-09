@@ -63,6 +63,7 @@ public class AuthenticationProviderSec implements AuthenticationProvider {
                 AuthLDAP autLDAP = new AuthLDAP("ldap://172.16.1.3:389", "simple", usuario, password);
 
                 if (autLDAP.isAutenticado()) {
+                //if (/*autLDAP.isAutenticado()*/true) {
                     role = new SimpleGrantedAuthority("ROLE_AUTHENTICATION");
                     roles.add(role);
                     usrDetails.set_userName(usuario);

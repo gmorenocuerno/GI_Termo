@@ -42,8 +42,9 @@ public class TerEmpleadoFamiliaIndicador implements Serializable {
     private static final long serialVersionUID = 1L;
     @EmbeddedId
     protected TerEmpleadoFamiliaIndicadorPK terEmpleadoFamiliaIndicadorPK;
-    @Column(name = "periodo")
-    private Integer periodo;
+    //@Column(name = "periodo")
+    //private Integer periodo;
+    
     // @Max(value=?)  @Min(value=?)//if you know range of your decimal fields consider using these annotations to enforce field validation
     @Column(name = "monto_meta")
     private BigDecimal meta;

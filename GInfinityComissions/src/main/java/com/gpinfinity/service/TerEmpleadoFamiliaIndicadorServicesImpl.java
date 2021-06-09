@@ -47,6 +47,7 @@ public class TerEmpleadoFamiliaIndicadorServicesImpl implements ITerEmpleadoFami
                     .idEmpleado(Integer.parseInt(csvDto.getIdEmpleado()))
                     .idFamilia(Integer.parseInt(csvDto.getIdFamilia()))
                     .idIndicador(Integer.parseInt(csvDto.getIdIndicador()))
+                    .periodo(Integer.parseInt(csvDto.getPeriodo()))
                     .build();
             //ACA SACAR LA INFORMACION DE LA FILIAL Y LA TASA DE CONVERSION
             TerEmpleadoFamiliaIndicador terFamEmp = TerEmpleadoFamiliaIndicador.builder()
@@ -55,7 +56,7 @@ public class TerEmpleadoFamiliaIndicadorServicesImpl implements ITerEmpleadoFami
                     .usuarioCreacion(usrDet.get_userName())
                     .terEmpleadoFamiliaIndicadorPK(pk)
                     .montoReal(new BigDecimal(csvDto.getReal()))
-                    .periodo(Integer.parseInt(csvDto.getPeriodo()))
+                    //.periodo(Integer.parseInt(csvDto.getPeriodo()))
                     .meta(new BigDecimal(csvDto.getMeta()))
                     .build();
             iterEmpleadoFamiliaIndicadorRepository.save(terFamEmp);
@@ -71,7 +72,7 @@ public class TerEmpleadoFamiliaIndicadorServicesImpl implements ITerEmpleadoFami
                     .build();
             System.out.println("Causa de error:" + exc.getCause());
             System.out.println("Message de error:" + exc.getMessage());
-            exc.printStackTrace();
+            //exc.printStackTrace();
         }
         return resp;
     }

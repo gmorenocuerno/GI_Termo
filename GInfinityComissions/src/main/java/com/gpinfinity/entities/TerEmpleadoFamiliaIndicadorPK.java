@@ -42,6 +42,9 @@ public class TerEmpleadoFamiliaIndicadorPK implements Serializable {
     @NotNull
     @Column(name = "id_familia")
     private int idFamilia;
-
     
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "periodo")
+    private int periodo;
 }

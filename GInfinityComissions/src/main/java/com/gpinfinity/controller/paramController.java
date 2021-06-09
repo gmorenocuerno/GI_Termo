@@ -134,16 +134,12 @@ public class paramController extends Utils implements Serializable {
 
     }
     
-   
-    
-
     public void loadListEmpeladosCalcDtoFiltro(){
         
         listEmpleadosDto = new ArrayList<>();
         listEmpleadosDto = iterEmpleadoFamiliaIndicadorServices.listAllEmpleadosCalc(Integer.parseInt(calcSelectedAreaNegocio), Integer.parseInt(calcSelectedPeriodo));
     }
 
-   
     public void generarReporte(){
     String file_name = "Reporte_Comisiones.csv";
 
@@ -193,7 +189,6 @@ public class paramController extends Utils implements Serializable {
     
     }
     
-    
     public void loadEmpeladoByAreaNegocio(){
     
         listEmpeladoAreaNegocio = new ArrayList<>();
@@ -203,7 +198,7 @@ public class paramController extends Utils implements Serializable {
     
     }
     
-public void exportCSVFile(OutputStream out, Iterable<?> iter, String charset, String... header) {
+    public void exportCSVFile(OutputStream out, Iterable<?> iter, String charset, String... header) {
         try {
             // Write bom to prevent Chinese miscoding  
             byte[] bytes = {(byte) 0xEF, (byte) 0xBB, (byte) 0xBF};
@@ -220,6 +215,7 @@ public void exportCSVFile(OutputStream out, Iterable<?> iter, String charset, St
             e.printStackTrace();
         }
     }
+    
     public void loadPeriodList() {
 
         listPeriodo = new ArrayList<>();
@@ -337,6 +333,7 @@ public void exportCSVFile(OutputStream out, Iterable<?> iter, String charset, St
                     .real((!rws.get(11).equals(" ")?rws.get(11).replace("\"", "").trim():"0")).build();
             listIndicadorFaEmCsv.add(csv);
         });
+        
         linea = 2;
         listCsvLoadErrors = new ArrayList<>();
         listIndicadorFaEmCsv.forEach((csvDto) -> {
