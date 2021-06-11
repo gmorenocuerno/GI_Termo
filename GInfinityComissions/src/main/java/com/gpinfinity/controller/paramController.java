@@ -76,6 +76,7 @@ public class paramController extends Utils implements Serializable {
     private int rptAreaNegocio;
     private int rptAreaNegocioPdf;
     private int idEmpeladoPdf;
+    private int periodoPdf;
     private String calcSelectedAreaNegocio;
     private int buscarAreanegocio;
     private int buscarPeriodo;
@@ -358,12 +359,13 @@ public class paramController extends Utils implements Serializable {
         //1. Get the compiled jasper template file stream
         InputStream reportStream = this.getClass().getClassLoader().getResourceAsStream("report2.jasper");
         //2. Getting the output stream    
-        System.out.println("Conexion"+datasoruce.getConnection());
+        //System.out.println("Conexion"+datasoruce.getConnection());
         ServletOutputStream outputStream = response.getOutputStream();
         //2. Create parameter values and fill them in
         HashMap<String, Object> hashMap = new HashMap<>();
         hashMap.put("id_area_negocio", rptAreaNegocioPdf);
         hashMap.put("id_empleado", idEmpeladoPdf);
+        hashMap.put("periodo", periodoPdf);
         //3. Call Jasper Report Engine
         try {
             JasperRunManager.runReportToPdfStream(reportStream, outputStream, hashMap ,datasoruce.getConnection());

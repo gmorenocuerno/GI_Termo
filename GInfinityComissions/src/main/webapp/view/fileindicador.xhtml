@@ -363,6 +363,14 @@
                             <p:message for="empleadpdf" />
                         </h:panelGroup>                      
                         
+                        <p:outputLabel style="display: none" for="periodoPdf" value="Periodo"/>
+                        <h:panelGroup styleClass="md-inputfield">
+                            <p:selectOneMenu required="true"  effect="fold"  value="#{paramController.periodoPdf}" id="periodoPdf">
+                                <f:selectItem itemLabel="Seleccione Periodo" itemValue="" />
+                                <f:selectItems value="#{paramController.listPeriodo}" />                                        
+                            </p:selectOneMenu>
+                            <p:message for="periodoPdf" />
+                        </h:panelGroup>
                         
                         <p:commandButton value="Generar Reporte" ajax="false"  actionListener="#{paramController.jasperReport()}" styleClass="NavyButton" />
                     </p:panelGrid>
